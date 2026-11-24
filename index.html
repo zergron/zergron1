@@ -284,6 +284,20 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .save-btn:hover:not(:disabled){background:var(--blue-dark)}
 .mini-note{font-size:9.5px; color:var(--muted2); font-weight:600; text-align:center; margin-top:6px; line-height:1.5}
 
+/* 자동 추천 카드 (재개일 기반) */
+.reco{border-radius:12px; padding:11px 12px 12px; background:linear-gradient(155deg,#111C33 0%,#0F172A 52%,#16233D 100%); color:#fff; box-shadow:0 12px 26px -20px rgba(15,23,42,.85)}
+.reco-top{display:flex; align-items:center; gap:6px}
+.reco-k{font-size:8.5px; font-weight:800; letter-spacing:.09em; color:#BFDBFE; background:rgba(37,99,235,.35); border:1px solid rgba(147,197,253,.35); border-radius:5px; padding:3px 6px}
+.reco-top .pill{margin-left:auto; font-size:11px; padding:4px 8px; letter-spacing:-.01em}
+.reco-why{font-size:10.5px; line-height:1.65; font-weight:700; color:#DCE5F3; margin-top:8px}
+.reco-why b{color:#fff; font-weight:800}
+.reco-basis{list-style:none; padding:0; margin:7px 0 0; display:grid; gap:3px}
+.reco-basis li{position:relative; padding-left:9px; font-size:9.5px; line-height:1.55; font-weight:700; color:#9FB3CE}
+.reco-basis li::before{content:"›"; position:absolute; left:0; top:0; color:#60A5FA; font-weight:800}
+.reco-inline{font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border-radius:4px; padding:2px 4px; vertical-align:1px; letter-spacing:0}
+.reco-chip{font-size:8.5px; font-weight:800; color:#fff; background:var(--blue); border-radius:4px; padding:2px 4px; vertical-align:1px; letter-spacing:0}
+.diff-note{margin-top:8px; border-radius:10px; background:#FFFBEB; border:1px solid #FDE9C4; padding:8px 9px; font-size:9.5px; line-height:1.55; font-weight:700; color:#92400E}
+
 /* privacy strip */
 .privacy{display:flex; gap:7px; background:#F8FAFC; border:1px solid var(--line); border-radius:11px; padding:9px 10px; font-size:9.5px; color:#64748B; font-weight:700; line-height:1.6; margin-top:11px}
 .privacy svg{flex:0 0 auto; width:13px; height:13px; stroke:#64748B; fill:none; stroke-width:2; margin-top:1px}
@@ -377,7 +391,12 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .sd-reason span{flex:0 0 auto; font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border-radius:4px; padding:2px 4px; height:fit-content}
 .sd-label{display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:800; color:var(--ink); margin:14px 0 6px}
 .sd-label span{font-size:9px; color:var(--muted2); font-weight:700}
-.date-input{width:100%; height:41px; border:1px solid var(--line); border-radius:11px; background:#F8FAFC; padding:0 11px; font-size:12.5px; font-weight:800; color:var(--ink)}
+.date-input{flex:1 1 auto; min-width:0; height:41px; border:1px solid var(--line); border-radius:11px; background:#F8FAFC; padding:0 11px; font-size:12.5px; font-weight:800; color:var(--ink)}
+.date-group{display:flex; gap:6px; align-items:center}
+.date-cal{position:relative; flex:0 0 auto; width:41px; height:41px; border:1px solid var(--line); border-radius:11px; background:#F8FAFC; display:grid; place-items:center; cursor:pointer}
+.date-cal:hover{border-color:#BFD3FF; background:#F8FAFF}
+.date-cal svg{width:16px; height:16px; stroke:#64748B; fill:none; stroke-width:2; stroke-linecap:round}
+.date-native{position:absolute; inset:0; width:100%; height:100%; opacity:0; border:0; padding:0; margin:0; cursor:pointer}
 .quick{display:flex; gap:4px; margin-top:6px}
 .quick button{flex:1; height:29px; border-radius:9px; border:1px solid var(--line); background:#fff; font-size:9.5px; font-weight:800; color:#475569; padding:0 2px}
 .quick button:hover{border-color:#BFD3FF; color:#1D4ED8; background:#F8FAFF}
@@ -472,7 +491,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
     <ul class="values">
       <li>
         <span class="vi"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8.5 14.5l2 2 4.5-4.5"/></svg></span>
-        <span><b>한눈에 보기</b>14개 구독의 금액·갱신일·사용률·크레딧을 한 화면에</span>
+        <span><b>한눈에 보기</b>14개 구독의 금액·갱신일·사용률/크레딧·약정을 한 화면에 (확인되지 않은 사용량은 '미확인')</span>
       </li>
       <li>
         <span class="vi"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-8.5 8.5"/><path d="M18 14.5V19a1.8 1.8 0 0 1-1.8 1.8H5A1.8 1.8 0 0 1 3.2 19V7.8A1.8 1.8 0 0 1 5 6h4.5"/></svg></span>
@@ -493,7 +512,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         <svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 3 6.5-8"/><path d="M15 7h5v5"/></svg>
         4단계 핵심 흐름 · 무료와 유료의 경계
       </div>
-      <p class="cb-desc">종합현황과 작업판은 무료로, <b>판단이 어려운 지점만 9,900원 심층 리포트</b>로 검증합니다. 결제·해지 실행은 2R 범위 밖입니다.</p>
+      <p class="cb-desc">홈 점검과 작업판은 무료로, <b>판단이 어려운 지점만 9,900원 심층 리포트</b>로 검증합니다. 9,900원은 2R에서 검증할 가격입니다. 결제·해지 실행은 2R 범위 밖입니다.</p>
       <div class="flow">
         <div class="flow-row">
           <span class="flow-tag free">무료 0원</span>
@@ -504,7 +523,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
           <span class="flow-items"><span class="flow-i on">③ 결제 전 판단</span><span class="flow-i on">④ 변경 후 확인</span></span>
         </div>
       </div>
-      <p class="flow-note">고객이 정한 것은 고객이 하고, 서비스는 <b>판단 근거</b>로 먼저 돕습니다. 심층 리포트 1회 9,900원 · 작성 18분 이내.</p>
+      <p class="flow-note">고객이 정한 것은 고객이 하고, 서비스는 <b>판단 근거</b>로 먼저 돕습니다. 심층 리포트 1회 9,900원은 <b>2R에서 검증할 가격</b>입니다 · 작성 18분 이내.</p>
     </div>
 
     <div class="card-block">
@@ -630,31 +649,31 @@ const DAY = 86400000;
 const SUBS_BASE = [
   { id:'chatgpt', name:'ChatGPT', plan:'Plus', price:15000, date:'2026-11-23', cat:'AI 도구', usage:60,
     color:'#10A37F', mark:'GPT', open:'https://chatgpt.com/', manage:'https://chatgpt.com/#settings/Subscription', manageHint:'설정 → 구독' },
-  { id:'claude', name:'Claude', plan:'Pro', price:36000, date:'2026-11-30', cat:'AI 도구', usage:75,
+  { id:'claude', name:'Claude', plan:'Pro', price:36000, date:'2026-11-30', cat:'AI 도구',
     color:'#D97757', mark:'CL', open:'https://claude.ai/', manage:'https://claude.ai/settings/billing', manageHint:'Settings → Billing' },
-  { id:'genspark', name:'Genspark', plan:'Plus', price:12000, date:'2026-12-06', cat:'AI 도구', usage:25, flag:'dup',
+  { id:'genspark', name:'Genspark', plan:'Plus', price:12000, date:'2026-12-06', cat:'AI 도구', flag:'dup',
     color:'#2563EB', mark:'GS', open:'https://www.genspark.ai/', manage:'https://www.genspark.ai/', manageHint:'계정 → 멤버십' },
-  { id:'coupang', name:'쿠팡 와우', plan:'멤버십', price:8000, date:'2026-11-19', cat:'생활·통신', usage:70,
+  { id:'coupang', name:'쿠팡 와우', plan:'멤버십', price:8000, date:'2026-11-19', cat:'생활·통신',
     color:'#E11D48', mark:'CP', open:'https://www.coupang.com/', manage:'https://www.coupang.com/', manageHint:'마이쿠팡 → 와우 멤버십' },
   { id:'higgsfield', name:'Higgsfield', plan:'Creator', price:29000, date:'2026-11-23', cat:'AI 도구', usage:20,
     color:'#7C3AED', mark:'HF', open:'https://higgsfield.ai/', manage:'https://higgsfield.ai/', manageHint:'Settings → Plan' },
-  { id:'netflix', name:'Netflix', plan:'스탠다드', price:14000, date:'2026-11-18', cat:'영상·음악', usage:55,
+  { id:'netflix', name:'Netflix', plan:'스탠다드', price:14000, date:'2026-11-18', cat:'영상·음악',
     color:'#B91C1C', mark:'NF', open:'https://www.netflix.com/', manage:'https://www.netflix.com/account', manageHint:'계정 → 멤버십 해지' },
   { id:'manus', name:'Manus', plan:'Starter', price:20000, date:'2026-11-27', cat:'AI 도구', credit:{ used:4000, total:20000 },
     color:'#334155', mark:'MN', open:'https://manus.im/', manage:'https://manus.im/', manageHint:'Settings → Billing' },
   { id:'vrew', name:'Vrew', plan:'Pro', price:10000, date:'2026-11-23', cat:'AI 도구', usage:40,
     color:'#F97316', mark:'VR', open:'https://vrew.voyagerx.com/', manage:'https://vrew.voyagerx.com/', manageHint:'요금제 → 구독 관리' },
-  { id:'suno', name:'Suno', plan:'Pro', price:9000, date:'2026-11-20', cat:'AI 도구', usage:28,
+  { id:'suno', name:'Suno', plan:'Pro', price:9000, date:'2026-11-20', cat:'AI 도구',
     color:'#111827', mark:'SN', open:'https://suno.com/', manage:'https://suno.com/account', manageHint:'Account → Subscription' },
-  { id:'youtube', name:'YouTube Premium', plan:'개인', price:10000, date:'2026-11-29', cat:'영상·음악', usage:65,
+  { id:'youtube', name:'YouTube Premium', plan:'개인', price:10000, date:'2026-11-29', cat:'영상·음악',
     color:'#FF0033', mark:'YT', open:'https://www.youtube.com/premium', manage:'https://www.youtube.com/paid_memberships', manageHint:'유료 멤버십 관리' },
-  { id:'duolingo', name:'듀오링고', plan:'Super', price:7000, date:'2026-11-26', cat:'저장·학습', usage:30,
+  { id:'duolingo', name:'듀오링고', plan:'Super', price:7000, date:'2026-11-26', cat:'저장·학습',
     color:'#58CC02', mark:'DU', open:'https://www.duolingo.com/', manage:'https://www.duolingo.com/', manageHint:'설정 → 구독' },
   { id:'skb', name:'SK브로드밴드', plan:'인터넷', price:28000, date:'2026-12-02', cat:'생활·통신', contract:{ end:'2026-12-10' },
     color:'#EA002C', mark:'SK', open:'https://www.skbroadband.com/', manage:'https://www.skbroadband.com/', manageHint:'마이페이지 → 요금제 변경' },
   { id:'g1', name:'Google One', plan:'100GB', price:3000, date:'2026-12-15', cat:'저장·학습', storage:{ used:68, total:100 },
     color:'#4285F4', mark:'G1', open:'https://one.google.com/', manage:'https://one.google.com/storage', manageHint:'저장공간 관리' },
-  { id:'spotify', name:'Spotify Premium', plan:'개인', price:9000, date:'2026-12-04', cat:'영상·음악', usage:85,
+  { id:'spotify', name:'Spotify Premium', plan:'개인', price:9000, date:'2026-12-04', cat:'영상·음악',
     color:'#1DB954', mark:'SP', open:'https://www.spotify.com/', manage:'https://www.spotify.com/account', manageHint:'계정 → 요금제' }
 ];
 
@@ -713,6 +732,40 @@ function checkBill(sub, recheck){
   return (recheck && recheck < sub.date) ? nb : addMonths(nb, 1);
 }
 function barColor(p){ return p < 30 ? '#F97316' : (p < 60 ? '#3B82F6' : '#10B981'); }
+/* 직접 타이핑한 날짜를 관대하게 해석: 2026-12-25 / 20261225 / 12-25 / 12/25 */
+function parseDateInput(raw){
+  const t = String(raw == null ? '' : raw).trim();
+  let m = t.match(/^(\d{4})[-\/.\s]?(\d{1,2})[-\/.\s]?(\d{1,2})\.?$/);
+  if (m){
+    const y = +m[1], mo = +m[2], d = +m[3];
+    if (mo >= 1 && mo <= 12 && d >= 1 && d <= 31) return isoOf(new Date(y, mo - 1, d));
+  }
+  m = t.match(/^(\d{1,2})[-\/.\s]?(\d{1,2})\.?$/);
+  if (m){
+    const mo = +m[1], d = +m[2];
+    if (mo >= 1 && mo <= 12 && d >= 1 && d <= 31) return isoOf(new Date(BASE.getFullYear(), mo - 1, d));
+  }
+  return null;
+}
+function setDateFields(id, iso){
+  const t = $('#' + id); if (t && t.value !== iso) t.value = iso;
+  const p = $('#' + id + 'Pick'); if (p) p.value = iso;
+}
+/* 텍스트 날짜 입력: 유효하면 즉시 반영, 확정(blur) 시 형식 정리 · 잘못된 값은 직전 값 복원 */
+function dateTextChanged(id, raw, commit){
+  const isSim = id === 'simDate';
+  const sub = isSim ? (S.subs.find(s => s.id === S.simSub) || S.subs[0]) : S.subs.find(s => s.id === S.detailId);
+  if (!sub) return;
+  const el = $('#' + id);
+  const v = parseDateInput(raw);
+  if (v){
+    if (el) el.dataset.last = v;
+    const p = $('#' + id + 'Pick'); if (p) p.value = v;
+    if (isSim){ S.simDate = v; refreshSim(); } else { refreshDetail(v); }
+  } else if (commit && el){
+    el.value = el.dataset.last || (isSim ? (S.simDate || defaultRecheck(sub)) : defaultRecheck(sub));
+  }
+}
 function timeNow(){
   const d = new Date();
   return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
@@ -727,18 +780,21 @@ function metric(sub){
   if (sub.credit){
     const p = Math.round(sub.credit.used / sub.credit.total * 100);
     const v = num(sub.credit.used) + '/' + num(sub.credit.total);
-    return { pct:p, name:'크레딧', label:'크레딧 ' + v, detail:'크레딧 ' + v + ' (' + p + '%)', short:'크레딧 ' + p + '%' };
+    return { pct:p, measure:'credit', name:'크레딧', label:'크레딧 ' + v, detail:'크레딧 ' + v + ' (' + p + '%)', short:'크레딧 ' + p + '%' };
   }
   if (sub.storage){
     const p = Math.round(sub.storage.used / sub.storage.total * 100);
     const v = sub.storage.used + '/' + sub.storage.total + 'GB';
-    return { pct:p, name:'저장공간', label:v, detail:v + ' (' + p + '%)', short:'용량 ' + p + '%' };
+    return { pct:p, measure:'storage', name:'저장공간', label:v, detail:v + ' (' + p + '%)', short:'용량 ' + p + '%' };
   }
   if (sub.contract){
     const d = Math.round((toDate(sub.contract.end) - BASE) / DAY);
-    return { pct:null, name:'약정 만료', label:'약정 만료 D-' + d, detail:'약정 만료 ' + md(sub.contract.end) + ' (D-' + d + ')', short:'약정 만료 D-' + d, contractDays:d };
+    return { pct:null, measure:'contract', name:'약정 만료', label:'약정 만료 D-' + d, detail:'약정 만료 ' + md(sub.contract.end) + ' (D-' + d + ')', short:'약정 만료 D-' + d, contractDays:d };
   }
-  return { pct:sub.usage, name:'사용률', label:'사용률 ' + sub.usage + '%', detail:'사용률 ' + sub.usage + '%', short:'사용 ' + sub.usage + '%' };
+  if (typeof sub.usage === 'number')
+    return { pct:sub.usage, measure:'usage', name:'사용률', label:'사용률 ' + sub.usage + '%', detail:'사용률 ' + sub.usage + '%', short:'사용 ' + sub.usage + '%' };
+  /* 측정하지 않은 구독은 임의 %를 만들지 않고 '미확인'으로 둡니다 (사업계획서 p.10 기준) */
+  return { pct:null, measure:'unknown', name:'사용량', label:'사용량 미확인', detail:'사용량 미확인', short:'사용량 미확인' };
 }
 
 /* ---------- 판단 규칙 ---------- */
@@ -757,6 +813,12 @@ function judge(sub){
     return { key:'check', cls:'warn', label:'약정 만료 · 요금제 재검토', basis:'근거 · ' + md(sub.contract.end) + ' 만료' };
   if (sub.credit && p !== null && p < 30)
     return { key:'check', cls:'warn', label:'크레딧 낭비 · 요금제 하향', basis:'근거 · ' + mt.short + (act ? ' · ' + act.name : '') };
+  /* 사용량을 측정하지 않은 구독: 임의 판단 대신 '미확인'으로 두고 입력을 안내합니다 */
+  if (mt.measure === 'unknown'){
+    if (act) return { key:'keep', cls:'ok', label:'작업 연결 · 유지', basis:'근거 · ' + act.name + ' · 사용량 미확인' };
+    if (pau) return { key:'check', cls:'warn', label:'사용량 미확인 · 중단 검토', basis:'근거 · ' + pau.name + ' 보류' };
+    return { key:'unknown', cls:'soft', label:'사용량 미확인 · 입력 필요', basis:'근거 · 사용량 미확인' };
+  }
   if (p !== null && p < 30){
     if (act) return { key:'keep', cls:'ok', label:'유지 · 재점검', basis:'근거 · ' + act.name + ' 진행 · ' + mt.short };
     if (pau) return { key:'check', cls:'warn', label:'저사용 · 중단 검토', basis:'근거 · ' + mt.short + ' · ' + pau.name + ' 보류' };
@@ -781,6 +843,60 @@ function stateOf(sub){
   return judge(sub);
 }
 
+/* ---------- 날짜 기반 자동 추천 (재개일만 바뀌어도 추천이 전환) ---------- */
+const RECO_GAP = 7;   /* 갱신일로부터 7일 안에 작업이 재개되면 유지, 넘으면 이번 결제 불필요 */
+
+function recommend(sub, rd){
+  if (!rd || !/^\d{4}-\d{2}-\d{2}$/.test(rd)) rd = defaultRecheck(sub);   /* 형식이 깨진 값은 기본 재개일로 */
+  const bill = sub.date;
+  const gap = Math.round((toDate(rd) - toDate(bill)) / DAY);
+  const mt = metric(sub);
+  const link = linksOf(sub.id)[0];
+  const keep = gap <= RECO_GAP;
+  let why, basisShort;
+  if (gap < 0){
+    why = '재개일 <b>' + md(rd) + '</b>이 갱신일 <b>' + md(bill) + '</b>보다 ' + (-gap) + '일 앞입니다. 갱신 전에 다음 작업이 시작되므로 이번 갱신을 유지합니다.';
+    basisShort = '갱신 전 재개';
+  } else if (gap === 0){
+    why = '재개일이 갱신일 <b>' + md(bill) + '</b>과 같습니다. 갱신 직후 다음 작업에 유료 기능이 필요합니다.';
+    basisShort = '갱신일 당일 재개';
+  } else if (keep){
+    why = '갱신일 <b>' + md(bill) + '</b>에서 <b>' + gap + '일</b> 뒤인 <b>' + md(rd) + '</b>에 작업이 재개됩니다. 갱신 직후 쓸 작업이 있어 유지합니다.';
+    basisShort = '갱신 후 ' + gap + '일 내 재개';
+  } else {
+    why = '갱신일 <b>' + md(bill) + '</b>부터 재개일 <b>' + md(rd) + '</b>까지 <b>' + gap + '일</b>입니다. 그 사이 유료 기능을 쓰지 않으므로 이번 결제가 필요하지 않습니다.';
+    basisShort = '갱신 후 ' + gap + '일 미사용';
+  }
+  const basis = [];
+  basis.push(link ? '연결 작업 「' + link.name + '」 ' + link.status + ' · 마감 ' + md(link.due) : '연결된 작업 없음');
+  basis.push(mt.detail);
+  basis.push('기준 · 갱신일 +' + RECO_GAP + '일 안에 재개되면 유지, 넘으면 이번 결제 불필요');
+  if (!keep){
+    basis.push('이번 결제는 건너뛰고 재개일에 다시 켜는 안을 기본으로, 요금제를 낮춰 유지하는 안과 견줘 보세요.');
+    if (mt.pct !== null && mt.pct >= 50) basis.push('지난 기간 사용률은 ' + mt.pct + '%였습니다. 재개일 전에 실제로 쓰는 날이 있으면 재개일을 앞당겨 다시 판단하세요.');
+  } else if (mt.measure === 'unknown'){
+    basis.push('사용량이 확인되지 않았습니다. 유지하더라도 재개일 전에 사용량을 입력해 두면 다음 판단이 정확해집니다.');
+  }
+  return { keep:keep, label:keep ? '유지 검토' : '하향·중단 검토', action:keep ? 'keep' : 'stop',
+    why:why, basis:basis, basisShort:basisShort, gap:gap, mt:mt, link:link };
+}
+
+function recoHTML(sub, rd){
+  const r = recommend(sub, rd);
+  return '<div class="reco">' +
+    '<div class="reco-top"><span class="reco-k">자동 추천</span>' +
+      '<span class="pill ' + (r.keep ? 'ok' : 'warn') + ' big">' + r.label + '</span></div>' +
+    '<div class="reco-why">' + r.why + '</div>' +
+    '<ul class="reco-basis">' + r.basis.map(function(b){ return '<li>' + b + '</li>'; }).join('') + '</ul>' +
+  '</div>';
+}
+
+function verdictHTML(sub, rd){
+  const r = recommend(sub, rd);
+  return '<span class="pill ' + (r.keep ? 'ok' : 'warn') + '">추천 · ' + r.label + '</span>' +
+    '<span class="pill basis">' + r.basisShort + '</span>';
+}
+
 /* ---------- 집계 ---------- */
 function totalPrice(){ return S.subs.reduce((a,s) => a + s.price, 0); }
 function aiSubs(){ return S.subs.filter(s => s.cat === 'AI 도구'); }
@@ -790,9 +906,13 @@ function pastCount(){ return S.subs.filter(s => dday(s) < 0).length; }
 function needCount(){ return S.subs.filter(s => { const d = dday(s); return d < 0 || judge(s).key !== 'keep'; }).length; }
 function judgedCount(){ return S.subs.filter(s => { const d = dday(s); return !!decisionFor(s.id) || (judge(s).key === 'keep' && d >= 0); }).length; }
 function avgUsage(){
-  const list = S.subs.map(s => metric(s).pct).filter(p => p !== null);
+  const list = S.subs.filter(s => metric(s).measure === 'usage').map(s => s.usage);
   if (!list.length) return 0;
   return Math.round(list.reduce((a,b) => a + b, 0) / list.length);
+}
+function usageMeasuredCount(){ return S.subs.filter(s => metric(s).measure === 'usage').length; }
+function avgUsageLabel(){
+  return usageMeasuredCount() ? '비교 가능 ' + usageMeasuredCount() + '개 평균 ' + avgUsage() + '%' : '사용률 확인 0개';
 }
 
 /* ---------- icons ---------- */
@@ -922,12 +1042,12 @@ function viewHome(){
       '<div class="ht red"><div class="k">경과 확인</div><div class="v">' + pastCount() + '<span class="u">개</span></div><div class="s">결제일 지남</div></div>' +
       '<div class="ht amber"><div class="k">판단 필요</div><div class="v">' + needCount() + '<span class="u">개</span></div><div class="s">다음 작업 연동</div></div>' +
     '</div>' +
-    '<div class="hero-foot"><span>전체 평균 사용률 <b>' + avgUsage() + '%</b></span><span>점검 완료 <b>' + judgedCount() + '/' + S.subs.length + '</b></span></div>' +
+    '<div class="hero-foot"><span>' + avgUsageLabel() + '</span><span>점검 완료 <b>' + judgedCount() + '/' + S.subs.length + '</b></span></div>' +
     '<span class="gauge"><i style="width:' + avgUsage() + '%"></i></span>' +
   '</div>' +
   '<button class="banner" data-act="detail" data-id="' + hf.id + '">' +
     '<span class="banner-txt">' +
-      '<span class="banner-kicker">다음 결제 전 점검</span>' +
+      '<span class="banner-kicker">다음 결제 전 점검 · 무료</span>' +
       '<b>' + hf.name + ' 결제 전 점검하기 ›</b>' +
       '<span class="banner-sub">' + md(hf.date) + ' ' + ddLabel(hf) + ' · 사용률 ' + hf.usage + '% · ' + hfNote + '</span>' +
     '</span>' +
@@ -940,7 +1060,7 @@ function viewHome(){
   filterNote() +
   '<div class="list">' + (list.length ? list.map(subCard).join('') : '<div class="empty">조건에 맞는 구독이 없습니다.<br>필터를 바꿔 보세요.</div>') + '</div>' +
   privacyStrip() +
-  '<div class="footnote" style="text-align:center;margin-top:9px">판단 기준: 다음 작업 연결 · 사용률/크레딧 · 갱신일(7일) · 약정 만료</div>';
+  '<div class="footnote" style="text-align:center;margin-top:9px">판단 기준: 다음 작업 연결 · 사용률/크레딧 · 갱신일(7일) · 약정 만료<br>사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>';
 }
 
 /* ---------- view: 심층 리포트 ---------- */
@@ -956,11 +1076,6 @@ function viewReport(){
   const sub = S.subs.find(s => s.id === S.simSub) || S.subs[0];
   const act = S.simAct;
   const rd = S.simDate || defaultRecheck(sub);
-  const opts = [
-    { id:'keep', title:'진행 과제 있음 (유지)', d:'작업이 이어지는 동안 그대로 씁니다' },
-    { id:'down', title:'요금제 하향·변경', d:'한도·크레딧에 맞는 낮은 요금제로 바꿉니다' },
-    { id:'stop', title:'갱신 중단 검토', d:'다음 갱신을 건너뛰고 재개일을 정합니다' }
-  ];
   const links = linksOf(sub.id);
   const link = links[0];
   const mt = metric(sub);
@@ -974,19 +1089,20 @@ function viewReport(){
   '<div class="rep-sub">계정 연동·결제 실행 없이, 다음 작업 일정과 크레딧·한도·용도 중복을 함께 보고 유지·하향·중단과 재점검일을 한 장에 정리합니다.</div>' +
 
   '<div class="rep-card">' +
-    '<div class="rep-tags"><span class="rep-tag paid">유료 과업</span><span class="rep-tag">1회 9,900원</span><span class="rep-tag">작성 18분 이내</span></div>' +
+    '<div class="rep-tags"><span class="rep-tag paid">유료 과업</span><span class="rep-tag">1회 9,900원 · 2R 검증 예정 가격</span><span class="rep-tag">작성 18분 이내</span></div>' +
     '<div class="rep-card-t">AI 도구 구독 점검 리포트 <span>샘플</span></div>' +
     '<div class="rep-card-m">2026-11-20 기준 · 구독 ' + S.subs.length + '개 · AI 도구 ' + aiSubs().length + '개 / 월 ' + fmt(aiSum()) + '</div>' +
 
     '<div class="rep-sec"><div class="rep-h"><span class="no">1</span>용도 중복</div>' +
       '<div class="rep-li"><span class="ar">›</span><span>범용 AI 3중 구독: <b>ChatGPT · Claude · Genspark</b> — 같은 목적(대화·검색·문서)으로 3개가 겹칩니다.</span></div>' +
-      '<div class="rep-li"><span class="ar">›</span><span>그중 <b>Genspark 사용률 25%</b>, 연결된 작업은 「브랜드 이미지 리뉴얼」 보류 상태 — 정리 후보 1순위.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span>그중 <b>Genspark</b>는 연결된 「브랜드 이미지 리뉴얼」이 보류 상태 — 정리 후보 1순위.</span></div>' +
     '</div>' +
 
     '<div class="rep-sec"><div class="rep-h"><span class="no">2</span>크레딧·한도 낭비</div>' +
       '<div class="rep-li"><span class="ar">›</span><span><b>Manus 크레딧 4,000/20,000 (20%)</b> — 결제 대비 사용이 적어 남은 크레딧이 이월·소멸됩니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><b>Higgsfield 사용률 20%</b> — 영상 생성 작업이 「브랜드 이미지 리뉴얼」 보류로 멈춰 있습니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><b>Google One 68/100GB</b> — 한도 임박이 아니므로 유지.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span>Claude·Genspark·쿠팡 와우·Netflix·Suno·YouTube Premium·듀오링고·Spotify Premium 8개는 <b>사용량 미확인</b> — 확인되기 전에는 숫자를 만들지 않고 판단만 보류합니다.</span></div>' +
     '</div>' +
 
     '<div class="rep-sec"><div class="rep-h"><span class="no">3</span>월간·연간 / 대체 요금제 전환 제안</div>' +
@@ -1005,29 +1121,33 @@ function viewReport(){
 
   '<div class="panel">' +
     '<div class="panel-h"><span class="dot"></span>작업 일정 연동 시뮬레이터</div>' +
-    '<div class="panel-d">구독과 결정을 고르고 재개·재점검일을 바꿔 보세요. 판단 · 처리 시점 · 다음 청구 확인 문구가 바로 바뀝니다.</div>' +
+    '<div class="panel-d">재개일(다음 작업일)만 바꿔 보세요. 추천 판정과 그 근거가 자동으로 바뀌고, 아래에서 내 최종 결정만 저장하면 됩니다.</div>' +
     '<select class="sel" data-act="simsub">' + S.subs.map(s =>
       '<option value="' + s.id + '"' + (s.id === sub.id ? ' selected' : '') + '>' + s.name + ' · ' + fmt(s.price) + ' · ' + metric(s).label + '</option>'
     ).join('') + '</select>' +
     '<div class="ctx"><span class="k">연결 작업</span><span>' +
       (link ? '「' + link.name + '」 ' + link.status + ' · 마감 ' + md(link.due) : '연결된 작업 없음') +
       ' · ' + mt.label + '</span></div>' +
-    '<div class="opts">' + opts.map(o =>
-      '<button class="opt ' + (act === o.id ? 'on' : '') + '" data-act="simopt" data-choice="' + o.id + '">' +
-        '<span class="rd"></span><span><b>' + o.title + '</b><span class="d">' + o.d + '</span></span>' +
-      '</button>'
-    ).join('') + '</div>' +
-    '<div class="sd-label" style="margin-top:11px">재개·재점검일 <span>' + md(sub.date) + ' 갱신 기준</span></div>' +
-    '<input type="date" id="simDate" class="date-input" value="' + rd + '">' +
+    '<div class="sd-label" style="margin-top:11px">재개일 <span>' + md(sub.date) + ' 갱신 기준</span></div>' +
+    '<div class="date-group">' +
+      '<input type="text" id="simDate" class="date-input" inputmode="numeric" autocomplete="off" placeholder="YYYY-MM-DD" value="' + rd + '">' +
+      '<label class="date-cal" title="달력에서 선택">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>' +
+        '<input type="date" id="simDatePick" class="date-native" value="' + rd + '" tabindex="-1" aria-label="달력에서 선택">' +
+      '</label>' +
+    '</div>' +
     '<div class="quick">' +
       '<button data-act="simquick" data-days="7">1주 후</button>' +
       '<button data-act="simquick" data-days="14">2주 후</button>' +
       '<button data-act="simquick" data-days="30">한 달 후</button>' +
       '<button data-act="simquick" data-days="0">갱신일</button>' +
     '</div>' +
-    '<div class="result" id="simResult">' + simResultHTML(sub, act, rd) + '</div>' +
-    '<button class="save-btn" data-act="simsave"' + (act ? '' : ' disabled') + '>내 결정 기록에 저장</button>' +
-    '<div class="mini-note">저장하면 기록 탭과 홈 상태에 즉시 반영됩니다.</div>' +
+    '<div id="simResult" style="margin-top:9px">' + simResultHTML(sub, act, rd) + '</div>' +
+    '<div class="sd-label" style="margin-top:11px">내 최종 결정 <span>추천과 달라도 됩니다</span></div>' +
+    '<div class="opts" id="simOpts">' + simOptsHTML(sub, act, rd) + '</div>' +
+    '<button class="save-btn" data-act="simsave">내 결정 기록에 저장</button>' +
+    '<div class="mini-note">저장하면 기록 탭과 홈 상태에 즉시 반영됩니다. 결정을 고르지 않으면 추천대로 저장됩니다.</div>' +
+    '<button class="undo" data-act="simexample">예시 다시 체험 (재개일만 초기화 · 저장한 기록 유지)</button>' +
   '</div>' +
   privacyStrip();
 }
@@ -1039,33 +1159,40 @@ function phaseOf(sub, rd){
   return 'after';
 }
 
+function simOptsHTML(sub, act, rd){
+  const rec = recommend(sub, rd);
+  const opts = [
+    { id:'keep', title:'진행 과제 있음 (유지)', d:'작업이 이어지는 동안 그대로 씁니다' },
+    { id:'down', title:'요금제 하향·변경', d:'한도·크레딧에 맞는 낮은 요금제로 바꿉니다' },
+    { id:'stop', title:'갱신 중단 검토', d:'다음 갱신을 건너뛰고 재개일을 정합니다' }
+  ];
+  return opts.map(function(o){
+    return '<button class="opt ' + (act === o.id ? 'on' : '') + '" data-act="simopt" data-choice="' + o.id + '">' +
+      '<span class="rd"></span><span><b>' + o.title + (o.id === rec.action ? ' <span class="reco-chip">추천</span>' : '') +
+      '</b><span class="d">' + o.d + '</span></span>' +
+    '</button>';
+  }).join('');
+}
+
 function simResultHTML(sub, act, rd){
   const bill = sub.date;
   const mt = metric(sub);
   const link = linksOf(sub.id)[0];
-  if (!act){
-    const j = judge(sub);
-    return '<div class="res-row"><span>판단</span><b class="big">결정을 선택하세요</b></div>' +
-      '<div class="res-row"><span>현재 판단</span><b>' + j.label + '</b></div>' +
-      '<div class="reason">' + sub.name + ' · ' + mt.detail + ' · ' +
-        (linksOf(sub.id).length
-          ? '연결된 작업은 ' + linksOf(sub.id).map(p => '「' + p.name + '」(' + p.status + ')').join(', ') + '입니다. '
-          : '연결된 작업은 없습니다. ') +
-        '위에서 결정을 고르면 처리 시점과 다음 청구 확인 문구가 표시됩니다.</div>';
-  }
-  const A = ACTIONS[act];
+  const rec = recommend(sub, rd);
+  const eff = act || rec.action;          /* 결정을 고르지 않아도 추천으로 바로 계산 */
+  const A = ACTIONS[eff];
   const nb = nextBill(sub);
   const check = checkBill(sub, rd);
   const ph = phaseOf(sub, rd);
   const w = link ? '「' + link.name + '」' : '연결 작업';
   let when, billTxt, reason;
 
-  if (act === 'keep'){
+  if (eff === 'keep'){
     when = '변경 없음';
     billTxt = md(nb) + ' · 금액 그대로 확인';
     reason = w + '이 ' + md(rd) + '까지 이어지므로 ' + md(bill) + ' 갱신도 유지가 적정합니다. ' +
       '재점검일(' + md(rd) + ')에 ' + mt.detail + ' 기준으로 다시 확인합니다.';
-  } else if (act === 'down'){
+  } else if (eff === 'down'){
     when = ph === 'before' ? '갱신 전 (' + mdw(bill) + ' 이전) 처리'
          : (ph === 'same' ? '갱신일 당일 (' + mdw(bill) + ') 처리'
          : '갱신 후 (' + mdw(rd) + ') 처리');
@@ -1090,10 +1217,17 @@ function simResultHTML(sub, act, rd){
           : '이번 갱신(' + md(bill) + ')은 결제되었고, ' + md(rd) + '에 중단하면 다음 청구(' + md(check) + ')부터 반영됩니다. ')) +
       (rd > isoAdd(bill, 30) ? '재개일이 한 달 이상 뒤이므로 재개 시 요금제·할인 조건이 유지되는지 확인이 필요합니다.' : '');
   }
-  return '<div class="res-row"><span>판단</span><b class="big ' + (A.cls === 'warn' ? 'warn' : '') + '">' + A.label + '</b></div>' +
-    '<div class="res-row"><span>처리 시점</span><b>' + when + '</b></div>' +
-    '<div class="res-row"><span>다음 청구</span><b>' + billTxt + '</b></div>' +
-    '<div class="reason">' + reason + '</div>';
+  return recoHTML(sub, rd) +
+    '<div class="result">' +
+      '<div class="res-row"><span>내 판단</span><b class="big ' + (A.cls === 'warn' ? 'warn' : '') + '">' + A.label +
+        (act ? '' : ' <span class="reco-inline">추천</span>') + '</b></div>' +
+      '<div class="res-row"><span>처리 시점</span><b>' + when + '</b></div>' +
+      '<div class="res-row"><span>다음 청구</span><b>' + billTxt + '</b></div>' +
+      '<div class="reason">' + reason + '</div>' +
+    '</div>' +
+    (act && act !== rec.action
+      ? '<div class="diff-note">추천(' + rec.label + ')과 다른 결정입니다. 저장하면 내가 고른 결정이 기록에 남고, 추천은 날짜 기준 그대로 유지됩니다.</div>'
+      : '');
 }
 
 /* ---------- view: 작업판 ---------- */
@@ -1146,7 +1280,7 @@ function subRows(){
 function viewSubs(){
   return '' +
   '<div class="sec-head"><div><div class="sec-title">내 구독</div><div class="sec-desc">' + S.subs.length + '개 · 총 월 ' + fmt(totalPrice()) + ' · AI 도구 ' + aiSubs().length + '개</div></div>' +
-    '<span class="sec-count">평균 사용률 ' + avgUsage() + '%</span></div>' +
+    '<span class="sec-count">' + avgUsageLabel() + '</span></div>' +
   '<div class="search-wrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>' +
     '<input class="search" id="q" type="search" placeholder="구독 이름·카테고리 검색" value="' + S.q.replace(/"/g,'&quot;') + '"></div>' +
   '<div class="chips">' + CATS.map(c =>
@@ -1198,23 +1332,34 @@ function detailSheet(sub){
   const mt = metric(sub);
   const links = linksOf(sub.id);
   const linkTxt = links.length ? links.map(p => p.name + ' (' + p.status + ')').join(', ') : '없음';
-  const st = stateOf(sub);
   const nb = nextBill(sub);
-  const note = dec
-    ? (dec.action === 'keep'
+  const rdNow = dec ? dec.recheck : defaultRecheck(sub);
+  const actLink = links.filter(p => p.status === '진행 중')[0];
+  const pauLink = links.filter(p => p.status === '보류')[0];
+  const doneLink = links.filter(p => p.status === '완료')[0];
+  let note;
+  if (dec){
+    note = dec.action === 'keep'
       ? '유지로 정리했습니다. 재점검일(' + md(dec.recheck) + ')에 ' + mt.detail + ' 기준으로 다시 확인하세요.'
       : (dec.action === 'down'
         ? '공식 페이지에서 한 단계 낮은 요금제로 바꾼 뒤, 다음 청구 금액이 의도대로 바뀌었는지 확인해 기록하세요.'
-        : '갱신을 건너뛰고, 재개일(' + md(dec.recheck) + ') 이후 다시 켜는 조건이 그대로인지 확인하세요.'))
-    : (r.key === 'keep'
-      ? '진행 중인 <b>' + (links.filter(p => p.status === '진행 중')[0] || {}).name + '</b> 작업에 쓰이고 있어 유지가 적정합니다. 작업이 길어지면 재점검일만 미루면 됩니다.'
-      : (sub.contract
-        ? '약정 만료일 <b>' + md(sub.contract.end) + '</b>이 다가옵니다. 만료 전에 재약정·요금제 조건을 비교하세요.'
-        : (sub.flag === 'dup'
-          ? '같은 목적의 범용 AI를 <b>3개</b> 함께 결제하고 있습니다. 사용률이 가장 낮은 이 구독이 정리 후보입니다.'
-          : (r.label.indexOf('중단') > -1
-            ? '연결된 <b>' + (links.filter(p => p.status === '보류')[0] || {}).name + '</b> 작업이 보류 상태입니다. 갱신을 건너뛰고 재개일을 정해 두세요.'
-            : '최근 사용이 <b>' + mt.detail + '</b>로 적습니다. 한 단계 낮은 요금제로 바꿀지 검토하세요.'))));
+        : '갱신을 건너뛰고, 재개일(' + md(dec.recheck) + ') 이후 다시 켜는 조건이 그대로인지 확인하세요.');
+  } else if (sub.contract){
+    note = '약정 만료일 <b>' + md(sub.contract.end) + '</b>이 다가옵니다. 만료 전에 재약정·요금제 조건을 비교하세요.';
+  } else if (sub.flag === 'dup'){
+    note = '같은 목적의 범용 AI를 <b>3개</b> 함께 결제하고 있습니다. 연결된 「브랜드 이미지 리뉴얼」이 보류 상태라 이 구독이 정리 후보입니다.';
+  } else if (r.key === 'keep'){
+    note = actLink
+      ? '진행 중인 <b>' + actLink.name + '</b> 작업에 쓰이고 있어 유지가 적정합니다. 작업이 길어지면 재점검일만 미루면 됩니다.'
+      : '사용량은 확인되지 않았지만 연결된 작업이 진행 중입니다. 마감 뒤 사용량을 입력하면 하향·중단 판단까지 볼 수 있습니다.';
+  } else if (r.key === 'unknown'){
+    note = '사용량이 확인되지 않았습니다. 최근 사용 화면을 보고 사용률을 입력하면 유지·하향 판단이 바로 바뀝니다.' +
+      (doneLink ? ' 연결된 「' + doneLink.name + '」 작업은 완료 상태입니다.' : '');
+  } else if (pauLink){
+    note = '연결된 <b>' + pauLink.name + '</b> 작업이 보류 상태입니다. 갱신을 건너뛰고 재개일을 정해 두세요.';
+  } else {
+    note = '최근 사용이 <b>' + mt.detail + '</b>로 적습니다. 한 단계 낮은 요금제로 바꿀지 검토하세요.';
+  }
 
   return '<div class="sheet-grip"></div>' +
     '<div class="sd-head"><span class="brand lg" style="background:' + sub.color + '">' + sub.mark + '</span>' +
@@ -1222,9 +1367,9 @@ function detailSheet(sub){
         '<div class="sd-meta">' + sub.cat + ' · ' + md(sub.date) + ' 결제 · ' + ddLabel(sub) + '</div></div>' +
       '<button class="x" data-act="close">✕</button></div>' +
     '<div class="sd-price">' + fmt(sub.price) + ' <span>/ 월</span></div>' +
-    '<div class="sd-verdict"><span class="pill ' + st.cls + '">' + st.label + '</span>' + duePill(sub) +
-      '<span class="pill basis">' + st.basis + '</span></div>' +
-    '<div class="sd-block"><div class="sd-row"><span>' + mt.name + '</span><b>' + (mt.pct === null ? md(sub.contract.end) : mt.pct + '%') + '</b></div>' +
+    '<div class="sd-verdict" id="sdVerdict">' + verdictHTML(sub, rdNow) + duePill(sub) + '</div>' +
+    '<div class="sd-block"><div class="sd-row"><span>' + mt.name + '</span><b>' +
+      (sub.contract ? md(sub.contract.end) : (mt.pct === null ? '미확인' : mt.pct + '%')) + '</b></div>' +
       (mt.pct === null ? '' : '<span class="gauge"><i style="width:' + Math.min(100, mt.pct) + '%;background:' + barColor(mt.pct) + '"></i></span>') + '</div>' +
     '<div class="sd-block"><div class="sd-row"><span>연결된 작업</span><b>' + linkTxt + '</b></div>' +
       '<div class="sd-ai">' + (dec ? '저장된 결정: <b>' + ACTIONS[dec.action].short + '</b> (재점검 ' + md(dec.recheck) + '). ' : '') + note + '</div></div>' +
@@ -1233,15 +1378,23 @@ function detailSheet(sub){
       '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
       '<div><span>갱신</span><em>' + md(sub.date) + ' · ' + (d >= 0 ? '갱신까지 ' + d + '일' : '결제 완료 · 다음 청구 ' + md(nextBill(sub))) + '</em></div>' +
     '</div>' +
-    '<div class="sd-label">재개·재점검일 <span>판단 근거가 이 날짜를 기준으로 계산됩니다</span></div>' +
-    '<input type="date" id="dRecheck" class="date-input" value="' + (dec ? dec.recheck : defaultRecheck(sub)) + '">' +
+    '<div class="sd-label">재개일 (다음 작업일) <span>날짜만 바뀌어도 추천이 자동으로 바뀝니다</span></div>' +
+    '<div class="date-group">' +
+      '<input type="text" id="dRecheck" class="date-input" inputmode="numeric" autocomplete="off" placeholder="YYYY-MM-DD" value="' + rdNow + '">' +
+      '<label class="date-cal" title="달력에서 선택">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>' +
+        '<input type="date" id="dRecheckPick" class="date-native" value="' + rdNow + '" tabindex="-1" aria-label="달력에서 선택">' +
+      '</label>' +
+    '</div>' +
     '<div class="quick">' +
       '<button data-act="quick" data-days="7">1주 후</button>' +
       '<button data-act="quick" data-days="14">2주 후</button>' +
       '<button data-act="quick" data-days="30">한 달 후</button>' +
       '<button data-act="quick" data-days="0">갱신일</button>' +
     '</div>' +
-    '<div class="sd-actions">' +
+    '<div id="sdReco" style="margin-top:9px">' + recoHTML(sub, rdNow) + '</div>' +
+    '<div class="sd-label">내 최종 결정 <span>추천과 달라도 됩니다</span></div>' +
+    '<div class="sd-actions" style="margin-top:2px">' +
       '<button class="btn-ghost" data-act="decide" data-choice="keep">유지</button>' +
       '<button class="btn-soft" data-act="decide" data-choice="down">하향·변경</button>' +
       '<button class="btn-danger" data-act="decide" data-choice="stop">갱신 중단</button>' +
@@ -1389,7 +1542,9 @@ document.addEventListener('click', function (e) {
     const inp = $('#dRecheck');
     if (!inp || !S.detailId) return;
     const sub = S.subs.find(s => s.id === S.detailId);
-    inp.value = days === 0 ? sub.date : isoAdd(sub.date, days);
+    const iso = days === 0 ? sub.date : isoAdd(sub.date, days);
+    setDateFields('dRecheck', iso);
+    refreshDetail(iso);
     return;
   }
 
@@ -1397,7 +1552,8 @@ document.addEventListener('click', function (e) {
     const sub = S.subs.find(s => s.id === S.detailId);
     if (!sub) return;
     const inp = $('#dRecheck');
-    pushDecision(sub.id, el.dataset.choice, inp ? inp.value : defaultRecheck(sub), '구독 점검');
+    const rdDec = (inp && parseDateInput(inp.value)) || defaultRecheck(sub);
+    pushDecision(sub.id, el.dataset.choice, rdDec, '구독 점검');
     renderSheet();
     const body = $('#overlay .sheet-panel');
     if (body) body.scrollTop = body.scrollHeight;
@@ -1452,22 +1608,32 @@ document.addEventListener('click', function (e) {
   if (act === 'simquick'){
     const days = Number(el.dataset.days);
     const sub = S.subs.find(s => s.id === S.simSub);
-    const inp = $('#simDate');
     S.simDate = days === 0 ? sub.date : isoAdd(sub.date, days);
-    if (inp) inp.value = S.simDate;
+    setDateFields('simDate', S.simDate);
     refreshSim();
     return;
   }
 
   if (act === 'simsave'){
-    if (!S.simAct) return;
     const inp = $('#simDate');
     const sub = S.subs.find(s => s.id === S.simSub);
-    pushDecision(sub.id, S.simAct, (inp && inp.value) || S.simDate || defaultRecheck(sub), '심층 리포트 시뮬레이터');
-    const label = ACTIONS[S.simAct].label;
+    if (!sub) return;
+    const rd = (inp && parseDateInput(inp.value)) || S.simDate || defaultRecheck(sub);
+    const fromReco = !S.simAct;
+    const choice = S.simAct || recommend(sub, rd).action;
+    pushDecision(sub.id, choice, rd, '심층 리포트 시뮬레이터');
     S.simAct = null;
     render();
-    toast(sub.name + ' · ' + label + ' 결정을 저장했습니다');
+    toast(sub.name + ' · ' + ACTIONS[choice].label + ' 결정을 저장했습니다' + (fromReco ? ' (추천대로)' : ''));
+    return;
+  }
+
+  if (act === 'simexample'){
+    S.simSub = 'higgsfield';
+    S.simAct = null;
+    S.simDate = '';                 /* 재개일만 초기값으로, 저장한 결정 기록은 그대로 */
+    render();
+    toast('예시 상태로 되돌렸습니다 · 저장한 결정 ' + S.decisions.length + '건은 그대로입니다');
     return;
   }
 
@@ -1512,11 +1678,11 @@ document.addEventListener('click', function (e) {
     if (day < 20) date = '2026-12-' + p;
     S.subs.push({
       id:'x' + Date.now().toString(36), name:name, plan:'직접 입력', price:price, date:date,
-      usage:0, cat:'AI 도구', color:colors[S.subs.length % colors.length],
+      cat:'AI 도구', color:colors[S.subs.length % colors.length],
       mark:name.slice(0,2).toUpperCase(), open:'#', manage:'#'
     });
     closeSheet(); S.tab = 'subs'; S.q = ''; S.subCat = '전체'; render();
-    toast(name + ' 구독을 추가했습니다 · 연결 작업 없음');
+    toast(name + ' 구독을 추가했습니다 · 사용량 미확인 · 연결 작업 없음');
     return;
   }
 
@@ -1542,6 +1708,16 @@ function refreshSim(){
   const rd = S.simDate || defaultRecheck(sub);
   const box = $('#simResult');
   if (box) box.innerHTML = simResultHTML(sub, S.simAct, rd);
+  const opt = $('#simOpts');
+  if (opt) opt.innerHTML = simOptsHTML(sub, S.simAct, rd);
+}
+
+/* 구독 점검 모달: 재개일만 바꿔도 추천 배지·근거가 즉시 바뀝니다 */
+function refreshDetail(rd){
+  const sub = S.subs.find(s => s.id === S.detailId);
+  if (!sub) return;
+  const v = $('#sdVerdict'); if (v) v.innerHTML = verdictHTML(sub, rd) + duePill(sub);
+  const b = $('#sdReco'); if (b) b.innerHTML = recoHTML(sub, rd);
 }
 
 document.addEventListener('change', function (e) {
@@ -1552,11 +1728,19 @@ document.addEventListener('change', function (e) {
     render();
     return;
   }
-  if (e.target.id === 'simDate'){ S.simDate = e.target.value; refreshSim(); return; }
+  if (e.target.id === 'simDate' || e.target.id === 'dRecheck'){ dateTextChanged(e.target.id, e.target.value, true); return; }
+  if (e.target.id === 'simDatePick'){
+    const v = e.target.value; if (!v) return;
+    setDateFields('simDate', v); S.simDate = v; refreshSim(); return;
+  }
+  if (e.target.id === 'dRecheckPick'){
+    const v = e.target.value; if (!v) return;
+    setDateFields('dRecheck', v); refreshDetail(v); return;
+  }
 });
 
 document.addEventListener('input', function (e) {
-  if (e.target.id === 'simDate'){ S.simDate = e.target.value; refreshSim(); return; }
+  if (e.target.id === 'simDate' || e.target.id === 'dRecheck'){ dateTextChanged(e.target.id, e.target.value, false); return; }
   if (e.target.id === 'q'){
     S.q = e.target.value;
     const list = $('#subList');
