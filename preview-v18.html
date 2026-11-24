@@ -720,6 +720,11 @@ h1.i-head em{font-style:normal; color:var(--blue)}
   .bgrid{grid-template-columns:1fr 1fr}
   .hero-cta{grid-template-columns:1fr}
 }
+
+/* 가로 잘림 방지: 필터 칩은 줄바꿈, 탭 이름은 한 줄 */
+.chips{flex-wrap:wrap; overflow-x:visible}
+.tab span{white-space:nowrap}
+@media (max-width:1023px){ .tabbar .tab{font-size:9px} }
 </style>
 </head>
 <body>
@@ -1487,7 +1492,7 @@ function viewHome(){
       '<button type="button" class="cta-example" data-act="example">예시로 바로 체험</button>' +
       '<button type="button" class="cta-direct" data-act="addopen">직접 입력해 체험</button>' +
     '</div>' +
-    '<div class="hero-mini"><b>예시</b> = Higgsfield 결제 전 점검 · <b>직접 입력</b> = 내 구독 1건 등록 · 이 브라우저에만 저장</div>' +
+    '<div class="hero-mini"><b>실제 계정·결제 연결 없이</b> 이 브라우저에만 저장됩니다</div>' +
     '<div class="hero-foot"><span>' + avgUsageLabel() + '</span><span>내 결정 <b>' + judgedCount() + '/' + allSubs().length + '</b></span></div>' +
     '<span class="gauge"><i style="width:' + avgUsage() + '%"></i></span>' +
   '</div>' +
@@ -1870,7 +1875,7 @@ function detailSheet(sub){
       '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
       '<div><span>갱신</span><em>' + (sub.date ? md(sub.date) + ' · ' + (dday(sub) >= 0 ? '갱신까지 ' + dday(sub) + '일' : '이미 지난 결제 · 다음 청구 ' + md(nextChargeDate(sub))) : '결제일 미확인') + '</em></div>' +
     '</div>' +
-    '<div style="margin-top:9px">' + recoHTML(sub, rdNow) + '</div>' +
+    '<div style="margin-top:9px" id="sdReco">' + recoHTML(sub, rdNow) + '</div>' +
     benefitHTML(sub) +
     '<div class="sd-label">재개일 (다음 작업일) <span>날짜만 바뀌어도 추천이 자동으로 바뀝니다</span></div>' +
     '<div class="date-group">' +
@@ -1886,7 +1891,6 @@ function detailSheet(sub){
       '<button data-act="quick" data-days="30">한 달 후</button>' +
       '<button data-act="quick" data-days="0">갱신일</button>' +
     '</div>' +
-    '<div id="sdReco" style="margin-top:9px">' + recoHTML(sub, rdNow) + '</div>' +
     '<div class="sd-label">내 결정 <span>추천과 달라도 됩니다 · 선택해야 저장됩니다</span></div>' +
     '<div class="seg4" id="dOpts">' + ['keep','down','stop','hold'].map(function(k){
       return '<button class="' + (choice === k ? 'on' : '') + '" data-act="dchoice" data-choice="' + k + '">' + ACTIONS[k].short + '</button>';
