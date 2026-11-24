@@ -703,7 +703,7 @@ function metric(sub){
   }
   if (sub.contract){
     const d = Math.round((toDate(sub.contract.end) - BASE) / DAY);
-    return { pct:null, name:'약정 만료', label:md(sub.contract.end), detail:'약정 만료 ' + md(sub.contract.end) + ' (D-' + d + ')', short:'약정 만료 D-' + d, contractDays:d };
+    return { pct:null, name:'약정 만료', label:'약정 만료 D-' + d, detail:'약정 만료 ' + md(sub.contract.end) + ' (D-' + d + ')', short:'약정 만료 D-' + d, contractDays:d };
   }
   return { pct:sub.usage, name:'사용률', label:'사용률 ' + sub.usage + '%', detail:'사용률 ' + sub.usage + '%', short:'사용 ' + sub.usage + '%' };
 }
