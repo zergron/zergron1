@@ -1438,6 +1438,7 @@ function subMeta(sub){
   parts.push(sub.date ? md(sub.date) + ' 결제' : '결제일 미확인');
   parts.push(sub.plan || '직접 입력');
   parts.push(channelOf(sub).label);
+  if (sub.origin === 'imgsample') parts.push('샘플 시연');
   return parts.join(' · ');
 }
 function subCard(sub){
@@ -1937,6 +1938,7 @@ function detailSheet(sub){
       '<div><span>작업</span><em>' + (links.length ? '「' + links[0].name + '」 ' + links[0].status + ' · 마감 ' + md(links[0].due) : '연결된 작업 없음') + '</em></div>' +
       '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
       '<div><span>갱신</span><em>' + (sub.date ? md(sub.date) + ' · ' + (dday(sub) >= 0 ? '갱신까지 ' + dday(sub) + '일' : '이미 지난 결제 · 다음 청구 ' + md(nextChargeDate(sub))) : '결제일 미확인') + '</em></div>' +
+      (sub.billDay ? '<div><span>계약</span><em>월 청구일 ' + sub.billDay + '일 · 약정 종료 ' + md(sub.contract && sub.contract.end) + ' (별도 항목)</em></div>' : '') +
     '</div>' +
     '<div style="margin-top:9px" id="sdReco">' + recoHTML(sub, rdNow) + '</div>' +
     benefitHTML(sub) +
@@ -2246,7 +2248,7 @@ function imgHTML(){
     (step === 1 ? imgStep1HTML() : step === 2 ? imgStep2HTML() : imgStep3HTML());
 }
 function imgStep1HTML(){
-  return '<div class="imp-desc">어떤 이미지로 등록할지 골라 보세요. 두 샘플 모두 <b>가상으로 그린 이미지</b>이며, 실제 결제·계약과 무관합니다.</div>' +
+  return '<div class="imp-desc">어떤 이미지로 등록할지 골라 보세요. 두 샘플 모두 <b>가상으로 그린 이미지</b>이며, 실제 결제·계약과 무관합니다. 등록은 <b>종합현황 · 이용 포털 · 계약·비용 최적화 · 혜택 활용</b>을 쓰기 위한 첫 단계입니다.</div>' +
     IMG_SAMPLES.map(function(sm){
       const reg = imgSub(sm.key);
       return '<div class="imgcard">' +
@@ -2819,6 +2821,15 @@ document.addEventListener('click', function(e){
     if (!sm) return;
     IMG.key = sm.key;
     IMG.values = Object.assign({}, sm.fields);
+    const reg = imgSub(sm.key);
+    if (reg){
+      IMG.values.name = reg.name;
+      IMG.values.price = reg.price;
+      IMG.values.cat = reg.cat;
+      if (sm.kind === 'ai'){ IMG.values.next = reg.date || ''; }
+      else { IMG.values.billDay = String(reg.billDay || ''); IMG.values.contractEnd = (reg.contract && reg.contract.end) || ''; }
+      IMG.values.paidOn = reg.paidOn || sm.fields.paidOn;
+    }
     IMG.err = ''; IMG.added = [];
     IMG.step = 2;
     renderImgDOM();
