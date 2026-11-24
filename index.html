@@ -708,6 +708,35 @@ const S = {
 
 function clone(a){ return JSON.parse(JSON.stringify(a)); }
 
+/* ---------- 화면 상태 저장(localStorage) : 새로고침해도 결정·재개일·처리 상태 유지 ---------- */
+const STATE_KEY = 'nadaesin.v3.state.v1';
+function saveState(){
+  try {
+    localStorage.setItem(STATE_KEY, JSON.stringify({
+      v:1,
+      tab:S.tab, homeFilter:S.homeFilter, subCat:S.subCat,
+      subs:S.subs, projects:S.projects, decisions:S.decisions,
+      simSub:S.simSub, simAct:S.simAct, simDate:S.simDate
+    }));
+  } catch (e) {}
+}
+function loadState(){
+  let o = null;
+  try { o = JSON.parse(localStorage.getItem(STATE_KEY) || 'null'); } catch (e) { o = null; }
+  if (!o || o.v !== 1) return;
+  if (Array.isArray(o.subs) && o.subs.length && o.subs.every(s => s && s.id && s.name && typeof s.price === 'number')) S.subs = o.subs;
+  if (Array.isArray(o.projects) && o.projects.length) S.projects = o.projects;
+  if (Array.isArray(o.decisions)){
+    S.decisions = o.decisions.filter(d => d && d.subId && ACTIONS[d.action] && /^\d{4}-\d{2}-\d{2}$/.test(d.recheck || ''));
+  }
+  if (o.simSub && S.subs.some(s => s.id === o.simSub)) S.simSub = o.simSub;
+  if (typeof o.simDate === 'string' && (!o.simDate || /^\d{4}-\d{2}-\d{2}$/.test(o.simDate))) S.simDate = o.simDate;
+  if (o.simAct && ACTIONS[o.simAct]) S.simAct = o.simAct;
+  if (o.tab && ['home','report','board','subs','history'].indexOf(o.tab) > -1) S.tab = o.tab;
+  if (['all','ai','soon','need'].indexOf(o.homeFilter) > -1) S.homeFilter = o.homeFilter;
+  if (o.subCat) S.subCat = o.subCat;
+}
+
 /* ---------- 날짜 ---------- */
 function toDate(s){ const p = s.split('-').map(Number); return new Date(p[0], p[1]-1, p[2]); }
 function isoOf(d){ const p = n => String(n).padStart(2,'0'); return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate()); }
@@ -952,6 +981,7 @@ function render(){
   else if (S.tab === 'subs') body.innerHTML = viewSubs();
   else body.innerHTML = viewHistory();
   body.scrollTop = keep;
+  saveState();
 }
 
 /* ---------- 공통 조각 ---------- */
@@ -1696,6 +1726,7 @@ document.addEventListener('click', function (e) {
     S.simSub = 'higgsfield'; S.simAct = null; S.simDate = '';
     S.tab = 'home';
     applyZoom(100, true);
+    try { localStorage.removeItem(STATE_KEY); } catch (e) {}
     closeSheet(); render();
     toast('데모 데이터를 초기화했습니다');
     return;
@@ -1710,6 +1741,7 @@ function refreshSim(){
   if (box) box.innerHTML = simResultHTML(sub, S.simAct, rd);
   const opt = $('#simOpts');
   if (opt) opt.innerHTML = simOptsHTML(sub, S.simAct, rd);
+  saveState();
 }
 
 /* 구독 점검 모달: 재개일만 바꿔도 추천 배지·근거가 즉시 바뀝니다 */
@@ -1718,6 +1750,7 @@ function refreshDetail(rd){
   if (!sub) return;
   const v = $('#sdVerdict'); if (v) v.innerHTML = verdictHTML(sub, rd) + duePill(sub);
   const b = $('#sdReco'); if (b) b.innerHTML = recoHTML(sub, rd);
+  saveState();
 }
 
 document.addEventListener('change', function (e) {
@@ -1769,6 +1802,7 @@ function showInstall(){
 /* ---------- init ---------- */
 $('#sbTime').textContent = timeNow();
 applyZoom(savedZoom(), false);   /* 저장된 배율 복원(기본 100%) */
+loadState();                     /* 저장된 결정·재개일·처리 상태 복원 */
 render();
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') zoomPopOpen(false);
