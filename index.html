@@ -349,6 +349,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .sd-ai b{color:var(--ink)}
 .sd-reason{display:grid; gap:4px; margin-top:9px; background:#F8FAFC; border:1px solid var(--line2); border-radius:11px; padding:10px}
 .sd-reason div{display:flex; gap:6px; font-size:10px; color:#475569; font-weight:600; line-height:1.55}
+.sd-reason em{font-style:normal; color:#475569; font-weight:600; font-size:10px}
 .sd-reason span{flex:0 0 auto; font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border-radius:4px; padding:2px 4px; height:fit-content}
 .sd-label{display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:800; color:var(--ink); margin:14px 0 6px}
 .sd-label span{font-size:9px; color:var(--muted2); font-weight:700}
@@ -673,6 +674,11 @@ function nextBill(sub){
   if (dday(sub) >= 0) return sub.date;
   return addMonths(sub.date, 1);
 }
+/* 결정을 재점검일 기준으로 처리했을 때 결과를 확인할 청구일 */
+function checkBill(sub, recheck){
+  const nb = nextBill(sub);
+  return (recheck && recheck < sub.date) ? nb : addMonths(nb, 1);
+}
 function barColor(p){ return p < 30 ? '#F97316' : (p < 60 ? '#3B82F6' : '#10B981'); }
 function timeNow(){
   const d = new Date();
@@ -687,17 +693,19 @@ function stamp(){
 function metric(sub){
   if (sub.credit){
     const p = Math.round(sub.credit.used / sub.credit.total * 100);
-    return { pct:p, label:'크레딧 ' + num(sub.credit.used) + '/' + num(sub.credit.total), short:'크레딧 ' + p + '%' };
+    const v = num(sub.credit.used) + '/' + num(sub.credit.total);
+    return { pct:p, name:'크레딧', label:'크레딧 ' + v, detail:'크레딧 ' + v + ' (' + p + '%)', short:'크레딧 ' + p + '%' };
   }
   if (sub.storage){
     const p = Math.round(sub.storage.used / sub.storage.total * 100);
-    return { pct:p, label:sub.storage.used + '/' + sub.storage.total + 'GB', short:'용량 ' + p + '%' };
+    const v = sub.storage.used + '/' + sub.storage.total + 'GB';
+    return { pct:p, name:'저장공간', label:v, detail:v + ' (' + p + '%)', short:'용량 ' + p + '%' };
   }
   if (sub.contract){
     const d = Math.round((toDate(sub.contract.end) - BASE) / DAY);
-    return { pct:null, label:'약정 만료 ' + md(sub.contract.end), short:'약정 만료 D-' + d, contractDays:d };
+    return { pct:null, name:'약정 만료', label:md(sub.contract.end), detail:'약정 만료 ' + md(sub.contract.end) + ' (D-' + d + ')', short:'약정 만료 D-' + d, contractDays:d };
   }
-  return { pct:sub.usage, label:'사용률 ' + sub.usage + '%', short:'사용 ' + sub.usage + '%' };
+  return { pct:sub.usage, name:'사용률', label:'사용률 ' + sub.usage + '%', detail:'사용률 ' + sub.usage + '%', short:'사용 ' + sub.usage + '%' };
 }
 
 /* ---------- 판단 규칙 ---------- */
@@ -873,7 +881,7 @@ function viewHome(){
   return '' +
   '<div class="hero">' +
     '<div class="hero-top"><span>월 환산 구독료</span><span class="lock">2026년 11월 20일 기준</span></div>' +
-    '<div class="hero-total">' + fmt(totalPrice()) + '<span>' + S.subs.length + '개 구독</span></div>' +
+    '<div class="hero-total">' + fmt(totalPrice()) + ' <span>' + S.subs.length + '개 구독</span></div>' +
     '<div class="hero-tiles">' +
       '<div class="ht"><div class="k">갱신 임박</div><div class="v">' + soonCount() + '<span style="font-size:10px">개</span></div><div class="s">7일 이내</div></div>' +
       '<div class="ht red"><div class="k">경과 확인</div><div class="v">' + pastCount() + '<span style="font-size:10px">개</span></div><div class="s">결제일 지남</div></div>' +
@@ -990,16 +998,21 @@ function viewReport(){
 }
 
 function defaultRecheck(sub){ return isoAdd(sub.date, 14); }
-function isBeforeOrSame(a, b){ return a <= b; }
+function phaseOf(sub, rd){
+  if (rd < sub.date) return 'before';
+  if (rd === sub.date) return 'same';
+  return 'after';
+}
 
 function simResultHTML(sub, act, rd){
   const bill = sub.date;
-  const before = isBeforeOrSame(rd, bill);
+  const mt = metric(sub);
+  const link = linksOf(sub.id)[0];
   if (!act){
     const j = judge(sub);
     return '<div class="res-row"><span>판단</span><b class="big">결정을 선택하세요</b></div>' +
       '<div class="res-row"><span>현재 판단</span><b>' + j.label + '</b></div>' +
-      '<div class="reason">' + sub.name + '은 ' + metric(sub).label + '이고, ' +
+      '<div class="reason">' + sub.name + ' · ' + mt.detail + ' · ' +
         (linksOf(sub.id).length
           ? '연결된 작업은 ' + linksOf(sub.id).map(p => '「' + p.name + '」(' + p.status + ')').join(', ') + '입니다. '
           : '연결된 작업은 없습니다. ') +
@@ -1007,28 +1020,40 @@ function simResultHTML(sub, act, rd){
   }
   const A = ACTIONS[act];
   const nb = nextBill(sub);
+  const check = checkBill(sub, rd);
+  const ph = phaseOf(sub, rd);
+  const w = link ? '「' + link.name + '」' : '연결 작업';
   let when, billTxt, reason;
+
   if (act === 'keep'){
     when = '변경 없음';
     billTxt = md(nb) + ' · 금액 그대로 확인';
-    reason = '「' + (linksOf(sub.id)[0] ? linksOf(sub.id)[0].name : '작업') + '」이 ' + md(rd) + '까지 이어지므로 ' + md(bill) + ' 갱신도 유지가 적정합니다. ' +
-      '재점검일(' + md(rd) + ')에 ' + metric(sub).label + '을 다시 확인합니다.';
+    reason = w + '이 ' + md(rd) + '까지 이어지므로 ' + md(bill) + ' 갱신도 유지가 적정합니다. ' +
+      '재점검일(' + md(rd) + ')에 ' + mt.detail + ' 기준으로 다시 확인합니다.';
   } else if (act === 'down'){
-    when = before ? '갱신 전 (' + mdw(bill) + ' 이전) 처리' : '갱신 후 (' + mdw(rd) + ') 처리';
-    billTxt = md(nb) + ' · 변경된 금액 반영 확인';
-    reason = metric(sub).label + ' 기준으로 한 단계 낮은 요금제가 맞습니다. ' +
-      (before
-        ? md(bill) + ' 갱신 전에 공식 페이지에서 하향하면 다음 청구(' + md(nb) + ')부터 바뀐 금액이 찍힙니다. '
-        : '이번 갱신(' + md(bill) + ')은 현재 요금으로 결제되고, ' + md(rd) + '에 하향하면 반영은 그다음 청구(' + md(addMonths(nb, 1)) + ')부터입니다. ') +
-      '변경 뒤 청구 금액을 확인해 기록하세요.';
+    when = ph === 'before' ? '갱신 전 (' + mdw(bill) + ' 이전) 처리'
+         : (ph === 'same' ? '갱신일 당일 (' + mdw(bill) + ') 처리'
+         : '갱신 후 (' + mdw(rd) + ') 처리');
+    billTxt = md(check) + ' · 변경된 금액 반영 확인';
+    reason = mt.detail + ' 기준으로 한 단계 낮은 요금제가 맞습니다. ' +
+      (ph === 'before'
+        ? md(bill) + ' 갱신 전에 공식 페이지에서 하향하면 다음 청구(' + md(nb) + ')부터 바뀐 금액이 찍힙니다.'
+        : (ph === 'same'
+          ? '갱신일 당일이라 결제 시각에 따라 현재 요금으로 이미 청구되었을 수 있습니다. 오늘 하향하면 ' + md(check) + ' 금액부터 바뀌었는지 확인하세요.'
+          : '이번 갱신(' + md(bill) + ')은 현재 요금으로 결제되었습니다. ' + md(rd) + '에 하향하면 반영은 그다음 청구(' + md(check) + ')부터입니다.')) +
+      ' 변경 뒤 청구 금액을 확인해 기록하세요.';
   } else {
-    when = before ? '갱신 전 (' + mdw(bill) + ' 이전) 처리' : '갱신 후 (' + mdw(rd) + ') 처리';
-    billTxt = before ? md(bill) + ' 청구 건너뜀 확인' : md(nb) + ' 청구 후 중단 반영 확인';
-    reason = metric(sub).label + '로 이번 작업 구간에는 필요하지 않습니다. ' +
-      (before
-        ? md(bill) + ' 갱신 전에 중단하면 이번 결제를 건너뜁니다. 재개일(' + md(rd) + ')에 다시 켤 수 있는지 요금제 조건을 함께 확인하세요. '
-        : '이번 갱신(' + md(bill) + ')은 결제되고, ' + md(rd) + ' 이후 중단하면 다음 청구부터 반영됩니다. ') +
-      (isBeforeOrSame(isoAdd(bill, 30), rd) ? '재개일이 한 달 이상 뒤이므로 재개 시 요금제·할인 조건이 유지되는지 확인이 필요합니다.' : '');
+    when = ph === 'before' ? '갱신 전 (' + mdw(bill) + ' 이전) 처리'
+         : (ph === 'same' ? '갱신일 당일 (' + mdw(bill) + ') 처리'
+         : '갱신 후 (' + mdw(rd) + ') 처리');
+    billTxt = ph === 'before' ? md(nb) + ' 청구 건너뜀 확인' : md(check) + ' 청구 없음 확인';
+    reason = mt.detail + '로 이번 작업 구간에는 필요하지 않습니다. ' +
+      (ph === 'before'
+        ? md(bill) + ' 갱신 전에 중단하면 이번 결제를 건너뜁니다. 재개일(' + md(rd) + ')에 다시 켤 수 있는지 요금제 조건을 함께 확인하세요.'
+        : (ph === 'same'
+          ? '갱신일 당일이라 이미 청구되었을 수 있습니다. 오늘 중단하면 ' + md(check) + ' 청구가 생성되지 않는지 확인하세요. '
+          : '이번 갱신(' + md(bill) + ')은 결제되었고, ' + md(rd) + '에 중단하면 다음 청구(' + md(check) + ')부터 반영됩니다. ')) +
+      (rd > isoAdd(bill, 30) ? '재개일이 한 달 이상 뒤이므로 재개 시 요금제·할인 조건이 유지되는지 확인이 필요합니다.' : '');
   }
   return '<div class="res-row"><span>판단</span><b class="big ' + (A.cls === 'warn' ? 'warn' : '') + '">' + A.label + '</b></div>' +
     '<div class="res-row"><span>처리 시점</span><b>' + when + '</b></div>' +
@@ -1109,12 +1134,12 @@ function viewHistory(){
     const s = S.subs.find(x => x.id === d.subId);
     if (!s) return '';
     const m = ACTIONS[d.action] || { label:d.action, cls:'soft' };
-    const nb = d.action === 'stop' ? '' : nextBill(s);
+    const tail = d.action === 'keep' ? ' · 다음 청구 ' + md(nextBill(s)) : ' · 청구 확인 ' + md(checkBill(s, d.recheck));
     return '<div class="tl-item"><div class="tl-card">' +
       '<div class="tl-top"><span class="brand" style="width:23px;height:23px;font-size:8px;background:' + s.color + '">' + s.mark + '</span>' +
         '<span class="tl-name">' + s.name + '</span><span class="tl-time">' + d.at + '</span></div>' +
       '<div class="tl-body"><span class="pill ' + m.cls + '">' + m.label + '</span> ' +
-        '재점검 <b>' + md(d.recheck) + '</b>' + (nb ? ' · 다음 청구 ' + md(nb) : ' · 중단') + '</div>' +
+        '재점검 <b>' + md(d.recheck) + '</b>' + tail + '</div>' +
       '<div class="prog">' +
         '<span class="step done">① 판단 저장</span>' +
         '<button class="step ' + (d.handled ? 'done' : 'cur') + '" data-act="mark" data-id="' + d.id + '" data-kind="handled">' + (d.handled ? '② 변경 처리 ✓' : '② 변경 처리') + '</button>' +
@@ -1158,14 +1183,14 @@ function detailSheet(sub){
     '<div class="sd-price">' + fmt(sub.price) + ' <span>/ 월</span></div>' +
     '<div class="sd-verdict"><span class="pill ' + st.cls + '">' + st.label + '</span>' + duePill(sub) +
       '<span class="pill basis">' + st.basis + '</span></div>' +
-    '<div class="sd-block"><div class="sd-row"><span>' + mt.label + '</span><b>' + (mt.pct === null ? '약정 ' + md(sub.contract.end) : mt.pct + '%') + '</b></div>' +
+    '<div class="sd-block"><div class="sd-row"><span>' + mt.name + '</span><b>' + (mt.pct === null ? md(sub.contract.end) : mt.pct + '%') + '</b></div>' +
       (mt.pct === null ? '' : '<span class="gauge"><i style="width:' + Math.min(100, mt.pct) + '%;background:' + barColor(mt.pct) + '"></i></span>') + '</div>' +
     '<div class="sd-block"><div class="sd-row"><span>연결된 작업</span><b>' + linkTxt + '</b></div>' +
-      '<div class="sd-ai">' + (dec ? '<b>' + ACTIONS[dec.action].short + '</b>로 저장된 결정이 있습니다 (재점검 ' + md(dec.recheck) + '). ' : '') + note + '</div></div>' +
+      '<div class="sd-ai">' + (dec ? '저장된 결정: <b>' + ACTIONS[dec.action].short + '</b> (재점검 ' + md(dec.recheck) + '). ' : '') + note + '</div></div>' +
     '<div class="sd-reason">' +
-      '<div><span>작업</span><span style="background:none;color:#475569;font-weight:600;font-size:10px;padding:0">' + (links.length ? '「' + links[0].name + '」 ' + links[0].status + ' · 마감 ' + md(links[0].due) : '연결된 작업 없음') + '</span></div>' +
-      '<div><span>사용</span><span style="background:none;color:#475569;font-weight:600;font-size:10px;padding:0">' + mt.label + (mt.pct === null ? '' : ' (' + mt.pct + '%)') + '</span></div>' +
-      '<div><span>갱신</span><span style="background:none;color:#475569;font-weight:600;font-size:10px;padding:0">' + md(sub.date) + ' · ' + ddLabel(sub) + ' · 다음 청구 ' + md(nb) + '</span></div>' +
+      '<div><span>작업</span><em>' + (links.length ? '「' + links[0].name + '」 ' + links[0].status + ' · 마감 ' + md(links[0].due) : '연결된 작업 없음') + '</em></div>' +
+      '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
+      '<div><span>갱신</span><em>' + md(sub.date) + ' · ' + ddLabel(sub) + ' · 다음 청구 ' + md(nb) + '</em></div>' +
     '</div>' +
     '<div class="sd-label">재개·재점검일 <span>판단 근거가 이 날짜를 기준으로 계산됩니다</span></div>' +
     '<input type="date" id="dRecheck" class="date-input" value="' + (dec ? dec.recheck : defaultRecheck(sub)) + '">' +
@@ -1186,7 +1211,8 @@ function detailSheet(sub){
 }
 
 function step4Block(sub, dec, nb){
-  const billLabel = dec.action === 'stop' ? '청구 중단 확인' : '다음 청구 확인 (' + md(nb) + ')';
+  const cb = checkBill(sub, dec.recheck);
+  const billLabel = dec.action === 'stop' ? '청구 중단 확인 (' + md(cb) + ')' : '다음 청구 확인 (' + md(cb) + ')';
   return '<div class="step4">' +
     '<div class="sd-label" style="margin-top:0">4단계 · 변경 후 다음 청구 확인 <span>' + ACTIONS[dec.action].short + ' · 재점검 ' + md(dec.recheck) + '</span></div>' +
     '<a class="btn-open-official" href="' + sub.manage + '" target="_blank" rel="noopener">공식 변경·해지 페이지 열기 ↗</a>' +
