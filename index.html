@@ -137,6 +137,10 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .zpop button.on{background:var(--navy); color:#fff}
 /* 배율 적용 시 말줄임 대신 자연스럽게 줄바꿈 */
 .app-body.zoomed .banner-sub{white-space:normal; overflow:visible; text-overflow:clip; line-height:1.5}
+/* 120% 이상: 내 구독 목록은 금액·상태를 아래 줄로 내려 이름이 잘리지 않게 */
+.app-body.bigzoom .row{flex-wrap:wrap; row-gap:3px}
+.app-body.bigzoom .row-main{flex:1 1 auto}
+.app-body.bigzoom .row-right{flex:1 1 100%; display:flex; align-items:center; justify-content:flex-end; gap:6px}
 
 /* app body */
 .app-body{flex:1 1 auto; overflow-y:auto; overscroll-behavior:contain; padding:13px 13px 22px; -webkit-overflow-scrolling:touch; scrollbar-width:thin}
@@ -1329,6 +1333,8 @@ function applyZoom(p, persist){
   if (body){
     /* CSS zoom: 레이아웃이 줄어든 폭으로 다시 계산되어 flex/grid가 자연스럽게 줄바꿈된다 */
     body.classList.toggle('zoomed', zoomPct !== 100);
+    body.classList.toggle('bigzoom', zoomPct > 100);
+    body.dataset.zoom = String(zoomPct);
     if (zoomPct === 100) body.style.removeProperty('zoom');
     else body.style.zoom = String(zoomPct / 100);
   }
