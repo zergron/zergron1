@@ -2051,6 +2051,12 @@ document.addEventListener('click', function (e) {
     S.homeFilter = 'all'; S.subCat = '전체'; S.q = '';
     S.simSub = 'higgsfield'; S.simAct = null; S.simDate = '';
     S.tab = 'home';
+    /* 되돌리기 뒤에도 뒤로가기 기준 칸을 홈으로 다시 맞춥니다
+       (저장된 탭이 홈이 아니었던 경우 남아 있던 히스토리 칸 때문에
+        모달을 닫으면 그 탭으로 돌아가 버리는 문제 방지) */
+    try { history.replaceState({ nav:1, id:0, tab:'home', ov:null, oid:null }, ''); } catch (e) {}
+    NAV.pending = false;
+    NAV.stack = [{ id:0, nav:1, tab:'home', ov:null, oid:null }];
     applyZoom(100, true);
     try { localStorage.removeItem(STATE_KEY); } catch (e) {}
     navGoTab('home');
