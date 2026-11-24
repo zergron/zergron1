@@ -926,8 +926,6 @@ function verdictHTML(sub, rd){
     '<span class="pill basis">' + r.basisShort + '</span>';
 }
 
-<<<<<<< HEAD
-=======
 /* ---------- 표시 순서 ----------
    처음 보는 사람도 바로 공감하는 순서로 고정합니다(사용자 지정 1~14).
    목록에 없는 새 구독은 맨 뒤에 추가한 순서대로 붙습니다. */
@@ -938,7 +936,6 @@ function orderIdx(sub){
 }
 function byDisplayOrder(a, b){ return orderIdx(a) - orderIdx(b); }
 
->>>>>>> main
 /* ---------- 집계 ---------- */
 function totalPrice(){ return S.subs.reduce((a,s) => a + s.price, 0); }
 function aiSubs(){ return S.subs.filter(s => s.cat === 'AI 도구'); }
