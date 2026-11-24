@@ -522,15 +522,20 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .pill.ch.web{color:#1D4ED8; background:#EFF4FF; border-color:#DCE7FF}
 .pill.ch.unknown{color:#B45309; background:#FFF7ED; border-color:#FDE9C4}
 
-/* 첫 화면 CTA */
-.hero-cta{display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:10px}
-.hero-cta button{height:42px; border-radius:11px; font-size:12px; font-weight:800; letter-spacing:-.02em; display:flex; align-items:center; justify-content:center; gap:4px}
-.cta-example{background:#fff; color:#0F172A; box-shadow:0 8px 18px -14px rgba(0,0,0,.6)}
-.cta-example:hover{background:#F1F5FF}
-.cta-direct{background:rgba(37,99,235,.28); color:#fff; border:1px solid rgba(147,197,253,.55)}
-.cta-direct:hover{background:rgba(37,99,235,.42)}
+/* 홈 요약 카드 */
 .hero-mini{display:flex; align-items:center; gap:5px; margin-top:8px; font-size:9px; color:#9FB3CE; font-weight:700; line-height:1.5}
 .hero-mini b{color:#DCE5F3}
+
+/* 내 구독 탭 상단 · 등록·체험 */
+.regbox{border:1px solid #DBE4FF; border-radius:13px; background:linear-gradient(180deg,#FAFCFF,#fff); padding:8px 8px 9px; margin:8px 0 9px; box-shadow:0 6px 16px -18px rgba(37,99,235,.7)}
+.regbox .btnrow{margin:0; gap:6px}
+.regbox .btnrow button{height:36px; font-size:10px}
+.regimport{width:100%; height:34px; margin-top:6px; border-radius:9px; border:1px dashed #BFD3FF; background:#F5F9FF; color:#1D4ED8; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; gap:5px; letter-spacing:-.02em}
+.regimport b{color:#2563EB}
+.regimport:hover{background:#EFF4FF; border-color:#9FC0FF}
+.regnote{display:flex; align-items:center; justify-content:center; gap:4px; margin-top:7px; font-size:8.5px; font-weight:700; color:#64748B; line-height:1.45; text-align:center}
+.regnote svg{width:11px; height:11px; flex:0 0 auto; fill:none; stroke:#94A3B8; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.regnote b{color:#334155}
 
 /* 다음 행동 카드 */
 .nextact{width:100%; display:flex; align-items:center; gap:10px; text-align:left; margin-top:9px; background:#fff; border:1.5px solid #DBE4FF; border-radius:16px; padding:11px 12px; box-shadow:0 8px 20px -18px rgba(37,99,235,.6)}
@@ -718,7 +723,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
   .amt{grid-template-columns:1fr}
   .state4{grid-template-columns:1fr}
   .bgrid{grid-template-columns:1fr 1fr}
-  .hero-cta{grid-template-columns:1fr}
+  .regbox .btnrow{grid-template-columns:1fr}
 }
 
 /* 가로 잘림 방지: 필터 칩은 줄바꿈, 탭 이름은 한 줄 */
@@ -729,9 +734,6 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .chiplab{font-size:8.5px; font-weight:800; color:#94A3B8; margin:2px 0 4px; letter-spacing:.01em}
 
 /* 샘플 이미지 등록 */
-.hero-imgentry{width:100%; height:33px; margin-top:7px; border-radius:10px; border:1px dashed rgba(147,197,253,.5); background:rgba(255,255,255,.06); color:#DCE5F3; font-size:9.5px; font-weight:800; display:flex; align-items:center; justify-content:center; gap:5px}
-.hero-imgentry b{color:#93C5FD}
-.hero-imgentry:hover{background:rgba(255,255,255,.12)}
 .btnrow.three{grid-template-columns:1fr 1fr 1fr; gap:4px}
 .btnrow.three button{font-size:8.5px; padding:0 2px; letter-spacing:-.03em}
 .imgcard{display:grid; grid-template-columns:1fr; gap:6px; border:1px solid var(--line); border-radius:11px; padding:7px; margin-bottom:7px; background:#fff}
@@ -823,7 +825,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         <svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 3 6.5-8"/><path d="M15 7h5v5"/></svg>
         공개 체험판에서 지금 할 수 있는 것
       </div>
-      <p class="cb-desc"><b>예시로 바로 체험</b>은 가상 구독 14개(월 환산 210,000원)로, <b>직접 입력·샘플 이미지·가상 불러오기</b>는 내 구독 1건부터 시작합니다. 등록은 다섯 번째 강점이 아니라 <b>위 네 가지 기능을 쓰기 위한 첫 단계</b>입니다. 입력한 내용은 이 브라우저에만 저장됩니다.</p>
+      <p class="cb-desc"><b>홈</b>은 가상 구독 14개(월 환산 210,000원) 요약으로 시작하고, <b>내 구독</b> 탭 상단의 <b>직접 입력·샘플 이미지·가상 알림 불러오기</b>는 내 구독 1건부터 시작합니다. 등록은 다섯 번째 강점이 아니라 <b>위 네 가지 기능을 쓰기 위한 첫 단계</b>입니다. 입력한 내용은 이 브라우저에만 저장됩니다.</p>
       <div class="flow">
         <div class="flow-row">
           <span class="flow-tag free">무료 0원</span>
@@ -874,10 +876,10 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         이렇게 체험해 보세요
       </div>
       <ol class="guide">
-        <li><span><b>예시로 바로 체험</b>홈 위쪽 <b>[예시로 바로 체험]</b>을 누르면 Higgsfield 결제 전 점검이 바로 열립니다.</span></li>
+        <li><span><b>샘플로 바로 보기</b>홈은 가상 구독 14개 요약으로 시작합니다. <b>[다음 행동]</b> 카드를 누르면 Higgsfield 결제 전 점검이 바로 열립니다.</span></li>
         <li><span><b>직접 입력·샘플 이미지</b>서비스명·금액·다음 결제일 3가지만으로 등록하거나, 가상 결제문자·렌탈 청구서 <b>샘플 이미지</b>에서 찾은 항목을 확인·수정해 등록합니다. 모르는 값은 <b>미확인</b>으로 둡니다.</span></li>
         <li><span><b>판단과 기록</b>재개일을 바꿔 추천이 전환되는지 보고, <b>내 결정</b>을 골라 저장한 뒤 직접 처리·청구 확인을 기록합니다.</span></li>
-        <li><span><b>불러오기</b>내 구독 탭의 <b>[내 구독 불러오기]</b>로 가상 결제 알림에서 찾은 구독을 확인해 등록합니다.</span></li>
+        <li><span><b>불러오기</b>내 구독 탭 상단의 <b>[가상 알림 불러오기]</b>로 가상 결제 알림에서 찾은 구독을 확인해 등록합니다.</span></li>
       </ol>
       <div class="qrbox">
         <img src="qr.png" alt="공개 체험판 QR 코드" width="78" height="78">
@@ -1543,12 +1545,6 @@ function viewHome(){
       '<button type="button" class="ht amber' + (S.homeFilter === 'need' ? ' on' : '') + '" data-act="tile" data-filter="need" aria-label="판단 필요 ' + needCount() + '개 목록 보기">' +
         '<span class="go">›</span><span class="k">판단 필요</span><span class="v">' + needCount() + '<span class="u">개</span></span><span class="s">다음 작업 연동</span></button>' +
     '</div>' +
-    '<div class="hero-cta">' +
-      '<button type="button" class="cta-example" data-act="example">예시로 바로 체험</button>' +
-      '<button type="button" class="cta-direct" data-act="addopen">직접 입력해 체험</button>' +
-    '</div>' +
-    '<button type="button" class="hero-imgentry" data-act="imgopen"><span>🖼</span> 샘플 이미지 한 장으로 등록해 보기 <b>›</b></button>' +
-    '<div class="hero-mini"><b>실제 계정·결제 연결 없이</b> 이 브라우저에만 저장됩니다</div>' +
     '<div class="hero-foot"><span>' + avgUsageLabel() + '</span><span>내 결정 <b>' + judgedCount() + '/' + allSubs().length + '</b></span></div>' +
     '<span class="gauge"><i style="width:' + avgUsage() + '%"></i></span>' +
   '</div>' +
@@ -1776,10 +1772,13 @@ function viewSubs(){
   return '' +
   '<div class="sec-head"><div><div class="sec-title">내 구독</div><div class="sec-desc">' + allSubs().length + '개 · 총 월 ' + fmt(totalMonthly()) + (unknown ? ' · 금액 미확인 ' + unknown + '건 별도' : '') + ' · AI 도구 ' + aiSubs().length + '개</div></div>' +
     '<span class="sec-count">' + avgUsageLabel() + '</span></div>' +
-  '<div class="btnrow three">' +
-    '<button class="b1" data-act="addopen">+ 직접 입력</button>' +
-    '<button class="b2" data-act="imgopen">샘플 이미지로 등록</button>' +
-    '<button class="b3" data-act="importopen">불러오기</button>' +
+  '<div class="regbox">' +
+    '<div class="btnrow">' +
+      '<button class="b1" data-act="addopen">+ 직접 입력</button>' +
+      '<button class="b2" data-act="imgopen">샘플 이미지로 등록</button>' +
+    '</div>' +
+    '<button class="regimport" data-act="importopen"><span>📩</span> 가상 알림 불러오기 <b>›</b></button>' +
+    '<div class="regnote"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10.5" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg><span><b>실제 계정·결제 연결 없이</b> 이 브라우저에만 저장됩니다</span></div>' +
   '</div>' +
   '<div class="search-wrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>' +
     '<input class="search" id="q" type="search" placeholder="구독 이름·카테고리 검색" value="' + esc(S.q) + '"></div>' +
@@ -2088,7 +2087,7 @@ function impRailHTML(){
 }
 function impHTML(){
   return '<div class="sheet-grip"></div>' +
-    '<div class="sd-head"><div><div class="sd-name">내 구독 불러오기</div>' +
+    '<div class="sd-head"><div><div class="sd-name">가상 결제 알림 불러오기</div>' +
       '<div class="sd-meta">결제 알림에서 찾은 구독을 골라 등록하는 4단계 · 가상 샘플</div></div>' +
       '<button class="x" data-act="close">✕</button></div>' +
     (IMP.step === 1
