@@ -119,6 +119,21 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .ab-install{margin-left:auto; display:flex; align-items:center; gap:4px; background:#fff; color:var(--navy); border-radius:8px; padding:6px 8px; font-size:10.5px; font-weight:800; white-space:nowrap}
 .ab-install svg{width:12px; height:12px; stroke:var(--navy); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
 
+/* 화면 배율 (70/100/120/150%) */
+.appbar{position:relative; z-index:24}
+.zbtn{flex:0 0 auto; display:inline-flex; align-items:center; gap:3px; height:26px; padding:0 7px 0 6px; border-radius:8px;
+  background:rgba(255,255,255,.10); border:1px solid rgba(148,163,184,.38); color:#DCE5F3; font-size:10.5px; font-weight:800; letter-spacing:-.01em}
+.zbtn svg{width:12px; height:12px; stroke:currentColor; fill:none; stroke-width:2.3; stroke-linecap:round}
+.zbtn:hover{background:rgba(255,255,255,.17)}
+.zbtn[aria-expanded="true"]{background:rgba(255,255,255,.2); border-color:rgba(191,219,254,.65)}
+.zbtn.mod{background:rgba(37,99,235,.45); border-color:rgba(147,197,253,.75); color:#fff}
+.zpop{position:absolute; top:calc(100% - 2px); right:11px; display:none; gap:2px; padding:4px; background:#fff;
+  border:1px solid var(--line); border-radius:11px; box-shadow:0 16px 30px -16px rgba(15,23,42,.5); z-index:60}
+.zpop.on{display:flex}
+.zpop button{font-size:10.5px; font-weight:800; color:#475569; padding:6px 7px; border-radius:7px; letter-spacing:-.01em; white-space:nowrap}
+.zpop button:hover{background:#F1F5F9; color:var(--navy)}
+.zpop button.on{background:var(--navy); color:#fff}
+
 /* app body */
 .app-body{flex:1 1 auto; overflow-y:auto; overscroll-behavior:contain; padding:13px 13px 22px; -webkit-overflow-scrolling:touch; scrollbar-width:thin}
 .app-body::-webkit-scrollbar{width:6px}
@@ -563,6 +578,16 @@ h1.i-head em{font-style:normal; color:var(--blue)}
           </span>
           <span class="ab-name">나대신</span>
           <span class="ab-badge">2R 시제품</span>
+          <button class="zbtn" id="zoomBtn" data-act="zoompick" aria-haspopup="true" aria-expanded="false" aria-controls="zoomPop" title="화면 크기 조절" aria-label="화면 크기 조절">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.2"/><path d="M20 20l-3.7-3.7"/></svg>
+            <span id="zoomLabel">100%</span>
+          </button>
+          <div class="zpop" id="zoomPop" role="group" aria-label="화면 배율 선택">
+            <button type="button" data-act="zoomset" data-zoom="70">70%</button>
+            <button type="button" data-act="zoomset" data-zoom="100" class="on">100%</button>
+            <button type="button" data-act="zoomset" data-zoom="120">120%</button>
+            <button type="button" data-act="zoomset" data-zoom="150">150%</button>
+          </div>
           <button class="ab-install" data-act="install">
             <svg viewBox="0 0 24 24"><path d="M12 4v10"/><path d="M8 11l4 3.5 4-3.5"/><path d="M5 19h14"/></svg>
             앱 설치
@@ -1274,16 +1299,73 @@ function pushDecision(subId, action, recheck, source){
   return d;
 }
 
+/* ---------- 화면 배율 (70 / 100 / 120 / 150%) ---------- */
+const ZOOMS = [70, 100, 120, 150];
+const ZOOM_KEY = 'nadaesin.v3.zoom';
+let zoomPct = 100;
+
+function savedZoom(){
+  try {
+    const v = Number(localStorage.getItem(ZOOM_KEY));
+    return ZOOMS.indexOf(v) > -1 ? v : 100;
+  } catch (e) { return 100; }
+}
+
+function zoomPopOpen(open){
+  const pop = $('#zoomPop'), btn = $('#zoomBtn');
+  if (!pop || !btn) return;
+  pop.classList.toggle('on', !!open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function applyZoom(p, persist){
+  const v = Number(p);
+  zoomPct = ZOOMS.indexOf(v) > -1 ? v : 100;
+  const body = $('#appBody');
+  if (body){
+    /* CSS zoom: 레이아웃이 줄어든 폭으로 다시 계산되어 flex/grid가 자연스럽게 줄바꿈된다 */
+    if (zoomPct === 100) body.style.removeProperty('zoom');
+    else body.style.zoom = String(zoomPct / 100);
+  }
+  const lab = $('#zoomLabel');
+  if (lab) lab.textContent = zoomPct + '%';
+  const btn = $('#zoomBtn');
+  if (btn) btn.classList.toggle('mod', zoomPct !== 100);
+  const pop = $('#zoomPop');
+  if (pop){
+    Array.prototype.forEach.call(pop.querySelectorAll('button'), function(b){
+      b.classList.toggle('on', Number(b.dataset.zoom) === zoomPct);
+    });
+  }
+  zoomPopOpen(false);
+  if (persist){
+    try { localStorage.setItem(ZOOM_KEY, String(zoomPct)); } catch (e) {}
+  }
+}
+
 /* ---------- events ---------- */
 document.addEventListener('click', function (e) {
   const el = e.target.closest('[data-act]');
   const bg = e.target.closest('[data-bg]');
 
   if (!el) {
+    if (!e.target.closest('.zpop') && !e.target.closest('.zbtn')) zoomPopOpen(false);
     if (bg && e.target.classList && e.target.classList.contains('sheet')) closeSheet();
     return;
   }
   const act = el.dataset.act;
+
+  if (act === 'zoompick'){
+    const pop = $('#zoomPop');
+    zoomPopOpen(!(pop && pop.classList.contains('on')));
+    return;
+  }
+  if (act === 'zoomset'){
+    applyZoom(Number(el.dataset.zoom), true);
+    toast('화면 크기 ' + zoomPct + '%');
+    return;
+  }
+  if (!e.target.closest('.zpop')) zoomPopOpen(false);
 
   if (act === 'tab') { S.tab = el.dataset.tab; closeSheet(); render(); return; }
   if (act === 'hfilter') { S.homeFilter = el.dataset.filter; render(); return; }
@@ -1436,6 +1518,7 @@ document.addEventListener('click', function (e) {
     S.homeFilter = 'all'; S.subCat = '전체'; S.q = '';
     S.simSub = 'higgsfield'; S.simAct = null; S.simDate = '';
     S.tab = 'home';
+    applyZoom(100, true);
     closeSheet(); render();
     toast('데모 데이터를 초기화했습니다');
     return;
@@ -1490,7 +1573,11 @@ function showInstall(){
 
 /* ---------- init ---------- */
 $('#sbTime').textContent = timeNow();
+applyZoom(savedZoom(), false);   /* 저장된 배율 복원(기본 100%) */
 render();
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') zoomPopOpen(false);
+});
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register('sw.js').catch(function () {});
