@@ -727,6 +727,47 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 @media (max-width:1023px){ .tabbar .tab{font-size:9px} }
 
 .chiplab{font-size:8.5px; font-weight:800; color:#94A3B8; margin:2px 0 4px; letter-spacing:.01em}
+
+/* 샘플 이미지 등록 */
+.hero-imgentry{width:100%; height:33px; margin-top:7px; border-radius:10px; border:1px dashed rgba(147,197,253,.5); background:rgba(255,255,255,.06); color:#DCE5F3; font-size:9.5px; font-weight:800; display:flex; align-items:center; justify-content:center; gap:5px}
+.hero-imgentry b{color:#93C5FD}
+.hero-imgentry:hover{background:rgba(255,255,255,.12)}
+.btnrow.three{grid-template-columns:1fr 1fr 1fr; gap:4px}
+.btnrow.three button{font-size:8.5px; padding:0 2px; letter-spacing:-.03em}
+.imgcard{display:grid; grid-template-columns:96px 1fr; gap:8px; border:1px solid var(--line); border-radius:11px; padding:7px; margin-bottom:7px; background:#fff}
+.imgthumb{height:104px; overflow:hidden; border-radius:8px; background:#EEF2F7; display:flex; align-items:center; justify-content:center; padding:5px}
+.imgcard-b{min-width:0}
+.imgcard-t{font-size:10px; font-weight:800; letter-spacing:-.02em; line-height:1.35}
+.imgcard-s{font-size:8px; color:#94A3B8; font-weight:700; margin-top:2px}
+.imgcard-n{font-size:8px; color:#64748B; font-weight:700; line-height:1.5; margin-top:3px}
+.demo-badge{font-size:7px; font-weight:800; color:#B45309; background:#FFF7ED; border:1px solid #FDE9C4; border-radius:4px; padding:1px 3px; vertical-align:1px; white-space:nowrap}
+.imgbtn{width:100%; height:27px; border-radius:7px; background:#EFF4FF; color:#1D4ED8; font-size:8.5px; font-weight:800; margin-top:5px}
+.imgbtn.done{background:#F1F5F9; color:#64748B}
+.imgpreview{position:relative; height:150px; border-radius:12px; background:#E8EDF5; border:1px solid #D7DEE8; padding:10px; display:flex; align-items:center; justify-content:center; overflow:hidden}
+.demo-badge.onimg{position:absolute; top:7px; right:7px; background:#fff}
+.mock-phone{width:150px; background:#fff; border-radius:12px; border:1px solid #D7DEE8; padding:7px; box-shadow:0 6px 14px -10px rgba(15,23,42,.5)}
+.mock-phone.big{width:230px; transform:scale(1.02)}
+.mp-top{font-size:6.5px; color:#94A3B8; font-weight:800; border-bottom:1px solid #EEF2F7; padding-bottom:3px; margin-bottom:5px}
+.mp-bubble{background:#FEF3C7; border-radius:9px; padding:6px 7px; font-size:7.5px; line-height:1.55; color:#334155; font-weight:700}
+.mock-phone.big .mp-bubble{font-size:9px}
+.mp-bubble b{font-weight:800; color:#0F172A}
+.mp-foot{font-size:6px; color:#CBD5E1; font-weight:700; margin-top:5px; text-align:right}
+.mock-bill{width:170px; background:#fff; border:1px solid #D7DEE8; border-radius:8px; padding:7px; box-shadow:0 6px 14px -10px rgba(15,23,42,.5)}
+.mock-bill.big{width:230px}
+.mb-head{font-size:8px; font-weight:800; border-bottom:1.5px solid #0F172A; padding-bottom:3px; margin-bottom:4px; display:flex; justify-content:space-between}
+.mb-head span{font-size:6px; color:#94A3B8; font-weight:800}
+.mb-row{display:flex; justify-content:space-between; gap:5px; font-size:6.5px; font-weight:700; color:#475569; padding:2px 0; border-bottom:1px dotted #EEF2F7}
+.mock-bill.big .mb-row{font-size:8px}
+.mb-row b{color:#0F172A; font-weight:800; text-align:right}
+.mb-foot{font-size:5.5px; color:#CBD5E1; font-weight:700; margin-top:4px; text-align:right}
+.imgpaid{display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-top:7px}
+.imgpaid-i{background:#F8FAFC; border:1px solid var(--line2); border-radius:9px; padding:7px 8px}
+.imgpaid-i.hl{background:#EFF4FF; border-color:#DCE7FF}
+.imgpaid-i .k{display:block; font-size:8px; font-weight:800; color:#64748B}
+.imgpaid-i .v{display:block; font-size:10.5px; font-weight:800; margin-top:2px}
+.imgpaid-i .s{display:block; font-size:7.5px; color:#94A3B8; font-weight:700; margin-top:2px; line-height:1.4}
+.imgpaid-i input{width:100%; height:27px; border:1px solid #C7D5EA; border-radius:6px; background:#fff; padding:0 5px; font-size:9.5px; font-weight:700; margin-top:3px}
+.origin-tag.img{color:#7C3AED; background:#F5F3FF}
 </style>
 </head>
 <body>
@@ -751,7 +792,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
     </div>
 
     <h1 class="i-head">구독은 한눈에,<br>필요한 도구는 <em>바로 열고</em>,<br>갱신은 다음 작업에 맞춰.</h1>
-    <p class="i-lead">내 구독을 <b>직접 입력하거나 결제 알림에서 불러와</b> 한곳에 모으고, 다음 작업일과 사용량을 견주어 <b>유지·하향·중단·판단 보류</b>를 정리합니다. 고객이 공식 페이지에서 직접 처리한 뒤 <b>다음 청구까지</b> 기록하는 <b>한국형 개인 맞춤형 구독케어 에이전트</b>입니다.</p>
+    <p class="i-lead">내 구독을 <b>직접 입력하거나 샘플 이미지·결제 알림에서 불러와</b> 한곳에 모으고, <b>종합현황 · 이용 포털 · 계약·비용 최적화 · 혜택 활용</b> 네 가지 기능으로 다음 작업일과 사용량을 견주어 <b>유지·하향·중단·판단 보류</b>를 정리합니다. 고객이 공식 페이지에서 직접 처리한 뒤 <b>다음 청구까지</b> 기록하는 <b>한국형 개인 맞춤형 구독케어 에이전트</b>입니다.</p>
 
     <div class="axis">
       <div class="ax">
@@ -781,7 +822,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         <svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 3 6.5-8"/><path d="M15 7h5v5"/></svg>
         공개 체험판에서 지금 할 수 있는 것
       </div>
-      <p class="cb-desc"><b>예시로 바로 체험</b>은 가상 구독 14개(월 환산 210,000원)로, <b>직접 입력해 체험</b>은 내 구독 1건부터 시작합니다. 입력한 내용은 이 브라우저에만 저장됩니다.</p>
+      <p class="cb-desc"><b>예시로 바로 체험</b>은 가상 구독 14개(월 환산 210,000원)로, <b>직접 입력·샘플 이미지·가상 불러오기</b>는 내 구독 1건부터 시작합니다. 등록은 다섯 번째 강점이 아니라 <b>위 네 가지 기능을 쓰기 위한 첫 단계</b>입니다. 입력한 내용은 이 브라우저에만 저장됩니다.</p>
       <div class="flow">
         <div class="flow-row">
           <span class="flow-tag free">무료 0원</span>
@@ -813,14 +854,14 @@ h1.i-head em{font-style:normal; color:var(--blue)}
           <div class="rs-k">2단계</div>
           <div>
             <div class="rs-t">2R 직접 입력 웹 MVP · 리포트 검증 <span>진행</span></div>
-            <div class="rs-d">제품화 · 직접 입력·결제 알림 불러오기, 사용량·크레딧 입력, 9,900원 리포트 유료 구매 검증</div>
+            <div class="rs-d">제품화 · 직접 입력·샘플 이미지·결제 알림 불러오기, 사용량·크레딧 입력, 9,900원 리포트 유료 구매 검증<br>출시 때는 실제 이미지 인식 + 사용자 확인 후 등록</div>
           </div>
         </div>
         <div class="road-step dim">
           <div class="rs-k">3단계</div>
           <div>
             <div class="rs-t">인허가·승인 기반 변경·해지 지원</div>
-            <div class="rs-d">안정화 후 확장 · 제휴·승인 범위에서 변경·해지 실행, 2028~ 디지털 구독 전반</div>
+            <div class="rs-d">안정화 후 확장 · <b>Google Play·카드사 등 공식 조회·제휴가 가능한 채널부터 동의 기반 자동 불러오기</b>, 제휴·승인 범위에서 변경·해지 실행</div>
           </div>
         </div>
       </div>
@@ -833,7 +874,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
       </div>
       <ol class="guide">
         <li><span><b>예시로 바로 체험</b>홈 위쪽 <b>[예시로 바로 체험]</b>을 누르면 Higgsfield 결제 전 점검이 바로 열립니다.</span></li>
-        <li><span><b>직접 입력해 체험</b>서비스명·금액·다음 결제일 3가지만으로 내 구독을 등록하고, 모르는 값은 <b>미확인</b>으로 둡니다.</span></li>
+        <li><span><b>직접 입력·샘플 이미지</b>서비스명·금액·다음 결제일 3가지만으로 등록하거나, 가상 결제문자·렌탈 청구서 <b>샘플 이미지</b>에서 찾은 항목을 확인·수정해 등록합니다. 모르는 값은 <b>미확인</b>으로 둡니다.</span></li>
         <li><span><b>판단과 기록</b>재개일을 바꿔 추천이 전환되는지 보고, <b>내 결정</b>을 골라 저장한 뒤 직접 처리·청구 확인을 기록합니다.</span></li>
         <li><span><b>불러오기</b>내 구독 탭의 <b>[내 구독 불러오기]</b>로 가상 결제 알림에서 찾은 구독을 확인해 등록합니다.</span></li>
       </ol>
@@ -1016,6 +1057,7 @@ function subById(id){ return allSubs().filter(function(s){ return s.id === id; }
 function isUser(sub){ return sub.origin === 'user'; }
 function isImport(sub){ return sub.origin === 'import'; }
 function originTag(sub){
+  if (sub.origin === 'imgsample') return '<span class="origin-tag img">이미지 샘플</span>';
   if (sub.origin === 'user') return '<span class="origin-tag user">내 입력</span>';
   if (sub.origin === 'import') return '<span class="origin-tag import">불러옴</span>';
   return '';
@@ -1073,7 +1115,10 @@ function nextChargeDate(sub){
   if (!sub.date) return null;
   return dday(sub) >= 0 ? sub.date : addMonths(sub.date, 1);
 }
-function alreadyPaidOn(sub){ return (dday(sub) != null && dday(sub) < 0) ? sub.date : null; }
+function alreadyPaidOn(sub){
+  if (sub.paidOn) return sub.paidOn;
+  return (dday(sub) != null && dday(sub) < 0) ? sub.date : null;
+}
 function defaultRecheck(sub){ return sub.date ? isoAdd(sub.date, 14) : null; }
 function barColor(p){ return p < 30 ? '#F97316' : (p < 60 ? '#3B82F6' : '#10B981'); }
 function parseDateInput(raw){
@@ -1222,8 +1267,9 @@ function recommend(sub, rd){
       rule:'사용률 50% 이상은 유지로 안내합니다.' };
   }
   if (mt.measure === 'unknown' && !held.length){
+    const gapTxt = (gap != null && gap >= 0) ? '재개일 ' + md(rd) + '까지 ' + gap + '일이 비지만, ' : '';
     return { key:'hold', label:'판단 보류', basisShort:'사용량·작업일 미확인',
-      why:'사용량과 다음 작업일이 모두 확인되지 않았습니다. 지금 중단·하향을 단정하지 않고 <b>판단을 보류</b>합니다. 사용량을 입력하거나 재개일을 정하면 바로 판단합니다.',
+      why:'사용량이 확인되지 않았습니다. ' + gapTxt + '지금 중단·하향을 단정하지 않고 <b>판단을 보류</b>합니다. 사용량을 입력하면 바로 판단합니다.',
       basis:['사용 ' + mt.detail, '연결 작업 없음', '갱신 ' + md(bill) + ' · ' + (d >= 0 ? 'D-' + d : '이미 지난 결제')],
       rule:'정보가 부족하면 판단 보류 — 추측으로 결정하지 않습니다.' };
   }
@@ -1382,6 +1428,11 @@ function recPillText(sub, rec){
   if (rec.key === 'stop' && dday(sub) != null && dday(sub) < 0) return '중단 · 다음 청구부터';
   return '추천 · ' + rec.label;
 }
+function openActionHTML(sub){
+  if (sub.open && sub.open !== '#') return '<a href="' + sub.open + '" target="_blank" rel="noopener">서비스 열기 ↗</a>';
+  if (sub.manageKind === 'contract') return '<button data-act="detail" data-id="' + sub.id + '">계약 관리</button>';
+  return '<button data-act="detail" data-id="' + sub.id + '">서비스 주소 입력</button>';
+}
 function subMeta(sub){
   const parts = [];
   parts.push(sub.date ? md(sub.date) + ' 결제' : '결제일 미확인');
@@ -1406,7 +1457,7 @@ function subCard(sub){
       '</span>' +
     '</button>' +
     '<div class="sub-actions">' +
-      (sub.open && sub.open !== '#' ? '<a href="' + sub.open + '" target="_blank" rel="noopener">서비스 열기 ↗</a>' : '<a href="#" data-act="detail" data-id="' + sub.id + '">서비스 주소 입력</a>') +
+      openActionHTML(sub) +
       '<button data-act="detail" data-id="' + sub.id + '">구독 점검</button>' +
     '</div>' +
   '</div>';
@@ -1494,6 +1545,7 @@ function viewHome(){
       '<button type="button" class="cta-example" data-act="example">예시로 바로 체험</button>' +
       '<button type="button" class="cta-direct" data-act="addopen">직접 입력해 체험</button>' +
     '</div>' +
+    '<button type="button" class="hero-imgentry" data-act="imgopen"><span>🖼</span> 샘플 이미지 한 장으로 등록해 보기 <b>›</b></button>' +
     '<div class="hero-mini"><b>실제 계정·결제 연결 없이</b> 이 브라우저에만 저장됩니다</div>' +
     '<div class="hero-foot"><span>' + avgUsageLabel() + '</span><span>내 결정 <b>' + judgedCount() + '/' + allSubs().length + '</b></span></div>' +
     '<span class="gauge"><i style="width:' + avgUsage() + '%"></i></span>' +
@@ -1518,7 +1570,7 @@ function viewHome(){
   '<div class="list">' + (list.length ? list.map(subCard).join('') : '<div class="empty">조건에 맞는 구독이 없습니다.<br>필터를 바꿔 보세요.</div>') + '</div>' +
   '</div>' +
   privacyStrip() +
-  '<div class="footnote" style="text-align:center;margin-top:9px">판단 기준: 다음 작업 연결 · 사용량/크레딧 · 갱신일(참고 규칙 7일) · 약정 만료<br>사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>';
+  '<div class="footnote" style="text-align:center;margin-top:9px"><b>종합현황 · 이용 포털 · 계약·비용 최적화 · 혜택 활용</b> — 등록은 이 네 가지를 쓰기 위한 첫 단계입니다.<br>판단 기준: 다음 작업 연결 · 사용량/크레딧 · 갱신일(참고 규칙 7일) · 약정 만료. 사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>';
 }
 
 /* ---------- 심층 리포트 ---------- */
@@ -1705,7 +1757,7 @@ function subRows(){
         '</button>' +
       '</div>' +
       '<div class="srow-acts">' +
-        (s.open && s.open !== '#' ? '<a href="' + s.open + '" target="_blank" rel="noopener">서비스 열기 ↗</a>' : '<button data-act="detail" data-id="' + s.id + '">서비스 주소 입력</button>') +
+        openActionHTML(s) +
         (s.origin === 'user'
           ? '<button class="deluser" data-act="deluser" data-id="' + s.id + '">이 구독 삭제</button>'
           : '<button data-act="detail" data-id="' + s.id + '">구독 점검</button>') +
@@ -1721,9 +1773,10 @@ function viewSubs(){
   return '' +
   '<div class="sec-head"><div><div class="sec-title">내 구독</div><div class="sec-desc">' + allSubs().length + '개 · 총 월 ' + fmt(totalMonthly()) + (unknown ? ' · 금액 미확인 ' + unknown + '건 별도' : '') + ' · AI 도구 ' + aiSubs().length + '개</div></div>' +
     '<span class="sec-count">' + avgUsageLabel() + '</span></div>' +
-  '<div class="btnrow">' +
+  '<div class="btnrow three">' +
     '<button class="b1" data-act="addopen">+ 직접 입력</button>' +
-    '<button class="b2" data-act="importopen">내 구독 불러오기</button>' +
+    '<button class="b2" data-act="imgopen">샘플 이미지로 등록</button>' +
+    '<button class="b3" data-act="importopen">불러오기</button>' +
   '</div>' +
   '<div class="search-wrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>' +
     '<input class="search" id="q" type="search" placeholder="구독 이름·카테고리 검색" value="' + esc(S.q) + '"></div>' +
@@ -1829,7 +1882,7 @@ function benefitHTML(sub){
       '<div class="bi"><span class="k">잔여 크레딧</span><span class="v' + (b.creditLeft == null ? ' need' : '') + '">' + credit + '</span></div>' +
       '<div class="bi"><span class="k">만료일</span><span class="v' + (b.creditExpiry ? '' : ' need') + '">' + expiry + '</span></div>' +
     '</div>' +
-    '<div class="bg">다음 작업 <b>' + esc(work) + '</b>에 쓸 수 있는 혜택부터 확인합니다.</div>' +
+    '<div class="bg">' + ((act.length || held.length) ? '다음 작업 <b>' + esc(work) + '</b>에 쓸 수 있는 혜택부터 확인합니다.' : '지금 보유한 혜택부터 확인합니다.') + '</div>' +
     '<ul class="blist">' + g.use.map(function(t){ return '<li>' + t + '</li>'; }).join('') + '</ul>' +
     '<div class="offer"><div class="offer-t">' + (b.creditLeft != null ? '그래도 부족할 때만 — 공식 요금·혜택 비교' : '요금제를 바꿀 때 비교할 공식 항목') + '</div>' +
       offersFor(sub).map(function(o){
@@ -1850,7 +1903,12 @@ function step4Block(sub, dec){
     '<div class="sd-label" style="margin-top:0">4단계 · 직접 처리와 다음 청구 확인 <span>' + ACTIONS[dec.action].short + ' · 재점검 ' + md(dec.recheck) + '</span></div>' +
     (cm.url
       ? '<a class="btn-open-official" href="' + cm.url + '" target="_blank" rel="noopener">' + cm.label + ' ↗</a>'
-      : '<div class="warnbox"><b>결제 채널 확인 필요</b> · ' + cm.hint + '</div>') +
+      : '<div class="warnbox"><b>결제 채널 확인 필요</b> · ' + cm.hint + '</div>' +
+        '<div class="seg4" style="grid-template-columns:repeat(3,1fr);margin-top:5px">' +
+          '<button data-act="setchannel" data-id="' + sub.id + '" data-ch="web">웹</button>' +
+          '<button data-act="setchannel" data-id="' + sub.id + '" data-ch="apple">App Store</button>' +
+          '<button data-act="setchannel" data-id="' + sub.id + '" data-ch="google">Google Play</button>' +
+        '</div>') +
     '<div style="font-size:9px;color:#94A3B8;font-weight:700;margin-top:4px;text-align:center">' + esc(cm.hint) + '</div>' +
     '<button class="chk ' + (dec.handled ? 'on' : '') + '" data-act="markone" data-kind="handled">' +
       '<span class="box"></span><span><b>직접 처리 기록</b><span class="d">공식 페이지에서 변경·중단을 직접 마쳤습니다</span></span></button>' +
@@ -1870,7 +1928,7 @@ function detailSheet(sub){
   return '' +
     '<div class="sd-head"><span class="brand lg" style="background:' + sub.color + '">' + esc(sub.mark) + '</span>' +
       '<div><div class="sd-name">' + esc(sub.name) + ' <span style="font-size:11px;font-weight:700;color:#94A3B8">' + esc(sub.plan || '') + '</span></div>' +
-        '<div class="sd-meta">' + esc(sub.cat || '카테고리 미확인') + ' · ' + channelBadge(sub) + (sub.cycle === 'yearly' ? ' <span class="pill ch">연 결제</span>' : '') + ' · ' + (sub.date ? md(sub.date) + ' 결제 · ' + ddLabel(sub) : '결제일 미확인') + '</div></div>' +
+        '<div class="sd-meta">' + esc(sub.cat || '카테고리 미확인') + ' · ' + channelBadge(sub) + (sub.cycle === 'yearly' ? ' <span class="pill ch">연 결제</span>' : '') + (sub.origin === 'imgsample' ? ' <span class="pill blue">샘플 시연</span>' : '') + ' · ' + (sub.date ? md(sub.date) + ' 결제 · ' + ddLabel(sub) : '결제일 미확인') + '</div></div>' +
       '<button class="x" data-act="close">✕</button></div>' +
     (sub.dayCaveat ? '<div class="warnbox"><b>말일 기준 변동 가능 · 확인 필요</b> · 29~31일 결제는 다음 달 말일에 맞춰 결제일이 바뀔 수 있어 임의로 확정하지 않습니다.</div>' : '') +
     amountsHTML(sub, rdNow) +
@@ -2134,6 +2192,147 @@ function openInstallDOM(){
   clearTimeout(window._instTm);
   window._instTm = setTimeout(function(){ if ($('#overlay .inst-h')) navCloseOverlay(); }, 3000);
 }
+/* ---------- 샘플 이미지로 내 구독 등록 ---------- */
+const IMG_SAMPLES = [
+  { key:'a', kind:'ai', title:'AI·OTT 구독 결제문자', sub:'가상 결제 문자 이미지',
+    fields:{ name:'샘플 AI 영상툴 Pro', price:12900, paidOn:'2026-11-12', next:'', cat:'AI 도구', channel:'web' },
+    note:'문서에 다음 결제일이 없어 미확인으로 둡니다. 필요하면 직접 입력할 수 있습니다.' },
+  { key:'b', kind:'rental', title:'인터넷·정수기 렌탈 청구서', sub:'가상 청구서·계약서 이미지',
+    fields:{ name:'샘플 렌탈케어', price:23900, paidOn:'2026-11-01', billDay:'25', contractEnd:'2027-06-30', cat:'생활·통신', channel:'web' },
+    note:'월 청구일과 약정·의무사용기간 종료일을 따로 확인합니다.' }
+];
+let IMG = null;
+function imgNew(){ return { step:1, key:null, values:{}, err:'' }; }
+function imgSample(key){ return IMG_SAMPLES.filter(function(s){ return s.key === key; })[0] || null; }
+function imgSub(key){ return S.imports.filter(function(s){ return s.imgKey === 'img:' + key; })[0] || null; }
+function dateForDay(day){
+  const d = Number(day);
+  let y = BASE.getFullYear(), m = BASE.getMonth();
+  if (d < BASE.getDate()) m += 1;
+  const last = new Date(y, m + 1, 0).getDate();
+  const dd = Math.min(d, last);
+  return isoOf(new Date(y, m, dd));
+}
+function imgMockHTML(key, big){
+  if (key === 'a'){
+    return '<div class="mock-phone' + (big ? ' big' : '') + '">' +
+      '<div class="mp-top">010-0000-0000 · 문자</div>' +
+      '<div class="mp-bubble">[Web발신]<br><b>샘플 AI 영상툴 Pro</b><br>12,900원 정기결제 승인<br>11/12 09:14</div>' +
+      '<div class="mp-foot">광고성 정보 아님 · 가상 샘플</div>' +
+    '</div>';
+  }
+  return '<div class="mock-bill' + (big ? ' big' : '') + '">' +
+    '<div class="mb-head">정기 이용 청구서 <span>샘플</span></div>' +
+    '<div class="mb-row"><span>이용 상품</span><b>정수기 렌탈 (36개월)</b></div>' +
+    '<div class="mb-row"><span>월 이용료</span><b>23,900원</b></div>' +
+    '<div class="mb-row"><span>청구일</span><b>매월 25일</b></div>' +
+    '<div class="mb-row"><span>약정 종료</span><b>2027-06-30</b></div>' +
+    '<div class="mb-foot">고객 확인용 · 가상 샘플</div>' +
+  '</div>';
+}
+function imgHTML(){
+  const step = IMG.step;
+  return '<div class="sheet-grip"></div>' +
+    '<div class="sd-head"><div><div class="sd-name">샘플 이미지로 등록</div>' +
+      '<div class="sd-meta">이미지에서 찾은 항목을 확인·수정해 등록하는 3단계</div></div>' +
+      '<button class="x" data-act="close">✕</button></div>' +
+    '<div class="imp-lock">실제 영수증·계약서 파일 업로드나 로그인은 없습니다. 직접 그린 <b>가상 샘플 이미지</b>로만 체험합니다.<span>표시된 <b>샘플 시연</b> 배지는 실제 문서가 아님을 뜻합니다.</span></div>' +
+    '<div class="imp-rail" style="grid-template-columns:repeat(3,1fr)">' +
+      [['1','이미지 선택'],['2','항목 확인·수정'],['3','등록 결과']].map(function(d, i){
+        const n = i + 1;
+        return '<div class="st ' + (step === n ? 'on' : (step > n ? 'done' : '')) + '">' + (step > n ? '✓' : d[0]) + ' ' + d[1] + '</div>';
+      }).join('') +
+    '</div>' +
+    (step === 1 ? imgStep1HTML() : step === 2 ? imgStep2HTML() : imgStep3HTML());
+}
+function imgStep1HTML(){
+  return '<div class="imp-desc">어떤 이미지로 등록할지 골라 보세요. 두 샘플 모두 <b>가상으로 그린 이미지</b>이며, 실제 결제·계약과 무관합니다.</div>' +
+    IMG_SAMPLES.map(function(sm){
+      const reg = imgSub(sm.key);
+      return '<div class="imgcard">' +
+        '<div class="imgthumb">' + imgMockHTML(sm.key, false) + '</div>' +
+        '<div class="imgcard-b">' +
+          '<div class="imgcard-t">' + sm.title + ' <span class="demo-badge">샘플 시연</span></div>' +
+          '<div class="imgcard-s">' + sm.sub + '</div>' +
+          '<div class="imgcard-n">' + sm.note + '</div>' +
+          (reg
+            ? '<button class="imgbtn done" data-act="imgchoose" data-key="' + sm.key + '">이미 등록됨 · 다시 보기</button>'
+            : '<button class="imgbtn" data-act="imgchoose" data-key="' + sm.key + '">이 샘플로 등록해 보기 ›</button>') +
+        '</div>' +
+      '</div>';
+    }).join('') +
+    '<div class="futurebox"><b>출시 계획</b> · 제품 출시 때는 <b>실제 이미지 인식 + 사용자 확인 후 등록</b>으로 제공하고, 이후에는 <b>Google Play·카드사 등 공식 조회·제휴가 가능한 채널부터 동의 기반 자동 불러오기</b>로 확장합니다. 지금은 로그인·실계정 연동이 없습니다.</div>';
+}
+function imgStep2HTML(){
+  const sm = imgSample(IMG.key);
+  const v = IMG.values;
+  const reg = imgSub(sm.key);
+  const ai = sm.kind === 'ai';
+  return '<div class="imp-desc">이미지에서 찾은 항목입니다. <b>등록 전에 직접 고칠 수</b> 있고, 확인을 누르기 전에는 목록·합계에 반영되지 않습니다.</div>' +
+    '<div class="imgpreview">' + imgMockHTML(sm.key, true) + '<span class="demo-badge onimg">샘플 시연</span></div>' +
+    '<div class="imp-fields" style="margin-top:8px">' +
+      '<label class="imp-f wide"><span>' + (ai ? '서비스명' : '업체명') + '</span><input id="imgName" type="text" autocomplete="off" value="' + esc(v.name) + '"></label>' +
+      '<label class="imp-f"><span>' + (ai ? '결제 금액 (원)' : '월 이용료 (원)') + '</span><input id="imgPrice" type="text" inputmode="numeric" autocomplete="off" value="' + esc(v.price) + '"></label>' +
+      '<label class="imp-f"><span>카테고리</span><select id="imgCat">' + ['AI 도구','영상·음악','생활·통신','저장·학습'].map(function(c){ return '<option' + (c === v.cat ? ' selected' : '') + '>' + c + '</option>'; }).join('') + '</select></label>' +
+    '</div>' +
+    (ai
+      ? '<div class="imgpaid">' +
+          '<div class="imgpaid-i"><span class="k">이미 결제된 날짜</span><span class="v">' + md(v.paidOn) + '</span><span class="s">문서에 적힌 결제일 · 수정 불가</span></div>' +
+          '<div class="imgpaid-i hl"><span class="k">다음 결제일</span><input id="imgNext" type="text" inputmode="numeric" autocomplete="off" value="' + esc(v.next) + '" placeholder="문서에 없으면 비워 두세요"><span class="s">비우면 <b>미확인</b>으로 저장합니다</span></div>' +
+        '</div>'
+      : '<div class="imp-fields" style="margin-top:0">' +
+          '<label class="imp-f"><span>월 청구일 (1~31)</span><input id="imgBillDay" type="text" inputmode="numeric" autocomplete="off" value="' + esc(v.billDay) + '" placeholder="예: 25"></label>' +
+          '<label class="imp-f"><span>약정·의무사용기간 종료일</span><input id="imgContract" type="text" inputmode="numeric" autocomplete="off" value="' + esc(v.contractEnd) + '" placeholder="YYYY-MM-DD"></label>' +
+          '<div class="imp-f wide"><span style="font-size:8px;color:#94A3B8;font-weight:700">이미 결제된 날짜 · ' + md(v.paidOn) + ' (청구서 발행 기준)</span></div>' +
+        '</div>') +
+    '<div class="imp-note">' + sm.note + ' 29~31일 청구일은 말일 변동 가능으로 표시합니다.</div>' +
+    (reg ? '<div class="imp-err" style="background:#FFF7ED;color:#B45309;border-color:#FDE9C4">이미 등록된 샘플입니다. 다시 등록해도 합계는 늘지 않습니다.</div>' : '') +
+    (IMG.err ? '<div class="imp-err">' + esc(IMG.err) + '</div>' : '') +
+    '<button class="imp-next" data-act="imgregister">' + (reg ? '중복 없이 결과 보기' : '이 항목으로 등록하기') + '</button>' +
+    '<button class="imp-back" data-act="imgback">‹ 다른 샘플 선택</button>';
+}
+function imgCollect(){
+  if (!IMG.key) return;
+  const n = $('#imgName'), p = $('#imgPrice'), c = $('#imgCat');
+  if (n) IMG.values.name = n.value;
+  if (p) IMG.values.price = p.value;
+  if (c) IMG.values.cat = c.value;
+  if (IMG.key === 'a'){ const x = $('#imgNext'); if (x) IMG.values.next = x.value; }
+  else {
+    const d = $('#imgBillDay'), e = $('#imgContract');
+    if (d) IMG.values.billDay = d.value;
+    if (e) IMG.values.contractEnd = e.value;
+  }
+}
+function imgStep3HTML(){
+  const added = IMG.added || [];
+  const sm = imgSample(IMG.key);
+  let h = '<div class="imp-sec"><span class="n">③</span>등록 결과</div>';
+  if (!added.length) h += '<div class="imp-err" style="background:#FFF7ED;color:#B45309;border-color:#FDE9C4">이미 등록된 샘플이라 새로 추가하지 않았습니다 — 중복 집계되지 않습니다.</div>';
+  added.forEach(function(id){
+    const s = subById(id);
+    if (!s) return;
+    const st = statusOf(s);
+    h += '<div class="imp-res-row" style="background:#fff"><div class="imp-res-t">' + esc(s.name) + ' · ' + fmt(s.price) +
+      '<div class="d">' + (s.date ? md(s.date) + ' 갱신' : '다음 결제일 미확인') + ' · 추천 ' + st.rec.label + ' · 샘플 시연</div></div><span class="pill ok">등록됨</span></div>';
+  });
+  h += '<div class="imp-sum"><span>내 구독 <b>' + allSubs().length + '개</b></span><span>월 <b>' + fmt(totalMonthly()) + '</b></span></div>' +
+    '<div class="imp-note">홈과 내 구독에 바로 반영됩니다. 카드에서 <b>계약 관리</b> 또는 <b>서비스 열기</b> → <b>구독 점검</b>으로 이어집니다. 새로고침해도 유지되고, <b>샘플 초기화</b>는 이미지 샘플만 지우며 직접 입력·결정 기록은 그대로 둡니다.</div>' +
+    '<button class="imp-next" data-act="imgdone">홈에서 확인하기</button>' +
+    '<button class="imp-back" data-act="imgsubs">내 구독에서 보기</button>' +
+    '<button class="imp-back" data-act="close">닫기</button>';
+  return h;
+}
+function openImgDOM(){
+  if (!IMG) IMG = imgNew();
+  renderImgDOM();
+}
+function renderImgDOM(keepScroll){
+  const panel = $('#overlay .sheet-panel');
+  const top = (panel && keepScroll) ? panel.scrollTop : 0;
+  if (panel && panel.querySelector('.imgcard, .imgpreview, .imp-res-row')){ panel.innerHTML = imgHTML(); panel.scrollTop = top; }
+  else { openSheetDOM(imgHTML()); }
+}
 /* ---------- 시트 plumbing ---------- */
 function openSheetDOM(html){
   const ov = $('#overlay');
@@ -2222,6 +2421,7 @@ function applyNav(st){
   else if (ov === 'install'){ zoomPopSet(false); if (!$('#overlay .inst-h')) openInstallDOM(); }
   else if (ov === 'add'){ zoomPopSet(false); if (!$('#fName')) openAddDOM(); }
   else if (ov === 'import'){ zoomPopSet(false); if (!$('#overlay .imp-rail')) openImportDOM(); }
+  else if (ov === 'img'){ zoomPopSet(false); if (!$('#overlay .imgcard') && !$('#overlay .imgpreview')) openImgDOM(); }
   else if (ov === 'zoom'){ zoomPopSet(true); }
   if (S.tab !== tab){ S.tab = NAV_TABS.indexOf(tab) > -1 ? tab : 'home'; render(); }
 }
@@ -2436,6 +2636,16 @@ document.addEventListener('click', function(e){
     toast(kind === 'billing' ? (dec.billing ? '다음 청구 확인을 기록했습니다' : '청구 확인 기록을 해제했습니다') : (dec.handled ? '직접 처리 기록' : '직접 처리 기록 해제'));
     return;
   }
+  if (act === 'setchannel'){
+    const sub = subById(el.dataset.id);
+    if (!sub) return;
+    sub.channel = el.dataset.ch;
+    saveState();
+    renderSheetKeepScroll();
+    render();
+    toast('결제 채널을 ' + channelOf(sub).label + '(으)로 저장했습니다');
+    return;
+  }
   if (act === 'undecide'){
     S.decisions = S.decisions.filter(d => d.subId !== S.detailId);
     S.detailChoice = null;
@@ -2601,6 +2811,75 @@ document.addEventListener('click', function(e){
     return;
   }
   if (act === 'install'){ navOpenOverlay('install', null, openInstallDOM); return; }
+
+  /* 샘플 이미지로 등록 */
+  if (act === 'imgopen'){ IMG = imgNew(); navOpenOverlay('img', null, openImgDOM); return; }
+  if (act === 'imgchoose'){
+    const sm = imgSample(el.dataset.key);
+    if (!sm) return;
+    IMG.key = sm.key;
+    IMG.values = Object.assign({}, sm.fields);
+    IMG.err = ''; IMG.added = [];
+    IMG.step = 2;
+    renderImgDOM();
+    return;
+  }
+  if (act === 'imgback'){ IMG.step = 1; IMG.err = ''; renderImgDOM(); return; }
+  if (act === 'imgregister'){
+    imgCollect();
+    const sm = imgSample(IMG.key);
+    const v = IMG.values;
+    const name = String(v.name || '').trim();
+    const price = impPrice(v.price);
+    let err = '';
+    let next = null, billDay = null, contractEnd = null;
+    if (!name) err = '서비스명을 입력해 주세요';
+    else if (!price) err = '금액을 숫자로 입력해 주세요';
+    else if (sm.kind === 'ai'){
+      if (String(v.next || '').trim()){
+        next = parseDateInput(v.next);
+        if (!next) err = '다음 결제일이 올바른 날짜가 아닙니다 (예: 2026-12-12) · 모르면 비워 두세요';
+      }
+    } else {
+      billDay = Number(String(v.billDay || '').replace(/[^\d]/g, ''));
+      if (!billDay || billDay < 1 || billDay > 31) err = '월 청구일을 1~31 사이로 입력해 주세요';
+      else {
+        contractEnd = parseDateInput(v.contractEnd);
+        if (!contractEnd) err = '약정·의무사용기간 종료일을 확인해 주세요 (예: 2027-06-30)';
+      }
+    }
+    if (err){ IMG.err = err; renderImgDOM(true); toast(err); return; }
+    if (imgSub(sm.key)){
+      IMG.added = []; IMG.step = 3; IMG.err = '';
+      renderImgDOM();
+      toast('이미 등록된 샘플입니다 · 중복 집계하지 않았습니다');
+      return;
+    }
+    const colors = { a:'#0EA5E9', b:'#0891B2' };
+    const sub = {
+      id:'img-' + sm.key + '-' + Date.now().toString(36),
+      name:name, plan:'이미지 샘플', price:price, date:(sm.kind === 'ai' ? next : dateForDay(billDay)),
+      paidOn:v.paidOn, cat:v.cat, channel:v.channel || 'web', cycle:'monthly',
+      color:colors[sm.key], mark:sm.key.toUpperCase(),
+      open:'#', manage:'', manageHint:'', manageKind:'contract',
+      origin:'imgsample', imgKey:'img:' + sm.key, source:'샘플 이미지(가상)',
+      billDay:(sm.kind === 'ai' ? null : billDay),
+      dayCaveat:!!(sm.kind !== 'ai' && billDay >= 29),
+      contract:(sm.kind === 'ai' ? null : { end:contractEnd }),
+      benefit:{ usagePct:null, creditLeft:null, creditExpiry:null, rollover:'확인 필요' }
+    };
+    S.imports.push(sub);
+    IMG.added = [sub.id];
+    IMG.step = 3;
+    IMG.err = '';
+    saveState();
+    renderImgDOM();
+    render();
+    toast(name + ' 등록 · ' + (sub.date ? md(sub.date) + ' 갱신' : '다음 결제일 미확인') + ' · 월 ' + fmt(totalMonthly()));
+    return;
+  }
+  if (act === 'imgdone'){ navGoTab('home'); render(); toast('홈에 반영했습니다 · 내 구독 ' + allSubs().length + '개'); return; }
+  if (act === 'imgsubs'){ navGoTab('subs'); render(); toast('내 구독에 반영했습니다 · ' + allSubs().length + '개'); return; }
 
   /* 가상 결제 알림 불러오기 */
   if (act === 'importopen'){ IMP = impNew(); navOpenOverlay('import', null, openImportDOM); return; }
