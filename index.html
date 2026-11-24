@@ -8,7 +8,10 @@
 <meta name="theme-color" content="#0F172A">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="나대신">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
@@ -83,8 +86,8 @@ h1.i-head em{font-style:normal; color:var(--blue); position:relative}
 .footnote{font-size:11.5px; color:var(--muted2); line-height:1.7; margin-top:18px}
 
 /* ============ device ============ */
-.device-col{display:flex; justify-content:center; padding-top:6px}
-.phone{width:404px; height:828px; background:#0B1220; border-radius:54px; padding:11px; position:relative;
+.device-col{display:flex; justify-content:center; align-items:flex-start; padding-top:6px}
+.phone{position:sticky; top:26px; width:404px; height:828px; background:#0B1220; border-radius:54px; padding:11px; position:relative;
   box-shadow:0 50px 90px -50px rgba(15,23,42,.55), 0 18px 40px -30px rgba(15,23,42,.5), inset 0 0 0 2px #1C2534}
 .screen{position:relative; width:100%; height:100%; background:var(--bg); border-radius:44px; overflow:hidden; display:flex; flex-direction:column}
 .notch{position:absolute; top:9px; left:50%; transform:translateX(-50%); width:104px; height:26px; background:#0B1220; border-radius:14px; z-index:30; pointer-events:none}
@@ -109,7 +112,8 @@ h1.i-head em{font-style:normal; color:var(--blue); position:relative}
 
 /* hero */
 .hero{background:linear-gradient(158deg,#111C33 0%,#0F172A 42%,#16233D 100%); border-radius:18px; padding:16px 16px 15px; color:#fff; position:relative; overflow:hidden; box-shadow:0 14px 30px -22px rgba(15,23,42,.8)}
-.hero::after{content:""; position:absolute; right:-46px; top:-56px; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle,rgba(37,99,235,.5),rgba(37,99,235,0) 68%)}
+.hero::after{content:""; position:absolute; right:-46px; top:-56px; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle,rgba(37,99,235,.5),rgba(37,99,235,0) 68%); z-index:0}
+.hero>*{position:relative; z-index:1}
 .hero-top{display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:#93A4BE; font-weight:700; position:relative}
 .hero-total{font-size:26px; font-weight:800; letter-spacing:-.03em; margin:3px 0 13px; position:relative}
 .hero-save{position:relative; background:rgba(255,255,255,.055); border:1px solid rgba(147,197,253,.16); border-radius:13px; padding:11px 12px}
@@ -243,8 +247,8 @@ h1.i-head em{font-style:normal; color:var(--blue); position:relative}
 .row:hover{border-color:#CBD5E1}
 .row .brand{width:32px; height:32px; font-size:9.5px}
 .row-main{flex:1; min-width:0}
-.row-name{font-size:12.5px; font-weight:800; letter-spacing:-.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.row-meta{font-size:10px; color:var(--muted2); font-weight:700; margin-top:2px}
+.row-name{display:block; font-size:12.5px; font-weight:800; letter-spacing:-.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.row-meta{display:block; font-size:10px; color:var(--muted2); font-weight:700; margin-top:2px}
 .row-right{text-align:right; flex:0 0 auto}
 .row-price{font-size:12.5px; font-weight:800; letter-spacing:-.02em}
 .row-right .pill{margin-top:4px; display:inline-block}
@@ -337,7 +341,7 @@ h1.i-head em{font-style:normal; color:var(--blue); position:relative}
   .stage::before{display:none}
   .intro{display:none}
   .device-col{padding:0}
-  .phone{width:100%; height:100dvh; border-radius:0; padding:0; background:transparent; box-shadow:none}
+  .phone{position:static; width:100%; height:100dvh; border-radius:0; padding:0; background:transparent; box-shadow:none}
   .screen{border-radius:0; height:100dvh}
   .notch{display:none}
   .statusbar{display:none}
@@ -646,15 +650,18 @@ function renderTabbar(){
   ).join('');
 }
 
+let lastTab = null;
 function render(){
   renderTabbar();
   const body = $('#appBody');
+  const keep = (lastTab === S.tab) ? body.scrollTop : 0;
+  lastTab = S.tab;
   if (S.tab === 'home') body.innerHTML = viewHome();
   else if (S.tab === 'report') body.innerHTML = viewReport();
   else if (S.tab === 'board') body.innerHTML = viewBoard();
   else if (S.tab === 'subs') body.innerHTML = viewSubs();
   else body.innerHTML = viewHistory();
-  body.scrollTop = 0;
+  body.scrollTop = keep;
 }
 
 /* ---------- view: home ---------- */
@@ -775,7 +782,7 @@ function viewReport(){
 
   return '' +
   '<span class="insight">AI INSIGHT</span>' +
-  '<div class="rep-title">"작업 일정에 맞춰 AI가 최적의<br>구독 유지·정지 시점을 계산합니다"</div>' +
+  '<div class="rep-title">"작업 일정에 맞춰 AI가 최적의<br> 구독 유지·정지 시점을 계산합니다"</div>' +
   '<div class="rep-sub">최근 30일 사용률과 연결된 과제 상태를 함께 보고, 이번 달 판단을 정리했습니다.</div>' +
 
   '<div class="stats">' +
@@ -854,7 +861,7 @@ function subRows(){
       '<span class="row-main"><span class="row-name">' + s.name + '</span>' +
         '<span class="row-meta">' + md(billDay(s)) + ' 결제 · D-' + d + '</span></span>' +
       '<span class="row-right"><span class="row-price">' + fmt(s.price) + '</span>' +
-        '<span class="pill ' + recOf(s).cls + '">' + recOf(s).label + '</span></span>' +
+        badgeFor(s) + '</span>' +
     '</button>';
   }).join('');
 }
@@ -876,7 +883,8 @@ function viewSubs(){
 function viewHistory(){
   if (!S.decisions.length) {
     return '<div class="sec-head"><div class="sec-title">기록</div></div>' +
-      '<div class="empty">아직 저장한 결정이 없습니다.<br>AI 리포트의 시뮬레이터나 구독 상세에서 결정을 저장해 보세요.</div>';
+      '<div class="empty">아직 저장한 결정이 없습니다.<br>AI 리포트의 시뮬레이터나 구독 상세에서 결정을 저장해 보세요.</div>' +
+      '<button class="undo" data-act="reset" style="margin-top:14px">데모 데이터 초기화</button>';
   }
   const map = { keep:['ok','유지'], pause:['warn','일시정지'], cancel:['danger','해지'], down:['soft','하향'] };
   const list = S.decisions.slice().reverse().map(d => {
@@ -894,7 +902,8 @@ function viewHistory(){
     '</div></div>';
   }).join('');
   return '<div class="sec-head"><div><div class="sec-title">기록</div><div class="sec-desc">저장한 결정 ' + S.decisions.length + '건 · 확정 절감 ' + fmt(savedTotal()) + '</div></div>' +
-    '<span class="sec-count">최신순</span></div><div class="tl">' + list + '</div>';
+    '<span class="sec-count">최신순</span></div><div class="tl">' + list + '</div>' +
+    '<button class="undo" data-act="reset" style="margin-top:4px">데모 데이터 초기화</button>';
 }
 
 /* ---------- detail sheet ---------- */
@@ -952,7 +961,7 @@ function toast(msg){
   t.textContent = msg;
   t.classList.add('on');
   clearTimeout(t._tm);
-  t._tm = setTimeout(() => t.classList.remove('on'), 2100);
+  t._tm = setTimeout(function () { t.classList.remove('on'); }, 2100);
 }
 
 /* ---------- decisions ---------- */
@@ -977,7 +986,7 @@ document.addEventListener('click', function (e) {
   const el = e.target.closest('[data-act]');
 
   if (!el) {
-    if (bg) closeSheet();
+    if (bg && e.target.classList && e.target.classList.contains('sheet')) closeSheet();
     return;
   }
   const act = el.dataset.act;
@@ -1024,7 +1033,13 @@ document.addEventListener('click', function (e) {
   if (act === 'sim') {
     S.simAction = el.dataset.choice;
     if (S.simAction === 'pause' && !S.simResume) S.simResume = isoIn(30);
-    render(); return;
+    render();
+    const body = $('#appBody'), res = body.querySelector('.result');
+    if (res) {
+      const rt = res.getBoundingClientRect(), bt = body.getBoundingClientRect();
+      body.scrollTo({ top: body.scrollTop + (rt.top - bt.top) - 12, behavior:'smooth' });
+    }
+    return;
   }
 
   if (act === 'simsave') {
@@ -1082,8 +1097,8 @@ document.addEventListener('click', function (e) {
       cat: '기타', color: colors[S.subs.length % colors.length],
       mark: name.slice(0, 2).toUpperCase(), isNew: true
     });
-    closeSheet(); S.tab = 'subs'; render();
-    toast(name + '을(를) 추가했습니다 · 연결 작업 없음');
+    closeSheet(); S.tab = 'subs'; S.q = ''; S.subCat = '전체'; render();
+    toast(name + ' 구독을 추가했습니다 · 연결 작업 없음');
     return;
   }
 
@@ -1105,7 +1120,7 @@ document.addEventListener('click', function (e) {
 document.addEventListener('change', function (e) {
   const el = e.target.closest('[data-act="simsub"]');
   if (el) { S.simSub = el.value; render(); return; }
-  if (e.target.id === 'simResume') { S.simResume = e.target.value; return; }
+  if (e.target.id === 'simResume') { S.simResume = e.target.value; render(); return; }
 });
 
 document.addEventListener('input', function (e) {
