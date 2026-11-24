@@ -725,6 +725,8 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .chips{flex-wrap:wrap; overflow-x:visible}
 .tab span{white-space:nowrap}
 @media (max-width:1023px){ .tabbar .tab{font-size:9px} }
+
+.chiplab{font-size:8.5px; font-weight:800; color:#94A3B8; margin:2px 0 4px; letter-spacing:.01em}
 </style>
 </head>
 <body>
@@ -1268,9 +1270,9 @@ function decisionFor(id){
   const list = S.decisions.filter(d => d.subId === id);
   return list.length ? list[list.length - 1] : null;
 }
-function statusOf(sub){
+function statusOf(sub, rd){
   const dec = decisionFor(sub.id);
-  const rec = recommend(sub, dec && dec.recheck ? dec.recheck : defaultRecheck(sub));
+  const rec = recommend(sub, rd || (dec && dec.recheck ? dec.recheck : defaultRecheck(sub)));
   return {
     rec: rec,
     dec: dec,
@@ -1725,7 +1727,9 @@ function viewSubs(){
   '</div>' +
   '<div class="search-wrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>' +
     '<input class="search" id="q" type="search" placeholder="구독 이름·카테고리 검색" value="' + esc(S.q) + '"></div>' +
+  '<div class="chiplab">프로젝트·즐겨찾기</div>' +
   '<div class="chips">' + projChips + '</div>' +
+  '<div class="chiplab">카테고리</div>' +
   '<div class="chips" style="margin-top:0">' + CATS.map(c =>
     '<button class="chip ' + (S.subCat === c ? 'on' : '') + '" data-act="subcat" data-cat="' + c + '">' + c + '</button>'
   ).join('') + '</div>' +
@@ -1772,12 +1776,13 @@ function viewHistory(){
     '<button class="undo" data-act="resetsample">샘플 초기화</button>';
 }
 /* ---------- 구독 점검 모달 ---------- */
-function amountsHTML(sub){
+function amountsHTML(sub, rd){
   const dec = decisionFor(sub.id);
   const nd = nextChargeDate(sub);
   const paid = alreadyPaidOn(sub);
   const choice = (S.detailId === sub.id && S.detailChoice) ? S.detailChoice : (dec ? dec.action : null);
-  const rec = recommend(sub, dec && dec.recheck ? dec.recheck : defaultRecheck(sub));
+  const useRd = rd || (dec && dec.recheck ? dec.recheck : defaultRecheck(sub));
+  const rec = recommend(sub, useRd);
   const key = choice || rec.key;
   const avoid = (key === 'stop' && nd && sub.price != null)
     ? { v:fmt(sub.price), s:md(nd) + ' 청구 · ' + (choice ? '내 결정 기준' : '추천 기준 · 결정 전'), cls:'warn' }
@@ -1791,8 +1796,8 @@ function amountsHTML(sub){
     '<div class="amt-i ' + confirmed.cls + '" style="grid-column:1/-1"><span class="k">실제로 확인한 청구</span><span class="v">' + confirmed.v + '</span><span class="s">' + confirmed.s + '</span></div>' +
   '</div>';
 }
-function state4HTML(sub){
-  const st = statusOf(sub);
+function state4HTML(sub, rd){
+  const st = statusOf(sub, rd);
   return '<div class="state4">' +
     '<div class="st4 on"><span class="n">① 추천</span><span class="v">' + st.rec.label + '</span><span class="d">' + st.rec.basisShort + '</span></div>' +
     '<div class="st4' + (st.dec ? ' on' : '') + '"><span class="n">② 내 결정</span><span class="v">' + st.mine + '</span><span class="d">' + (st.dec ? '재개일 ' + md(st.dec.recheck) : '아직 저장 전') + '</span></div>' +
@@ -1868,8 +1873,8 @@ function detailSheet(sub){
         '<div class="sd-meta">' + esc(sub.cat || '카테고리 미확인') + ' · ' + channelBadge(sub) + (sub.cycle === 'yearly' ? ' <span class="pill ch">연 결제</span>' : '') + ' · ' + (sub.date ? md(sub.date) + ' 결제 · ' + ddLabel(sub) : '결제일 미확인') + '</div></div>' +
       '<button class="x" data-act="close">✕</button></div>' +
     (sub.dayCaveat ? '<div class="warnbox"><b>말일 기준 변동 가능 · 확인 필요</b> · 29~31일 결제는 다음 달 말일에 맞춰 결제일이 바뀔 수 있어 임의로 확정하지 않습니다.</div>' : '') +
-    amountsHTML(sub) +
-    state4HTML(sub) +
+    amountsHTML(sub, rdNow) +
+    '<div id="sdState">' + state4HTML(sub, rdNow) + '</div>' +
     '<div class="sd-reason">' +
       '<div><span>작업</span><em>' + (links.length ? '「' + links[0].name + '」 ' + links[0].status + ' · 마감 ' + md(links[0].due) : '연결된 작업 없음') + '</em></div>' +
       '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
@@ -2679,7 +2684,8 @@ function refreshDetail(rd){
   const sub = subById(S.detailId);
   if (!sub) return;
   const b = $('#sdReco'); if (b) b.innerHTML = recoHTML(sub, rd);
-  const amt = $('#overlay .amt'); if (amt) amt.outerHTML = amountsHTML(sub);
+  const amt = $('#overlay .amt'); if (amt) amt.outerHTML = amountsHTML(sub, rd);
+  const st = $('#sdState'); if (st) st.innerHTML = state4HTML(sub, rd);
   saveState();
 }
 
