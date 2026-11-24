@@ -60,6 +60,17 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .values .vi svg{width:15px; height:15px; stroke:var(--blue); fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
 .values b{display:block; font-weight:800; color:var(--ink); font-size:13px}
 
+/* 종합생애관리 4축 */
+.axis{display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:0 0 20px}
+.ax{background:#fff; border:1px solid var(--line); border-radius:11px; padding:9px 10px; box-shadow:var(--shadow)}
+.ax .k{display:block; font-size:9px; font-weight:800; color:#94A3B8; letter-spacing:.02em}
+.ax b{display:block; font-size:11.5px; font-weight:800; letter-spacing:-.02em; margin-top:2px; line-height:1.4}
+.ax .d{display:block; font-size:10px; color:var(--muted); font-weight:600; line-height:1.5; margin-top:3px}
+.ax.on{background:linear-gradient(155deg,#111C33 0%,#0F172A 52%,#16233D 100%); border-color:#16233D; box-shadow:0 12px 26px -20px rgba(15,23,42,.85)}
+.ax.on .k{color:#93C5FD}
+.ax.on b{color:#fff}
+.ax.on .d{color:#B9C7DA}
+
 .card-block{background:#fff; border:1px solid var(--line); border-radius:18px; padding:18px; box-shadow:var(--shadow); margin-bottom:14px}
 .cb-head{display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:800; margin-bottom:4px}
 .cb-head svg{width:16px;height:16px;stroke:#2563EB;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -157,12 +168,21 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .hero-total span{font-size:11.5px; font-weight:700; color:#9FB3CE; letter-spacing:0; margin-left:6px}
 .hero-tiles{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:11px}
 .ht{background:rgba(255,255,255,.055); border:1px solid rgba(147,197,253,.14); border-radius:11px; padding:8px 7px 7px}
-.ht .k{font-size:9px; color:#93A4BE; font-weight:800; letter-spacing:-.01em; white-space:nowrap}
-.ht .v{font-size:18px; font-weight:800; color:#fff; letter-spacing:-.03em; margin-top:2px; line-height:1.1}
+.ht .k{display:block; font-size:9px; color:#93A4BE; font-weight:800; letter-spacing:-.01em; white-space:nowrap}
+.ht .v{display:block; font-size:18px; font-weight:800; color:#fff; letter-spacing:-.03em; margin-top:2px; line-height:1.1}
 .ht .u{font-size:10.5px; font-weight:800; letter-spacing:0; margin-left:1.5px}
-.ht .s{font-size:8.5px; color:#7F93B0; font-weight:700; margin-top:2px; line-height:1.35}
+.ht .s{display:block; font-size:8.5px; color:#7F93B0; font-weight:700; margin-top:2px; line-height:1.35}
 .ht.amber .v{color:#FDBA74}
 .ht.red .v{color:#FCA5A5}
+/* 요약 타일 = 바로 필터로 이어지는 버튼 */
+.ht{position:relative; display:block; width:100%; text-align:left; font-family:inherit; transition:background .15s, border-color .15s, transform .1s}
+.ht .k{padding-right:9px}
+.ht .go{position:absolute; top:6px; right:6px; font-size:10px; font-weight:800; line-height:1; color:#7F93B0}
+.ht:hover{background:rgba(255,255,255,.10); border-color:rgba(147,197,253,.34)}
+.ht:active{transform:scale(.985)}
+.ht:focus-visible{outline:2px solid #93C5FD; outline-offset:2px}
+.ht.on{background:rgba(37,99,235,.30); border-color:rgba(147,197,253,.62)}
+.ht.on .go{color:#fff}
 .hero-foot{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px; font-size:10px; color:#9FB3CE; font-weight:700}
 .hero-foot b{color:#fff; font-weight:800}
 .hero .gauge{background:rgba(255,255,255,.14); height:5px; margin-top:6px}
@@ -250,6 +270,10 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .rep-li .ar{flex:0 0 auto; color:#94A3B8; font-weight:800}
 .rep-li b{color:var(--ink); font-weight:800}
 .rep-foot{margin-top:11px; padding-top:9px; border-top:1px solid var(--line2); font-size:9.5px; color:var(--muted2); font-weight:700; line-height:1.55}
+.rep-step{display:inline-block; font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border:1px solid #DCE7FF; border-radius:4px; padding:1px 4px; margin-right:4px; vertical-align:1px; letter-spacing:-.01em}
+.rep-step.two{color:#B45309; background:#FFF7ED; border-color:#FDE9C4}
+.rep-note{margin-top:8px; padding:7px 8px; border-radius:8px; background:#F8FAFC; border:1px solid var(--line2); font-size:9px; line-height:1.55; color:#64748B; font-weight:700}
+.rep-note b{color:#334155}
 
 .panel{background:#fff; border:1px solid var(--line); border-radius:16px; padding:13px; box-shadow:var(--shadow); margin-top:11px}
 .panel-h{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:800; letter-spacing:-.01em}
@@ -389,6 +413,20 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .sd-reason div{display:flex; gap:6px; font-size:10px; color:#475569; font-weight:600; line-height:1.55}
 .sd-reason em{font-style:normal; color:#475569; font-weight:600; font-size:10px}
 .sd-reason span{flex:0 0 auto; font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border-radius:4px; padding:2px 4px; height:fit-content}
+/* 줄이기 전에 먼저 확인 (보유 활용 · 한국형 공식 혜택) */
+.before{margin-top:11px; border:1px solid #DFE8F4; border-radius:13px; background:linear-gradient(180deg,#FCFDFF 0%,#F7FAFF 100%); padding:10px 11px 9px}
+.before-h{display:flex; align-items:center; gap:5px; font-size:11px; font-weight:800; letter-spacing:-.015em; color:var(--ink)}
+.before-h .em{font-size:11px; line-height:1}
+.before-h .btag{margin-left:auto; font-size:8.5px; font-weight:800; color:#64748B; background:#EDF2F9; border:1px solid #E2E8F0; border-radius:4px; padding:2px 5px; letter-spacing:-.01em}
+.before-g{margin-top:8px}
+.before-k{display:flex; align-items:center; gap:4px; font-size:9.5px; font-weight:800; color:#1D4ED8; letter-spacing:-.01em}
+.before-k i{width:4px; height:4px; border-radius:50%; background:#2563EB; display:block; flex:0 0 auto}
+.before-l{list-style:none; padding:0; margin:4px 0 0; display:grid; gap:3px}
+.before-l li{position:relative; padding-left:9px; font-size:9.8px; line-height:1.6; color:#475569; font-weight:600}
+.before-l li::before{content:"·"; position:absolute; left:0; top:-1px; color:#94A3B8; font-weight:800}
+.before-l b{color:var(--ink); font-weight:800}
+.before-note{margin-top:8px; padding-top:7px; border-top:1px dashed #E2E8F0; font-size:9px; line-height:1.55; color:#94A3B8; font-weight:700}
+.before-note b{color:#64748B}
 .sd-label{display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:800; color:var(--ink); margin:14px 0 6px}
 .sd-label span{font-size:9px; color:var(--muted2); font-weight:700}
 .date-input{flex:1 1 auto; min-width:0; height:41px; border:1px solid var(--line); border-radius:11px; background:#F8FAFC; padding:0 11px; font-size:12.5px; font-weight:800; color:var(--ink)}
@@ -480,13 +518,36 @@ h1.i-head em{font-style:normal; color:var(--blue)}
       </span>
       <div>
         <div class="i-name">나대신 구독케어</div>
-        <div class="i-sub">AI 구독 점검·판단 비서</div>
+        <div class="i-sub">구독 종합생애관리 · AI 구독케어 에이전트</div>
       </div>
       <span class="i-badge"><i></i>모두의 창업 2R 시제품</span>
     </div>
 
     <h1 class="i-head">구독은 한눈에,<br>필요한 도구는 <em>바로 열고</em>,<br>갱신은 다음 작업에 맞춰.</h1>
-    <p class="i-lead">결제내역만으로는 보이지 않는 <b>AI 도구의 크레딧·한도·용도 중복까지 판단</b>합니다. 다음 작업 일정에 견주어 갱신 전에 유지·하향·중단을 정하고, 고객이 공식 페이지에서 처리한 뒤 <b>다음 청구까지</b> 확인합니다.</p>
+    <p class="i-lead">구독의 <b>시작부터 활용·변경·해지·다음 청구 확인</b>까지 — 구독서비스를 종합적으로 관리하는 <b>한국형 개인 맞춤형 구독케어 에이전트</b>입니다. 결제내역만으로는 보이지 않는 AI 도구의 크레딧·한도·용도 중복까지 판단하고, 갱신 전에 유지·하향·중단을 정해 고객이 공식 페이지에서 처리한 뒤 <b>다음 청구까지</b> 확인합니다.</p>
+
+    <div class="axis">
+      <div class="ax">
+        <span class="k">① 한곳에서</span>
+        <b>보고, 바로 연다</b>
+        <span class="d">구독·비용·갱신일·크레딧을 한 화면에서 보고 공식 사이트로 바로 이동</span>
+      </div>
+      <div class="ax">
+        <span class="k">② 내 작업에 맞춰</span>
+        <b>재개일로 판단한다</b>
+        <span class="d">사용률이 낮아도 다음 작업이 가까우면 유지·요금제 변경·중단을 제안</span>
+      </div>
+      <div class="ax on">
+        <span class="k">③ 줄이기 전에</span>
+        <b>이미 가진 것부터 쓴다</b>
+        <span class="d">보유 기능·잔여 크레딧을 먼저 쓰고, 한국 공식 할인·번들·대체 요금제를 함께 비교</span>
+      </div>
+      <div class="ax">
+        <span class="k">④ 끝까지</span>
+        <b>다음 청구까지 확인한다</b>
+        <span class="d">공식 처리 경로로 안내하고 실제 반영 여부를 다음 청구에서 기록</span>
+      </div>
+    </div>
 
     <ul class="values">
       <li>
@@ -531,27 +592,27 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         <svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="4.2"/></svg>
         서비스 확장 로드맵
       </div>
-      <p class="cb-desc">가상 시제품과 조사로 판단 규칙을 세우고, <b>2R 직접 입력 웹 MVP</b>로 검증한 뒤 인허가·승인 기반 실행으로 넓힙니다.</p>
+      <p class="cb-desc">사업 범위를 <b>시제품 / 제품화 / 안정화 후 확장</b>으로 나눠 봅니다. 지금 시제품은 가상 데이터로 판단 규칙을 시연하는 단계이고, 실제 계정 연동·자동 변경·실청구 확인은 이후 범위입니다.</p>
       <div class="road">
         <div class="road-step">
           <div class="rs-k">1단계</div>
           <div>
             <div class="rs-t">가상 시제품 · 고객 조사 <span>완료</span></div>
-            <div class="rs-d">2차 설문 218건 · 체험 설문 8명 · V2.3 가상 데이터 14개</div>
+            <div class="rs-d">지금 보여주는 것 · 2차 설문 218건 · 체험 설문 8명 · 가상 데이터 14개로 판단 규칙 시연</div>
           </div>
         </div>
         <div class="road-step">
           <div class="rs-k">2단계</div>
           <div>
             <div class="rs-t">2R 직접 입력 웹 MVP · 리포트 검증 <span>진행</span></div>
-            <div class="rs-d">사용량·크레딧 직접 입력, 9,900원 리포트 유료 구매 검증 (사용성 20명)</div>
+            <div class="rs-d">제품화 · 사용량·크레딧 직접 입력, 9,900원 리포트 유료 구매 검증 (사용성 20명)</div>
           </div>
         </div>
         <div class="road-step dim">
           <div class="rs-k">3단계</div>
           <div>
             <div class="rs-t">인허가·승인 기반 변경·해지 지원</div>
-            <div class="rs-d">제휴·승인 범위에서 변경·해지 실행, 2028~ 디지털 구독 전반으로 확장</div>
+            <div class="rs-d">안정화 후 확장 · 제휴·승인 범위에서 변경·해지 실행, 2028~ 디지털 구독 전반</div>
           </div>
         </div>
       </div>
@@ -576,7 +637,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
       </div>
     </div>
 
-    <p class="footnote">'모두의 창업' 2라운드 시제품입니다. 화면의 14개 구독은 사업계획서 붙임 1과 같은 가상 데이터이며 실제 결제·변경은 발생하지 않습니다. 판단은 규칙 기반 시연이고, 나대신은 비밀번호·카드번호를 받지 않습니다.</p>
+    <p class="footnote">'모두의 창업' 2라운드 시제품입니다. 화면의 14개 구독은 사업계획서 붙임 1과 같은 가상 데이터이며 실제 결제·변경은 발생하지 않습니다. 판단은 규칙 기반 시연이고, 나대신은 비밀번호·카드번호를 받지 않습니다. 구독 점검의 '줄이기 전에 먼저 확인'은 공식 서비스에서 직접 확인할 항목을 정리한 예시 가이드입니다.</p>
   </aside>
 
   <!-- ================= DEVICE ================= -->
@@ -733,7 +794,7 @@ function loadState(){
   if (typeof o.simDate === 'string' && (!o.simDate || /^\d{4}-\d{2}-\d{2}$/.test(o.simDate))) S.simDate = o.simDate;
   if (o.simAct && ACTIONS[o.simAct]) S.simAct = o.simAct;
   if (o.tab && ['home','report','board','subs','history'].indexOf(o.tab) > -1) S.tab = o.tab;
-  if (['all','ai','soon','need'].indexOf(o.homeFilter) > -1) S.homeFilter = o.homeFilter;
+  if (['all','ai','soon','past','need'].indexOf(o.homeFilter) > -1) S.homeFilter = o.homeFilter;
   if (o.subCat) S.subCat = o.subCat;
 }
 
@@ -936,6 +997,108 @@ function orderIdx(sub){
 }
 function byDisplayOrder(a, b){ return orderIdx(a) - orderIdx(b); }
 
+/* ---------- 줄이기 전에 먼저 확인 (③ 보유 활용 · 한국형 공식 혜택) ----------
+   ③ "줄이기 전에, 이미 가진 것부터 잘 쓴다"를 시제품에서 보여주는 블록입니다.
+   실제 요금·혜택을 추정하거나 단정하지 않고, 어떤 항목을 어떤 순서로 확인하면
+   되는지의 '예시 가이드'만 둡니다(최종 확인은 각 서비스 공식 페이지에서).
+   {creditLeft}·{storageLeft}·{contractEnd}는 해당 구독의 가상 데이터로 채웁니다. */
+const GUIDE = {
+  chatgpt: {
+    use:['이번 주 대화·문서 작업을 Plus 한도 안에서 먼저 끝냈는지 확인합니다.',
+         'Claude·Genspark와 같은 용도에 겹쳐 쓰고 있지 않은지 정리합니다.'],
+    official:['월간/연간 주기와 개인·팀 요금제 중 작업량에 맞는 쪽을 공식 요금표에서 비교합니다.',
+              '학생·교육 등 공식 감면 조건에 해당하는지 확인합니다.']
+  },
+  claude: {
+    use:['논문·문서 작업에 Pro 사용 한도를 먼저 다 쓰고, 남은 한도가 있는지 확인합니다.',
+         'Claude에서 끝낼 수 있는 작업을 다른 AI와 나눠 결제하고 있지 않은지 봅니다.'],
+    official:['월간/연간 전환과 팀 요금제 중 실제 사용량에 맞는 조건을 공식 페이지에서 비교합니다.']
+  },
+  netflix: {
+    use:['보고 싶은 작품이 몰린 달에만 시청하고, 남은 기간 프로필·다운로드 혜택을 씁니다.',
+         '가족이 실제로 함께 보는 인원에 프로필 수를 맞춥니다.'],
+    official:['광고형·스탠다드·프리미엄 중 화질·동시 시청 수에 맞는 공식 요금제를 비교합니다.',
+              '통신사 멤버십·카드 제휴의 공식 할인·번들 조건을 확인합니다.']
+  },
+  coupang: {
+    use:['이번 달 로켓배송·쿠팡이츠·쿠팡플레이를 실제로 몇 번 썼는지 보고 유지 여부를 정합니다.',
+         '와우에 딸린 이츠 할인·플레이 혜택을 아직 안 썼다면 먼저 사용합니다.'],
+    official:['연간 결제·카드 제휴 등 공식 멤버십 조건을 비교합니다.']
+  },
+  manus: {
+    use:['남은 크레딧 <b>{creditLeft}</b>을 다음 작업에 먼저 소진합니다.',
+         '크레딧이 소멸·이월되는 조건인지 공식 안내에서 확인합니다.'],
+    official:['정기 결제와 종량(부가 크레딧) 구매 중 작업 빈도에 맞는 쪽을 비교합니다.']
+  },
+  higgsfield: {
+    use:['보유 크레딧·영상 생성 한도를 다음 썸네일·숏폼 작업에 먼저 씁니다.',
+         '작업이 보류된 동안 크레딧이 소멸되지 않는지 확인합니다.'],
+    official:['월간/연간 요금제와 크레딧 충전 중 작업 빈도에 맞는 쪽을 비교합니다.']
+  },
+  vrew: {
+    use:['Pro 한도 안에서 이번 달 자막·편집 작업을 먼저 마무리합니다.'],
+    official:['무료·라이트 요금제로 충분한지 공식 요금표에서 비교하고, 연간 결제 조건도 함께 봅니다.']
+  },
+  genspark: {
+    use:['Genspark에서만 되는 기능(에이전트 결과물)을 먼저 써 보고, ChatGPT·Claude와 겹치는 용도를 정리합니다.'],
+    official:['무료 티어와 월간/연간 요금제 조건을 공식 페이지에서 비교합니다.']
+  },
+  suno: {
+    use:['남은 곡 생성 크레딧을 12월 시리즈 작업에 먼저 씁니다.'],
+    official:['무료 티어 곡 수와 월간/연간 요금제 조건을 비교합니다.']
+  },
+  youtube: {
+    use:['Premium에 포함된 YouTube Music을 Spotify 대신 쓸 수 있는지 확인합니다.',
+         '광고 제거·백그라운드 재생을 실제로 쓰는 기기 수를 확인합니다.'],
+    official:['개인·가족·학생 요금제와 통신사 멤버십 번들 조건을 비교합니다.']
+  },
+  spotify: {
+    use:['YouTube Premium에 포함된 음악 기능과 겹치는 용도를 먼저 확인합니다.'],
+    official:['개인·듀오·패밀리·학생 요금제 중 실제 함께 쓰는 인원에 맞는 조건을 비교합니다.']
+  },
+  g1: {
+    use:['남은 저장공간 <b>{storageLeft}</b>을 먼저 쓰고, 드라이브·사진의 큰 파일을 정리한 뒤 필요 용량을 다시 봅니다.'],
+    official:['100GB·200GB 요금제와 연간 결제 조건을 공식 페이지에서 비교합니다.']
+  },
+  duolingo: {
+    use:['Super 혜택(광고 제거·무제한 하트) 중 실제로 쓰는 기능이 있는지 확인합니다.'],
+    official:['월간/연간(연간 할인)과 가족 요금제 조건을 비교합니다.']
+  },
+  skb: {
+    use:['약정 기간에 받기로 한 공식 사은품·상품권을 모두 받았는지 확인합니다.',
+         '남은 약정 기간과 해지 시 위약금 조건을 공식 안내에서 확인합니다.'],
+    official:['만료 전 재약정 조건, 모바일 결합 할인, 공식 사은품 조건을 만료 전에 나란히 비교합니다.']
+  },
+  _default: {
+    use:['무료·기본 기능으로 처리할 수 있는 일을 먼저 해 보았는지 확인합니다.'],
+    official:['월간/연간·번들·멤버십 등 공식 요금제 조건을 서비스 공식 페이지에서 비교합니다.']
+  }
+};
+
+function guideFor(sub){
+  const g = GUIDE[sub.id] || GUIDE._default;
+  const tok = {
+    '{creditLeft}': sub.credit ? num(sub.credit.total - sub.credit.used) : '',
+    '{storageLeft}': sub.storage ? (sub.storage.total - sub.storage.used) + 'GB' : '',
+    '{contractEnd}': sub.contract ? md(sub.contract.end) : ''
+  };
+  const fill = t => String(t).replace(/\{creditLeft\}|\{storageLeft\}|\{contractEnd\}/g, m => tok[m] || '');
+  return { use:g.use.map(fill), official:g.official.map(fill) };
+}
+
+function beforeHTML(sub){
+  const g = guideFor(sub);
+  const li = arr => arr.map(t => '<li>' + t + '</li>').join('');
+  return '<div class="before">' +
+    '<div class="before-h"><span class="em">💡</span>줄이기 전에 먼저 확인<span class="btag">가상 예시</span></div>' +
+    '<div class="before-g"><div class="before-k"><i></i>보유 기능·크레딧 먼저 쓰기</div>' +
+      '<ul class="before-l">' + li(g.use) + '</ul></div>' +
+    '<div class="before-g"><div class="before-k"><i></i>한국형 공식 할인·번들·대체 요금제</div>' +
+      '<ul class="before-l">' + li(g.official) + '</ul></div>' +
+    '<div class="before-note">실제 요금·혜택은 서비스마다 바뀝니다. 위 항목을 <b>공식 서비스의 요금·혜택 페이지에서 직접 확인</b>하는 예시 가이드입니다.</div>' +
+  '</div>';
+}
+
 /* ---------- 집계 ---------- */
 function totalPrice(){ return S.subs.reduce((a,s) => a + s.price, 0); }
 function aiSubs(){ return S.subs.filter(s => s.cat === 'AI 도구'); }
@@ -1038,16 +1201,30 @@ function privacyStrip(){
 /* ---------- view: home ---------- */
 function filteredHome(){
   /* 홈 목록은 지정 순서. 단 [갱신 임박]은 갱신일이 임박한 순서로 봐야 하므로 D-day 순 유지 */
-  const list = S.subs.slice().sort(S.homeFilter === 'soon'
+  const list = S.subs.slice().sort((S.homeFilter === 'soon' || S.homeFilter === 'past')
     ? ((a,b) => dday(a) - dday(b))
     : byDisplayOrder);
   return list.filter(s => {
     const d = dday(s);
     if (S.homeFilter === 'ai') return s.cat === 'AI 도구';
     if (S.homeFilter === 'soon') return d >= 0 && d <= 7;
+    if (S.homeFilter === 'past') return d < 0;
     if (S.homeFilter === 'need') return d < 0 || judge(s).key !== 'keep';
     return true;
   });
+}
+
+function homeFilterGo(f, scroll){
+  if (['all','ai','soon','past','need'].indexOf(f) < 0) return;
+  S.homeFilter = f;
+  render();
+  if (!scroll) return;
+  setTimeout(function () {
+    const t = $('#homeResult'), body = $('#appBody');
+    if (!t || !body) return;
+    const rt = t.getBoundingClientRect(), bt = body.getBoundingClientRect();
+    body.scrollTo({ top: body.scrollTop + (rt.top - bt.top) - 6, behavior:'smooth' });
+  }, 40);
 }
 
 function filterNote(){
@@ -1057,6 +1234,9 @@ function filterNote(){
   }
   if (S.homeFilter === 'soon'){
     return '<div class="filter-note"><b>7일 이내 갱신 ' + soonCount() + '개</b> · 갱신 전에 다음 작업과 견주어 판단이 필요한 구독만 모았습니다.</div>';
+  }
+  if (S.homeFilter === 'past'){
+    return '<div class="filter-note"><b>결제일이 지난 ' + pastCount() + '개</b> · 갱신일이 지나 이번 청구가 실제로 결제되었는지 확인하고, 다음 작업에 맞춰 재개일을 정하세요.</div>';
   }
   if (S.homeFilter === 'need'){
     return '<div class="filter-note"><b>판단 ' + (needCount() - pastCount()) + '개 + 결제 경과 ' + pastCount() + '개 = ' + needCount() + '개</b> · 판단 근거를 눌러 [구독 점검]에서 확인하세요.</div>';
@@ -1070,6 +1250,7 @@ function viewHome(){
     { id:'all', label:'전체', n:S.subs.length },
     { id:'ai', label:'AI 도구 집중', n:aiSubs().length },
     { id:'soon', label:'갱신 임박', n:soonCount() },
+    { id:'past', label:'경과 확인', n:pastCount() },
     { id:'need', label:'판단 필요', n:needCount() }
   ];
   const hf = S.subs.find(s => s.id === 'higgsfield') || S.subs[0];
@@ -1081,9 +1262,12 @@ function viewHome(){
     '<div class="hero-top"><span>월 환산 구독료</span><span class="lock">2026년 11월 20일 기준</span></div>' +
     '<div class="hero-total">' + fmt(totalPrice()) + ' <span>' + S.subs.length + '개 구독</span></div>' +
     '<div class="hero-tiles">' +
-      '<div class="ht"><div class="k">갱신 임박</div><div class="v">' + soonCount() + '<span class="u">개</span></div><div class="s">7일 이내</div></div>' +
-      '<div class="ht red"><div class="k">경과 확인</div><div class="v">' + pastCount() + '<span class="u">개</span></div><div class="s">결제일 지남</div></div>' +
-      '<div class="ht amber"><div class="k">판단 필요</div><div class="v">' + needCount() + '<span class="u">개</span></div><div class="s">다음 작업 연동</div></div>' +
+      '<button type="button" class="ht' + (S.homeFilter === 'soon' ? ' on' : '') + '" data-act="tile" data-filter="soon" aria-label="갱신 임박 ' + soonCount() + '개 목록 보기">' +
+        '<span class="go">›</span><span class="k">갱신 임박</span><span class="v">' + soonCount() + '<span class="u">개</span></span><span class="s">7일 이내</span></button>' +
+      '<button type="button" class="ht red' + (S.homeFilter === 'past' ? ' on' : '') + '" data-act="tile" data-filter="past" aria-label="결제일 지난 ' + pastCount() + '개 목록 보기">' +
+        '<span class="go">›</span><span class="k">경과 확인</span><span class="v">' + pastCount() + '<span class="u">개</span></span><span class="s">결제일 지남</span></button>' +
+      '<button type="button" class="ht amber' + (S.homeFilter === 'need' ? ' on' : '') + '" data-act="tile" data-filter="need" aria-label="판단 필요 ' + needCount() + '개 목록 보기">' +
+        '<span class="go">›</span><span class="k">판단 필요</span><span class="v">' + needCount() + '<span class="u">개</span></span><span class="s">다음 작업 연동</span></button>' +
     '</div>' +
     '<div class="hero-foot"><span>' + avgUsageLabel() + '</span><span>점검 완료 <b>' + judgedCount() + '/' + S.subs.length + '</b></span></div>' +
     '<span class="gauge"><i style="width:' + avgUsage() + '%"></i></span>' +
@@ -1096,12 +1280,14 @@ function viewHome(){
     '</span>' +
     '<span class="banner-ic">!</span>' +
   '</button>' +
+  '<div id="homeResult">' +
   '<div class="chips">' + chips.map(f =>
       '<button class="chip ' + (S.homeFilter === f.id ? 'on' : '') + '" data-act="hfilter" data-filter="' + f.id + '">' +
         f.label + '<span class="n">' + f.n + '</span></button>'
     ).join('') + '</div>' +
   filterNote() +
   '<div class="list">' + (list.length ? list.map(subCard).join('') : '<div class="empty">조건에 맞는 구독이 없습니다.<br>필터를 바꿔 보세요.</div>') + '</div>' +
+  '</div>' +
   privacyStrip() +
   '<div class="footnote" style="text-align:center;margin-top:9px">판단 기준: 다음 작업 연결 · 사용률/크레딧 · 갱신일(7일) · 약정 만료<br>사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>';
 }
@@ -1148,10 +1334,13 @@ function viewReport(){
       '<div class="rep-li"><span class="ar">›</span><span>Claude·Genspark·쿠팡 와우·Netflix·Suno·YouTube Premium·듀오링고·Spotify Premium 8개는 <b>사용량 미확인</b> — 확인되기 전에는 숫자를 만들지 않고 판단만 보류합니다.</span></div>' +
     '</div>' +
 
-    '<div class="rep-sec"><div class="rep-h"><span class="no">3</span>월간·연간 / 대체 요금제 전환 제안</div>' +
-      '<div class="rep-li"><span class="ar">›</span><span><b>SK브로드밴드</b> 약정 만료 ' + md('2026-12-10') + ' — 재약정·요금제 조건을 만료 전에 비교.</span></div>' +
-      '<div class="rep-li"><span class="ar">›</span><span><b>Manus</b> — 크레딧을 다 쓴 뒤 재결제(종량)로 돌리는 쪽이 맞는지 검토.</span></div>' +
-      '<div class="rep-li"><span class="ar">›</span><span><b>Claude</b> — 월 결제 유지, 논문 종료 시점에 결제 주기 재검토.</span></div>' +
+    '<div class="rep-sec"><div class="rep-h"><span class="no">3</span>보유 활용 → 공식 혜택·요금제 전환 제안</div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step">먼저</span><b>Manus 크레딧 4,000/20,000</b> — 남은 16,000을 다음 작업에 먼저 쓰고, 다 쓴 뒤 정기 결제·종량 중 맞는 쪽을 정합니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step">먼저</span><b>ChatGPT · Claude · Genspark</b> — 겹치는 용도는 한 곳으로 몰고, 각 서비스에만 있는 기능을 먼저 써 봅니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>SK브로드밴드</b> 약정 만료 ' + md('2026-12-10') + ' — 재약정·모바일 결합·공식 사은품 조건을 만료 전에 비교합니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>YouTube · Spotify · Netflix</b> — 통신사 멤버십, 패밀리·학생·광고형 등 공식 요금제 대안을 비교합니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>AI 도구 7개 · 쿠팡 와우</b> — 작업·이용 빈도에 맞춘 월간/연간·종량·무료 티어 전환을 검토합니다.</span></div>' +
+      '<div class="rep-note">보유 크레딧·기능을 먼저 쓰고, 그래도 남는 비용만 <b>공식 할인·번들·대체 요금제</b>로 비교합니다. 실제 요금·혜택은 각 서비스 공식 페이지에서 직접 확인하는 예시입니다.</div>' +
     '</div>' +
 
     '<div class="rep-sec"><div class="rep-h"><span class="no">4</span>다음 작업일 기준 갱신 전 재점검일</div>' +
@@ -1159,7 +1348,7 @@ function viewReport(){
         '<div class="rep-li"><span class="ar">›</span><span>' + r.work + ' (' + mdw(r.due) + ') → <b>' + r.sub + '</b> 재점검 ' + mdw(r.when) + '</span></div>'
       ).join('') +
     '</div>' +
-    '<div class="rep-foot">담긴 것: 중복 · 크레딧·한도 · 전환 제안 · 재점검일 / 담지 않은 것: 결제·변경·해지 실행, 계정 연동, 비밀번호·카드번호</div>' +
+    '<div class="rep-foot">담긴 것: 중복 · 크레딧·한도 · 보유 활용 · 공식 혜택·대체 요금제 · 재점검일 / 담지 않은 것: 결제·변경·해지 실행, 계정 연동, 비밀번호·카드번호</div>' +
   '</div>' +
 
   '<div class="panel">' +
@@ -1421,6 +1610,7 @@ function detailSheet(sub){
       '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
       '<div><span>갱신</span><em>' + md(sub.date) + ' · ' + (d >= 0 ? '갱신까지 ' + d + '일' : '결제 완료 · 다음 청구 ' + md(nextBill(sub))) + '</em></div>' +
     '</div>' +
+    beforeHTML(sub) +
     '<div class="sd-label">재개일 (다음 작업일) <span>날짜만 바뀌어도 추천이 자동으로 바뀝니다</span></div>' +
     '<div class="date-group">' +
       '<input type="text" id="dRecheck" class="date-input" inputmode="numeric" autocomplete="off" placeholder="YYYY-MM-DD" value="' + rdNow + '">' +
@@ -1705,6 +1895,7 @@ document.addEventListener('click', function (e) {
 
   if (act === 'tab') { navGoTab(el.dataset.tab); return; }
   if (act === 'hfilter') { S.homeFilter = el.dataset.filter; render(); return; }
+  if (act === 'tile') { homeFilterGo(el.dataset.filter, true); return; }
   if (act === 'subcat') { S.subCat = el.dataset.cat; render(); return; }
   if (act === 'detail') { openDetail(el.dataset.id); return; }
   if (act === 'close') { navCloseOverlay(); return; }
