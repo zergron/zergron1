@@ -926,6 +926,16 @@ function verdictHTML(sub, rd){
     '<span class="pill basis">' + r.basisShort + '</span>';
 }
 
+/* ---------- 표시 순서 ----------
+   처음 보는 사람도 바로 공감하는 순서로 고정합니다(사용자 지정 1~14).
+   목록에 없는 새 구독은 맨 뒤에 추가한 순서대로 붙습니다. */
+const SUB_ORDER = ['chatgpt','claude','netflix','coupang','manus','higgsfield','vrew','genspark','suno','youtube','spotify','g1','duolingo','skb'];
+function orderIdx(sub){
+  const i = SUB_ORDER.indexOf(sub.id);
+  return i < 0 ? SUB_ORDER.length : i;
+}
+function byDisplayOrder(a, b){ return orderIdx(a) - orderIdx(b); }
+
 /* ---------- 집계 ---------- */
 function totalPrice(){ return S.subs.reduce((a,s) => a + s.price, 0); }
 function aiSubs(){ return S.subs.filter(s => s.cat === 'AI 도구'); }
@@ -1027,7 +1037,10 @@ function privacyStrip(){
 
 /* ---------- view: home ---------- */
 function filteredHome(){
-  const list = S.subs.slice().sort((a,b) => dday(a) - dday(b));
+  /* 홈 목록은 지정 순서. 단 [갱신 임박]은 갱신일이 임박한 순서로 봐야 하므로 D-day 순 유지 */
+  const list = S.subs.slice().sort(S.homeFilter === 'soon'
+    ? ((a,b) => dday(a) - dday(b))
+    : byDisplayOrder);
   return list.filter(s => {
     const d = dday(s);
     if (S.homeFilter === 'ai') return s.cat === 'AI 도구';
@@ -1293,7 +1306,7 @@ function subRows(){
     if (S.subCat !== '전체' && s.cat !== S.subCat) return false;
     if (q && s.name.toLowerCase().indexOf(q) === -1 && s.cat.indexOf(q) === -1) return false;
     return true;
-  });
+  }).sort(byDisplayOrder);   /* 내 구독도 지정 순서(새 구독은 맨 뒤) */
   if (!list.length) return '<div class="empty">검색 결과가 없습니다.<br>다른 이름이나 카테고리로 찾아보세요.</div>';
   return list.map(s => {
     const st = stateOf(s);
