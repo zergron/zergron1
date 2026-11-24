@@ -492,7 +492,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .import-bar .add-sub{margin-bottom:0; height:41px; font-size:10.5px; letter-spacing:-.04em; white-space:nowrap; padding:0 4px}
 .add-sub.import{border-style:solid; border-color:#BFD3F5; background:#F4F8FF; color:#1D4ED8}
 .add-sub.import:hover{background:#EAF2FF}
-.imp-reset{width:100%; height:34px; border-radius:10px; border:1px dashed #D9E5FF; background:#F8FBFF; color:#3B6FD4; font-size:10px; font-weight:800; margin:-2px 0 9px; letter-spacing:-.02em}
+.imp-reset{width:100%; height:33px; border-radius:10px; border:1px solid #C7D9FF; background:#EFF6FF; color:#1D4ED8; font-size:10px; font-weight:800; margin:-2px 0 9px; letter-spacing:-.02em}
 .imp-head{display:flex; align-items:flex-start; gap:8px}
 .imp-main{flex:1 1 auto; min-width:0}
 .imp-t{font-size:13px; font-weight:800; letter-spacing:-.02em}
@@ -1607,7 +1607,7 @@ function viewSubs(){
     '<button class="add-sub" data-act="addopen">+ 새 구독 추가 (데모)</button>' +
     '<button class="add-sub import" data-act="importopen">내 구독 불러오기</button>' +
   '</div>' +
-  (S.subs.some(s => s.importKey) ? '<button class="imp-reset" data-act="impreset">불러온 샘플 초기화 (가져온 항목만 삭제 · 직접 추가한 구독과 결정 기록은 유지)</button>' : '') +
+  (S.subs.some(s => s.importKey) ? '<button class="imp-reset" data-act="impreset">불러온 샘플 초기화 (가져온 항목만 삭제)</button>' : '') +
   '<div id="subList">' + subRows() + '</div>' +
   privacyStrip();
 }
@@ -2206,7 +2206,7 @@ document.addEventListener('click', function (e) {
       const sm = p.sm, v = p.v;
       S.subs.push({
         id:'imp-' + sm.key, name:v.name, plan:'불러온 샘플', price:v.price, date:v.next, cat:v.cat,
-        color:(sm.key === 's1' ? '#0EA5E9' : '#6366F1'), mark:v.name.slice(0, 2),
+        color:(sm.key === 's1' ? '#0EA5E9' : '#6366F1'), mark:sm.key.toUpperCase(),
         open:'#', manage:'#',
         importKey:'import:' + sm.key, source:'가상 결제 알림(샘플)', paidOn:v.paid
       });
@@ -2469,9 +2469,11 @@ function impValidate(it, sm){
   const price = impPrice(it.price);
   if (!price) return { err:'월 구독료를 숫자로 입력해 주세요' };
   const paid = parseStrictDate(it.paidRaw || sm.paid);
+  if (!String(it.paidRaw || '').trim()) return { err:'최근 결제일을 입력해 주세요' };
   if (!paid) return { err:'최근 결제일이 올바른 날짜가 아닙니다 (예: 2026-11-05)' };
+  if (!String(it.nextRaw || '').trim()) return { err:'다음 갱신일을 입력해 주세요 (빈 날짜를 1일로 채우지 않습니다)' };
   const next = parseStrictDate(it.nextRaw);
-  if (!next) return { err:'다음 갱신일을 YYYY-MM-DD로 입력해 주세요 (빈 날짜를 1일로 채우지 않습니다)' };
+  if (!next) return { err:'다음 갱신일이 올바른 날짜가 아닙니다 (예: 2026-12-05)' };
   return { name:name, price:price, paid:paid, next:next, cat:it.cat || 'AI 도구' };
 }
 function impSelection(){
@@ -2639,7 +2641,7 @@ function impStep3HTML(){
       '<div class="d">' + md(s.date) + ' 갱신 · 출처 ' + impEsc(s.source) + '</div></div><span class="pill ok">등록됨</span></div>';
   });
   h += '<div class="imp-sum"><span>내 구독 <b>' + S.subs.length + '개</b></span><span>월 <b>' + fmt(totalPrice()) + '</b></span></div>' +
-    '<div class="imp-note">저장 위치: 이 브라우저(localStorage) · 중복 방지 키: <b>import:' + ((IMP.regKeys || []).join(', import:') || '-') + '</b><br>새로고침해도 유지되고, 같은 샘플을 다시 불러와도 한 번만 등록됩니다.</div>' +
+    '<div class="imp-note">저장 위치: 이 브라우저(localStorage) · 중복 방지 키: <b>' + ((IMP.regKeys || []).length ? 'import:' + IMP.regKeys.join(', import:') : '이미 등록된 항목 유지') + '</b><br>새로고침해도 유지되고, 같은 샘플을 다시 불러와도 한 번만 등록됩니다.</div>' +
     '<button class="imp-next" data-act="impstep4">④ 내 구독에서 점검하기 ›</button>';
   return h;
 }
