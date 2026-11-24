@@ -1840,9 +1840,11 @@ function amountsHTML(sub, rd){
   const useRd = rd || (dec && dec.recheck ? dec.recheck : defaultRecheck(sub));
   const rec = recommend(sub, useRd);
   const key = choice || rec.key;
+  const savedChoice = !!(dec && choice === dec.action);
+  const basisTxt = savedChoice ? '내 결정 기준' : (choice ? '선택 기준 · 저장 전' : '추천 기준 · 결정 전');
   const avoid = (key === 'stop' && nd && sub.price != null)
-    ? { v:fmt(sub.price), s:md(nd) + ' 청구 · ' + (choice ? '내 결정 기준' : '추천 기준 · 결정 전'), cls:'warn' }
-    : { v:'없음', s:choice ? (key === 'keep' ? '유지 결정' : '청구 없음 확인 예정') : '결정 전', cls:'' };
+    ? { v:fmt(sub.price), s:md(nd) + ' 청구 · ' + basisTxt, cls:'warn' }
+    : { v:'없음', s:choice ? basisTxt : '결정 전', cls:'' };
   const confirmed = dec && dec.billing ? { v:fmt(sub.price), s:'직접 확인 기록', cls:'ok' } : { v:'0건', s:'확인 전 · 자동 확인은 향후', cls:'' };
   return '<div class="amt">' +
     '<div class="amt-i hl"><span class="k">월 환산액</span><span class="v">' + monthlyLabel(sub) + '</span><span class="s">' + (sub.cycle === 'yearly' ? '연 결제를 12로 나눈 값' : '월 결제 기준') + '</span></div>' +
