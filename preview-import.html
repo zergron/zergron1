@@ -1,0 +1,2694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>나대신 구독케어 · 내 구독 불러오기 검수용 (2R 시제품)</title>
+<meta name="description" content="구독은 한눈에, 필요한 도구는 바로 열고, 갱신은 다음 작업에 맞춰 — AI 도구의 크레딧·한도·용도 중복까지 판단하는 구독 점검 비서(모두의 창업 2R 시제품)">
+<meta name="theme-color" content="#0F172A">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="나대신">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --navy:#0F172A; --navy2:#1E293B; --blue:#2563EB; --blue-dark:#1D4ED8; --blue-soft:#EFF4FF;
+  --bg:#F8FAFC; --line:#E2E8F0; --line2:#EEF2F7; --ink:#0F172A; --muted:#64748B; --muted2:#94A3B8;
+  --ok:#047857; --ok-soft:#ECFDF5; --warn:#B45309; --warn-soft:#FFF7ED; --soft:#475569; --soft-bg:#F1F5F9;
+  --danger:#B91C1C; --danger-soft:#FEF2F2;
+  --shadow:0 1px 2px rgba(15,23,42,.04), 0 10px 26px -20px rgba(15,23,42,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  color:var(--ink); background:#fff; -webkit-font-smoothing:antialiased; word-break:keep-all;
+}
+button{font-family:inherit; cursor:pointer; border:0; background:none; color:inherit}
+a{color:inherit; text-decoration:none}
+input,select{font-family:inherit}
+b,strong{font-weight:800}
+p{margin:0}
+h1,h2,h3{margin:0}
+
+/* ============ stage ============ */
+.stage{max-width:1380px; margin:0 auto; padding:44px 40px 56px; display:grid; grid-template-columns:minmax(360px,520px) 1fr; gap:60px; align-items:start; background:#fff}
+.stage::before{content:""; position:fixed; inset:0; z-index:-1; background:linear-gradient(180deg,#F4F7FC 0%,#FBFCFE 46%,#fff 100%)}
+
+/* ============ intro ============ */
+.intro{max-width:480px}
+.i-brand{display:flex; align-items:center; gap:10px; margin-bottom:20px}
+.i-logo{width:42px; height:42px; border-radius:13px; background:var(--navy); display:grid; place-items:center; box-shadow:0 6px 16px -8px rgba(15,23,42,.6)}
+.i-logo svg{width:26px;height:26px}
+.i-name{font-size:17px; font-weight:800; letter-spacing:-.02em; line-height:1.2}
+.i-sub{font-size:12px; color:var(--muted); font-weight:600; margin-top:2px}
+.i-badge{display:inline-flex; align-items:center; gap:6px; margin-left:auto; font-size:11.5px; font-weight:800; color:#1D4ED8; background:var(--blue-soft); border:1px solid #DCE7FF; border-radius:999px; padding:6px 10px; white-space:nowrap}
+.i-badge i{width:5px;height:5px;border-radius:50%;background:#2563EB;display:block}
+
+h1.i-head{font-size:31px; line-height:1.42; letter-spacing:-.038em; font-weight:800; margin:0 0 14px}
+h1.i-head em{font-style:normal; color:var(--blue)}
+.i-lead{font-size:14px; line-height:1.78; color:var(--muted); margin-bottom:20px}
+.i-lead b{color:var(--ink); font-weight:800}
+
+.values{list-style:none; padding:0; margin:0 0 20px; display:grid; gap:10px}
+.values li{display:flex; gap:10px; align-items:flex-start; font-size:13px; color:#334155; line-height:1.5}
+.values .vi{flex:0 0 auto; width:26px; height:26px; border-radius:9px; background:#fff; border:1px solid var(--line); display:grid; place-items:center; box-shadow:var(--shadow)}
+.values .vi svg{width:15px; height:15px; stroke:var(--blue); fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+.values b{display:block; font-weight:800; color:var(--ink); font-size:13px}
+
+/* 종합생애관리 4축 */
+.axis{display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:0 0 20px}
+.ax{background:#fff; border:1px solid var(--line); border-radius:11px; padding:9px 10px; box-shadow:var(--shadow)}
+.ax .k{display:block; font-size:9px; font-weight:800; color:#94A3B8; letter-spacing:.02em}
+.ax b{display:block; font-size:11.5px; font-weight:800; letter-spacing:-.02em; margin-top:2px; line-height:1.4}
+.ax .d{display:block; font-size:10px; color:var(--muted); font-weight:600; line-height:1.5; margin-top:3px}
+.ax.on{background:linear-gradient(155deg,#111C33 0%,#0F172A 52%,#16233D 100%); border-color:#16233D; box-shadow:0 12px 26px -20px rgba(15,23,42,.85)}
+.ax.on .k{color:#93C5FD}
+.ax.on b{color:#fff}
+.ax.on .d{color:#B9C7DA}
+
+.card-block{background:#fff; border:1px solid var(--line); border-radius:18px; padding:18px; box-shadow:var(--shadow); margin-bottom:14px}
+.cb-head{display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:800; margin-bottom:4px}
+.cb-head svg{width:16px;height:16px;stroke:#2563EB;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cb-desc{font-size:12px; color:var(--muted); line-height:1.65; margin-bottom:14px}
+.cb-desc b{color:var(--blue); font-weight:800}
+
+/* 4단계 흐름 */
+.flow{display:grid; gap:7px}
+.flow-row{display:flex; align-items:center; gap:8px}
+.flow-tag{flex:0 0 62px; font-size:10px; font-weight:800; text-align:center; border-radius:7px; padding:5px 0}
+.flow-tag.free{color:#047857; background:var(--ok-soft); border:1px solid #CBEFDF}
+.flow-tag.paid{color:#B45309; background:var(--warn-soft); border:1px solid #FDE9C4}
+.flow-items{display:flex; gap:5px; flex-wrap:wrap}
+.flow-i{font-size:11px; font-weight:800; color:#334155; background:#F8FAFC; border:1px solid var(--line); border-radius:7px; padding:5px 7px}
+.flow-i.on{background:var(--navy); border-color:var(--navy); color:#fff}
+.flow-note{font-size:11px; color:var(--muted); font-weight:600; line-height:1.6; margin-top:9px}
+.flow-note b{color:var(--ink)}
+
+.road{display:grid; gap:0}
+.road-step{display:grid; grid-template-columns:52px 1fr; gap:11px; padding:11px 0; border-top:1px dashed var(--line)}
+.road-step:first-child{border-top:0; padding-top:0}
+.road-step:last-child{padding-bottom:0}
+.rs-k{font-size:10px; font-weight:800; color:#1D4ED8; background:var(--blue-soft); border-radius:7px; padding:5px 0; text-align:center; height:fit-content; letter-spacing:-.01em}
+.road-step.dim .rs-k{color:#64748B; background:#F1F5F9}
+.rs-t{font-size:12.5px; font-weight:800; letter-spacing:-.01em; line-height:1.4}
+.rs-t span{font-size:9.5px; font-weight:800; color:#fff; background:var(--blue); border-radius:5px; padding:2px 5px; margin-left:5px; vertical-align:1px}
+.road-step.dim .rs-t span{background:#94A3B8}
+.rs-d{font-size:11.5px; color:var(--muted); line-height:1.6; margin-top:4px}
+
+.guide{counter-reset:g; list-style:none; padding:0; margin:0; display:grid; gap:9px}
+.guide li{counter-increment:g; display:grid; grid-template-columns:20px 1fr; gap:9px; font-size:12.2px; line-height:1.6; color:#334155}
+.guide li::before{content:counter(g); width:20px; height:20px; border-radius:50%; background:#EFF4FF; color:#1D4ED8; font-size:10.5px; font-weight:800; display:grid; place-items:center}
+
+.i-actions{display:flex; gap:8px; margin-top:14px}
+.btn-reset{flex:1; height:42px; border-radius:12px; border:1px solid var(--line); background:#fff; font-size:12.5px; font-weight:800; color:#334155; display:flex; align-items:center; justify-content:center; gap:6px}
+.btn-reset:hover{border-color:#CBD5E1; background:#F8FAFC}
+.btn-reset svg{width:15px;height:15px;stroke:#64748B;fill:none;stroke-width:2;stroke-linecap:round}
+.footnote{font-size:11px; color:var(--muted2); line-height:1.7; margin-top:16px}
+
+/* ============ device ============ */
+.device-col{display:flex; justify-content:center; align-items:flex-start; padding-top:6px}
+.phone{position:sticky; top:26px; width:404px; height:828px; background:#0B1220; border-radius:54px; padding:11px;
+  box-shadow:0 50px 90px -50px rgba(15,23,42,.55), 0 18px 40px -30px rgba(15,23,42,.5), inset 0 0 0 2px #1C2534}
+.screen{position:relative; width:100%; height:100%; background:var(--bg); border-radius:44px; overflow:hidden; display:flex; flex-direction:column}
+.notch{position:absolute; top:9px; left:50%; transform:translateX(-50%); width:104px; height:26px; background:#0B1220; border-radius:14px; z-index:30; pointer-events:none}
+
+.statusbar{flex:0 0 auto; height:46px; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 22px 0 26px; font-size:12.5px; font-weight:700; letter-spacing:.01em}
+.sb-right{display:flex; align-items:center; gap:5px; opacity:.95}
+.sb-right svg{width:15px; height:11px}
+
+/* app bar */
+.appbar{flex:0 0 auto; background:var(--navy); color:#fff; padding:6px 14px 13px; display:flex; align-items:center; gap:7px}
+.ab-logo{width:29px; height:29px; border-radius:9px; background:var(--blue); display:grid; place-items:center; flex:0 0 auto}
+.ab-logo svg{width:20px;height:20px}
+.ab-name{font-size:15px; font-weight:800; letter-spacing:-.02em}
+.ab-badge{font-size:9px; font-weight:800; color:#BFDBFE; background:rgba(37,99,235,.28); border:1px solid rgba(96,165,250,.28); border-radius:5px; padding:3px 5px; letter-spacing:-.01em; white-space:nowrap}
+.ab-install{margin-left:auto; display:flex; align-items:center; gap:4px; background:#fff; color:var(--navy); border-radius:8px; padding:6px 8px; font-size:10.5px; font-weight:800; white-space:nowrap}
+.ab-install svg{width:12px; height:12px; stroke:var(--navy); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+
+/* 화면 배율 (70/100/120/150%) */
+.appbar{position:relative; z-index:24}
+.appbar .zbtn{margin-left:auto}
+.ab-install{margin-left:6px}
+.zbtn{flex:0 0 auto; display:inline-flex; align-items:center; gap:3px; height:26px; padding:0 7px 0 6px; border-radius:8px;
+  background:rgba(255,255,255,.10); border:1px solid rgba(148,163,184,.38); color:#DCE5F3; font-size:10.5px; font-weight:800; letter-spacing:-.01em}
+.zbtn svg{width:12px; height:12px; stroke:currentColor; fill:none; stroke-width:2.3; stroke-linecap:round}
+.zbtn:hover{background:rgba(255,255,255,.17)}
+.zbtn[aria-expanded="true"]{background:rgba(255,255,255,.2); border-color:rgba(191,219,254,.65)}
+.zbtn.mod{background:rgba(37,99,235,.45); border-color:rgba(147,197,253,.75); color:#fff}
+.zpop{position:absolute; top:calc(100% - 2px); right:11px; display:none; gap:2px; padding:4px; background:#fff;
+  border:1px solid var(--line); border-radius:11px; box-shadow:0 16px 30px -16px rgba(15,23,42,.5); z-index:60}
+.zpop.on{display:flex}
+.zpop button{font-size:10.5px; font-weight:800; color:#475569; padding:6px 7px; border-radius:7px; letter-spacing:-.01em; white-space:nowrap}
+.zpop button:hover{background:#F1F5F9; color:var(--navy)}
+.zpop button.on{background:var(--navy); color:#fff}
+/* 배율 적용 시 말줄임 대신 자연스럽게 줄바꿈 */
+.app-body.zoomed .banner-sub{white-space:normal; overflow:visible; text-overflow:clip; line-height:1.5}
+/* 120% 이상: 내 구독 목록은 금액·상태를 아래 줄로 내려 이름이 잘리지 않게 */
+.app-body.bigzoom .row{flex-wrap:wrap; row-gap:3px}
+.app-body.bigzoom .row-main{flex:1 1 auto}
+.app-body.bigzoom .row-right{flex:1 1 100%; display:flex; align-items:center; justify-content:flex-end; gap:6px}
+
+/* app body */
+.app-body{flex:1 1 auto; overflow-y:auto; overscroll-behavior:contain; padding:13px 13px 22px; -webkit-overflow-scrolling:touch; scrollbar-width:thin}
+.app-body::-webkit-scrollbar{width:6px}
+.app-body::-webkit-scrollbar-thumb{background:#D7DEE8; border-radius:99px}
+
+/* hero */
+.hero{background:linear-gradient(158deg,#111C33 0%,#0F172A 42%,#16233D 100%); border-radius:18px; padding:15px 15px 13px; color:#fff; position:relative; overflow:hidden; box-shadow:0 14px 30px -22px rgba(15,23,42,.8)}
+.hero::after{content:""; position:absolute; right:-46px; top:-56px; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle,rgba(37,99,235,.5),rgba(37,99,235,0) 68%); z-index:0}
+.hero>*{position:relative; z-index:1}
+.hero-top{display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#93A4BE; font-weight:700}
+.hero-top .lock{font-size:9.5px; color:#7F93B0; font-weight:800; background:rgba(255,255,255,.06); border-radius:5px; padding:3px 5px}
+.hero-total{font-size:27px; font-weight:800; letter-spacing:-.035em; margin:2px 0 1px}
+.hero-total span{font-size:11.5px; font-weight:700; color:#9FB3CE; letter-spacing:0; margin-left:6px}
+.hero-tiles{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:11px}
+.ht{background:rgba(255,255,255,.055); border:1px solid rgba(147,197,253,.14); border-radius:11px; padding:8px 7px 7px}
+.ht .k{display:block; font-size:9px; color:#93A4BE; font-weight:800; letter-spacing:-.01em; white-space:nowrap}
+.ht .v{display:block; font-size:18px; font-weight:800; color:#fff; letter-spacing:-.03em; margin-top:2px; line-height:1.1}
+.ht .u{font-size:10.5px; font-weight:800; letter-spacing:0; margin-left:1.5px}
+.ht .s{display:block; font-size:8.5px; color:#7F93B0; font-weight:700; margin-top:2px; line-height:1.35}
+.ht.amber .v{color:#FDBA74}
+.ht.red .v{color:#FCA5A5}
+/* 요약 타일 = 바로 필터로 이어지는 버튼 */
+.ht{position:relative; display:block; width:100%; text-align:left; font-family:inherit; transition:background .15s, border-color .15s, transform .1s}
+.ht .k{padding-right:9px}
+.ht .go{position:absolute; top:6px; right:6px; font-size:10px; font-weight:800; line-height:1; color:#7F93B0}
+.ht:hover{background:rgba(255,255,255,.10); border-color:rgba(147,197,253,.34)}
+.ht:active{transform:scale(.985)}
+.ht:focus-visible{outline:2px solid #93C5FD; outline-offset:2px}
+.ht.on{background:rgba(37,99,235,.30); border-color:rgba(147,197,253,.62)}
+.ht.on .go{color:#fff}
+.hero-foot{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px; font-size:10px; color:#9FB3CE; font-weight:700}
+.hero-foot b{color:#fff; font-weight:800}
+.hero .gauge{background:rgba(255,255,255,.14); height:5px; margin-top:6px}
+.hero .gauge i{background:linear-gradient(90deg,#60A5FA,#93C5FD)}
+
+/* gauge */
+.gauge{display:block; height:6px; border-radius:99px; background:#EDF1F6; overflow:hidden; margin-top:6px}
+.gauge i{display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,#3B82F6,#2563EB); transition:width .35s ease}
+
+/* banner */
+.banner{width:100%; display:flex; align-items:center; gap:10px; text-align:left; margin-top:11px; background:#fff; border:1.5px solid #DBE4FF; border-radius:16px; padding:12px; box-shadow:0 8px 20px -18px rgba(37,99,235,.6)}
+.banner:hover{border-color:#BFD3FF; background:#FCFDFF}
+.banner-txt{display:grid; gap:2px; min-width:0}
+.banner-kicker{font-size:9px; font-weight:800; color:#2563EB; letter-spacing:.03em}
+.banner-txt b{font-size:13.5px; font-weight:800; letter-spacing:-.02em; color:var(--ink)}
+.banner-sub{font-size:9.5px; color:var(--muted); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.banner-ic{margin-left:auto; flex:0 0 auto; width:26px; height:26px; border-radius:50%; background:#FFF4E8; color:#C2410C; font-weight:800; font-size:13px; display:grid; place-items:center; border:1px solid #FFE2C7}
+
+/* chips */
+.chips{display:flex; gap:5px; margin:14px 0 9px; overflow-x:auto; padding-bottom:2px; scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto; font-size:11.5px; font-weight:800; color:var(--muted); background:#fff; border:1px solid var(--line); border-radius:999px; padding:7px 11px; letter-spacing:-.01em}
+.chip.on{background:var(--navy); border-color:var(--navy); color:#fff}
+.chip .n{opacity:.6; font-weight:700; margin-left:3px}
+.filter-note{display:flex; gap:6px; align-items:flex-start; background:#F1F5F9; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-size:10px; color:#475569; font-weight:700; line-height:1.5; margin-bottom:9px}
+.filter-note b{color:var(--ink)}
+
+/* sub card */
+.list{display:grid; gap:8px}
+.sub{background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden}
+.sub-hit{width:100%; display:flex; gap:10px; text-align:left; padding:12px 12px 10px; transition:.15s}
+.sub-hit:hover{background:#FCFDFF}
+.brand{flex:0 0 auto; width:36px; height:36px; border-radius:50%; display:grid; place-items:center; color:#fff; font-size:10px; font-weight:800; letter-spacing:-.04em; box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.sub-main{min-width:0; flex:1; display:block}
+.sub-top{display:flex; align-items:center; gap:5px}
+.sub-name{font-size:13px; font-weight:800; letter-spacing:-.02em; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.sub-meta{display:block; font-size:10px; color:var(--muted2); font-weight:700; margin-top:2px}
+.sub-bottom{display:flex; align-items:baseline; justify-content:space-between; margin-top:5px}
+.price{font-size:15.5px; font-weight:800; letter-spacing:-.03em; color:var(--ink)}
+.pct{font-size:10px; font-weight:800; color:var(--muted); white-space:nowrap}
+.sub-badges{display:flex; flex-wrap:wrap; gap:4px; margin-top:7px}
+
+.sub-actions{display:grid; grid-template-columns:1fr 1fr; gap:1px; border-top:1px solid var(--line2); background:var(--line2)}
+.sub-actions a,.sub-actions button{height:33px; display:flex; align-items:center; justify-content:center; gap:4px; font-size:11px; font-weight:800; background:#fff; letter-spacing:-.01em}
+.sub-actions a{color:#1D4ED8}
+.sub-actions a:hover{background:#F8FAFF}
+.sub-actions button{color:#475569}
+.sub-actions button:hover{background:#F8FAFC}
+
+.pill{font-size:9.5px; font-weight:800; padding:3px 6px; border-radius:6px; letter-spacing:-.01em; white-space:nowrap}
+.pill.ok{color:var(--ok); background:var(--ok-soft)}
+.pill.warn{color:var(--warn); background:var(--warn-soft)}
+.pill.soft{color:var(--soft); background:var(--soft-bg)}
+.pill.danger{color:var(--danger); background:var(--danger-soft)}
+.pill.soon{color:#B91C1C; background:#FEF2F2; border:1px solid #FBD5D5}
+.pill.today{color:#fff; background:#C2410C}
+.pill.past{color:#B91C1C; background:#FEF2F2; border:1px solid #FBD5D5}
+.pill.blue{color:#1D4ED8; background:var(--blue-soft)}
+.pill.navy{color:#fff; background:var(--navy)}
+.pill.basis{color:#64748B; background:#F1F5F9; font-weight:700}
+
+.empty{text-align:center; padding:24px 12px; color:var(--muted2); font-size:12px; font-weight:700; background:#fff; border:1px dashed var(--line); border-radius:16px; line-height:1.7}
+
+/* section head */
+.sec-head{display:flex; align-items:flex-end; justify-content:space-between; gap:8px; margin:2px 0 9px}
+.sec-title{font-size:14.5px; font-weight:800; letter-spacing:-.02em}
+.sec-desc{font-size:10.5px; color:var(--muted); font-weight:600; margin-top:2px; line-height:1.5}
+.sec-count{font-size:10.5px; font-weight:800; color:var(--muted2); white-space:nowrap}
+
+/* report */
+.insight{display:inline-flex; align-items:center; gap:5px; background:var(--navy); color:#fff; font-size:9px; font-weight:800; letter-spacing:.08em; border-radius:5px; padding:4px 7px}
+.rep-title{font-size:15px; font-weight:800; line-height:1.45; letter-spacing:-.03em; margin:9px 0 4px}
+.rep-sub{font-size:11px; color:var(--muted); line-height:1.6; font-weight:600}
+.rep-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:13px; box-shadow:var(--shadow); margin-top:11px}
+.rep-tags{display:flex; gap:5px; flex-wrap:wrap}
+.rep-tag{font-size:9px; font-weight:800; border-radius:5px; padding:3px 6px; background:var(--blue-soft); color:#1D4ED8; border:1px solid #DCE7FF}
+.rep-tag.paid{background:var(--warn-soft); color:var(--warn); border-color:#FDE9C4}
+.rep-card-t{font-size:14px; font-weight:800; letter-spacing:-.025em; margin-top:8px; line-height:1.4}
+.rep-card-t span{font-weight:700; color:var(--muted2); font-size:11px}
+.rep-card-m{font-size:10px; color:var(--muted2); font-weight:700; margin-top:3px}
+.rep-sec{margin-top:11px; padding-top:10px; border-top:1px dashed #E2E8F0}
+.rep-h{display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:800; letter-spacing:-.01em}
+.rep-h .no{flex:0 0 auto; width:15px; height:15px; border-radius:50%; background:var(--navy); color:#fff; font-size:8.5px; display:grid; place-items:center}
+.rep-li{display:flex; gap:5px; font-size:10.5px; color:#475569; line-height:1.62; margin-top:5px; font-weight:600}
+.rep-li .ar{flex:0 0 auto; color:#94A3B8; font-weight:800}
+.rep-li b{color:var(--ink); font-weight:800}
+.rep-foot{margin-top:11px; padding-top:9px; border-top:1px solid var(--line2); font-size:9.5px; color:var(--muted2); font-weight:700; line-height:1.55}
+.rep-step{display:inline-block; font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border:1px solid #DCE7FF; border-radius:4px; padding:1px 4px; margin-right:4px; vertical-align:1px; letter-spacing:-.01em}
+.rep-step.two{color:#B45309; background:#FFF7ED; border-color:#FDE9C4}
+.rep-note{margin-top:8px; padding:7px 8px; border-radius:8px; background:#F8FAFC; border:1px solid var(--line2); font-size:9px; line-height:1.55; color:#64748B; font-weight:700}
+.rep-note b{color:#334155}
+
+.panel{background:#fff; border:1px solid var(--line); border-radius:16px; padding:13px; box-shadow:var(--shadow); margin-top:11px}
+.panel-h{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:800; letter-spacing:-.01em}
+.panel-h .dot{width:6px; height:6px; border-radius:50%; background:var(--blue)}
+.panel-d{font-size:10px; color:var(--muted); font-weight:600; margin:5px 0 10px; line-height:1.55}
+.sel{width:100%; height:39px; border-radius:11px; border:1px solid var(--line); background:#F8FAFC; font-size:12px; font-weight:800; color:var(--ink); padding:0 10px; appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.6' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat:no-repeat; background-position:right 12px center}
+.ctx{display:flex; gap:6px; align-items:center; font-size:10px; color:#475569; font-weight:700; background:#F8FAFC; border:1px solid var(--line2); border-radius:9px; padding:7px 9px; margin-top:7px; line-height:1.5}
+.ctx .k{flex:0 0 auto; font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border-radius:4px; padding:2px 4px}
+.opts{display:grid; gap:6px; margin-top:9px}
+.opt{display:flex; align-items:center; gap:9px; padding:10px; border:1.5px solid var(--line); border-radius:12px; background:#fff; text-align:left; transition:.14s}
+.opt .rd{flex:0 0 auto; width:15px; height:15px; border-radius:50%; border:2px solid #CBD5E1; display:grid; place-items:center}
+.opt .rd::after{content:""; width:6px; height:6px; border-radius:50%; background:transparent}
+.opt b{font-size:12px; font-weight:800; display:block; letter-spacing:-.01em}
+.opt span.d{font-size:9.5px; color:var(--muted); font-weight:600; display:block; margin-top:2px}
+.opt.on{border-color:var(--blue); background:#F8FAFF}
+.opt.on .rd{border-color:var(--blue)}
+.opt.on .rd::after{background:var(--blue)}
+.opt.on b{color:#1D4ED8}
+
+.result{margin-top:9px; border-radius:12px; background:#F8FAFC; border:1px solid var(--line2); padding:11px}
+.res-row{display:flex; justify-content:space-between; align-items:baseline; gap:8px; padding:3px 0}
+.res-row span{font-size:10.5px; color:var(--muted); font-weight:700; white-space:nowrap}
+.res-row b{font-size:12px; font-weight:800; letter-spacing:-.02em; text-align:right}
+.res-row b.big{font-size:14px; color:#1D4ED8}
+.res-row b.warn{color:#B45309}
+.reason{font-size:10.5px; line-height:1.68; color:#475569; font-weight:600; margin-top:8px; padding-top:8px; border-top:1px dashed #DDE5EF}
+.reason b{color:var(--ink)}
+.save-btn{width:100%; height:42px; margin-top:9px; border-radius:12px; background:var(--blue); color:#fff; font-size:12.5px; font-weight:800; letter-spacing:-.01em; box-shadow:0 10px 20px -14px rgba(37,99,235,.9)}
+.save-btn:disabled{background:#E2E8F0; color:#94A3B8; box-shadow:none}
+.save-btn:hover:not(:disabled){background:var(--blue-dark)}
+.mini-note{font-size:9.5px; color:var(--muted2); font-weight:600; text-align:center; margin-top:6px; line-height:1.5}
+
+/* 자동 추천 카드 (재개일 기반) */
+.reco{border-radius:12px; padding:11px 12px 12px; background:linear-gradient(155deg,#111C33 0%,#0F172A 52%,#16233D 100%); color:#fff; box-shadow:0 12px 26px -20px rgba(15,23,42,.85)}
+.reco-top{display:flex; align-items:center; gap:6px}
+.reco-k{font-size:8.5px; font-weight:800; letter-spacing:.09em; color:#BFDBFE; background:rgba(37,99,235,.35); border:1px solid rgba(147,197,253,.35); border-radius:5px; padding:3px 6px}
+.reco-top .pill{margin-left:auto; font-size:11px; padding:4px 8px; letter-spacing:-.01em}
+.reco-why{font-size:10.5px; line-height:1.65; font-weight:700; color:#DCE5F3; margin-top:8px}
+.reco-why b{color:#fff; font-weight:800}
+.reco-basis{list-style:none; padding:0; margin:7px 0 0; display:grid; gap:3px}
+.reco-basis li{position:relative; padding-left:9px; font-size:9.5px; line-height:1.55; font-weight:700; color:#9FB3CE}
+.reco-basis li::before{content:"›"; position:absolute; left:0; top:0; color:#60A5FA; font-weight:800}
+.reco-inline{font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border-radius:4px; padding:2px 4px; vertical-align:1px; letter-spacing:0}
+.reco-chip{font-size:8.5px; font-weight:800; color:#fff; background:var(--blue); border-radius:4px; padding:2px 4px; vertical-align:1px; letter-spacing:0}
+.diff-note{margin-top:8px; border-radius:10px; background:#FFFBEB; border:1px solid #FDE9C4; padding:8px 9px; font-size:9.5px; line-height:1.55; font-weight:700; color:#92400E}
+
+/* privacy strip */
+.privacy{display:flex; gap:7px; background:#F8FAFC; border:1px solid var(--line); border-radius:11px; padding:9px 10px; font-size:9.5px; color:#64748B; font-weight:700; line-height:1.6; margin-top:11px}
+.privacy svg{flex:0 0 auto; width:13px; height:13px; stroke:#64748B; fill:none; stroke-width:2; margin-top:1px}
+.privacy b{color:#334155}
+
+/* board */
+.proj{background:#fff; border:1px solid var(--line); border-radius:16px; padding:13px; box-shadow:var(--shadow); margin-bottom:8px}
+.proj-h{display:flex; align-items:center; gap:7px}
+.proj-h .dot{width:8px; height:8px; border-radius:50%; flex:0 0 auto}
+.proj-h b{font-size:13px; font-weight:800; letter-spacing:-.02em}
+.proj-h .pill{margin-left:auto}
+.proj-d{font-size:10px; color:var(--muted); font-weight:600; margin:5px 0 8px; line-height:1.55}
+.proj-subs{display:flex; flex-wrap:wrap; gap:4px; margin-bottom:9px}
+.tag{display:inline-flex; align-items:center; gap:4px; font-size:9.5px; font-weight:800; color:#334155; background:#F8FAFC; border:1px solid var(--line); border-radius:7px; padding:3px 6px}
+.tag i{width:7px; height:7px; border-radius:50%; display:block}
+.seg{display:grid; grid-template-columns:repeat(3,1fr); gap:3px; background:#F1F5F9; border-radius:10px; padding:3px}
+.seg button{height:29px; border-radius:8px; font-size:11px; font-weight:800; color:var(--muted)}
+.seg button.on{background:#fff; color:var(--ink); box-shadow:0 2px 6px -3px rgba(15,23,42,.35)}
+.seg button.on[data-status="진행 중"]{color:#1D4ED8}
+.seg button.on[data-status="보류"]{color:#B45309}
+.board-tip{display:flex; gap:7px; background:#FFFBEB; border:1px solid #FDE9C4; border-radius:12px; padding:9px 10px; font-size:10px; color:#92400E; font-weight:700; line-height:1.6; margin-bottom:10px}
+.board-tip b{color:#78350F}
+
+/* my subs */
+.search-wrap{position:relative; margin-bottom:9px}
+.search-wrap svg{position:absolute; left:11px; top:50%; transform:translateY(-50%); width:14px; height:14px; stroke:#94A3B8; fill:none; stroke-width:2.2}
+.search{width:100%; height:39px; border-radius:11px; border:1px solid var(--line); background:#fff; padding:0 12px 0 32px; font-size:12px; font-weight:700; color:var(--ink)}
+.search::placeholder{color:#A9B6C7; font-weight:600}
+.row{width:100%; display:flex; align-items:center; gap:9px; text-align:left; background:#fff; border:1px solid var(--line); border-radius:13px; padding:9px 10px; margin-bottom:6px}
+.row:hover{border-color:#CBD5E1}
+.row .brand{width:31px; height:31px; font-size:9px}
+.row-main{flex:1; min-width:0}
+.row-name{display:block; font-size:12px; font-weight:800; letter-spacing:-.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.row-meta{display:block; font-size:9.5px; color:var(--muted2); font-weight:700; margin-top:2px}
+.row-right{text-align:right; flex:0 0 auto}
+.row-price{font-size:12px; font-weight:800; letter-spacing:-.02em}
+.row-right .pill{margin-top:3px; display:inline-block}
+.add-sub{width:100%; height:41px; border-radius:12px; border:1.5px dashed #C7D5EA; background:#fff; color:#1D4ED8; font-size:12px; font-weight:800; margin-bottom:9px}
+.add-sub:hover{background:#F8FAFF}
+
+/* history */
+.tl{position:relative; padding-left:16px}
+.tl::before{content:""; position:absolute; left:4px; top:6px; bottom:6px; width:2px; background:#E6ECF4; border-radius:2px}
+.tl-item{position:relative; margin-bottom:8px}
+.tl-item::before{content:""; position:absolute; left:-16px; top:15px; width:9px; height:9px; border-radius:50%; background:#fff; border:2.5px solid var(--blue)}
+.tl-card{background:#fff; border:1px solid var(--line); border-radius:13px; padding:10px 11px; box-shadow:var(--shadow)}
+.tl-top{display:flex; align-items:center; gap:6px}
+.tl-name{font-size:12px; font-weight:800; letter-spacing:-.01em}
+.tl-time{font-size:9px; color:var(--muted2); font-weight:700; margin-left:auto}
+.tl-body{font-size:10px; color:var(--muted); font-weight:700; margin-top:5px; line-height:1.6}
+.tl-body b{color:#1D4ED8}
+.prog{display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-top:8px}
+.step{font-size:8.5px; font-weight:800; border-radius:7px; padding:5px 2px; text-align:center; background:#F1F5F9; color:#94A3B8; border:1px solid transparent; letter-spacing:-.02em}
+.step.done{background:#ECFDF5; color:#047857}
+.step.cur{background:#EFF4FF; color:#1D4ED8; border-color:#DCE7FF}
+.tl-foot{display:flex; align-items:center; gap:5px; margin-top:7px; padding-top:7px; border-top:1px solid var(--line2)}
+.tl-src{font-size:9px; color:var(--muted2); font-weight:700; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.tl-link{font-size:9px; font-weight:800; color:#1D4ED8; padding:3px 6px; border-radius:6px; background:#F8FAFF; border:1px solid #DCE7FF; white-space:nowrap}
+.del{margin-left:auto; font-size:9px; font-weight:800; color:#94A3B8; padding:3px 6px; border-radius:6px; background:#F8FAFC; border:1px solid var(--line); white-space:nowrap}
+.del:hover{color:#B91C1C; border-color:#FBD5D5; background:#FEF2F2}
+.undo{margin-top:10px; width:100%; height:37px; border-radius:11px; border:1px dashed var(--line); background:#fff; font-size:10.5px; font-weight:800; color:var(--muted)}
+
+/* tabbar */
+.tabbar{flex:0 0 auto; display:grid; grid-template-columns:repeat(5,1fr); background:#fff; border-top:1px solid var(--line); padding:7px 2px 8px}
+.tab{display:flex; flex-direction:column; align-items:center; gap:3px; font-size:9.5px; font-weight:800; color:#9AA7B8; letter-spacing:-.03em; padding:2px 0}
+.tab svg{width:19px; height:19px; stroke:currentColor; fill:none; stroke-width:1.85; stroke-linecap:round; stroke-linejoin:round}
+.tab.on{color:var(--blue)}
+.tab.on svg{stroke-width:2.1}
+
+/* sheet */
+.sheet{position:absolute; inset:0; background:rgba(15,23,42,.42); backdrop-filter:blur(1.5px); display:flex; align-items:flex-end; z-index:40}
+.sheet-panel{width:100%; max-height:90%; overflow-y:auto; background:#fff; border-radius:22px 22px 0 0; padding:10px 15px 20px; animation:up .24s cubic-bezier(.2,.7,.3,1); scrollbar-width:thin}
+@keyframes up{from{transform:translateY(26px); opacity:.6}to{transform:translateY(0); opacity:1}}
+.sheet-grip{width:36px; height:4px; border-radius:99px; background:#DDE5EF; margin:0 auto 12px}
+.sd-head{display:flex; align-items:center; gap:9px}
+.brand.lg{width:42px; height:42px; font-size:11px}
+.sd-name{font-size:15px; font-weight:800; letter-spacing:-.025em}
+.sd-meta{font-size:10px; color:var(--muted); font-weight:700; margin-top:2px}
+.x{margin-left:auto; width:27px; height:27px; border-radius:50%; background:#F1F5F9; color:#64748B; font-size:11px; font-weight:800; display:grid; place-items:center; flex:0 0 auto}
+.sd-price{font-size:24px; font-weight:800; letter-spacing:-.035em; margin:12px 0 0}
+.sd-price span{font-size:11.5px; color:var(--muted2); font-weight:700; letter-spacing:0}
+.sd-verdict{display:flex; align-items:center; gap:6px; margin-top:9px; flex-wrap:wrap}
+.sd-block{margin-top:11px}
+.sd-row{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; font-size:11px; font-weight:700; color:var(--muted)}
+.sd-row b{color:var(--ink); font-weight:800; text-align:right; font-size:11px; max-width:64%; line-height:1.45}
+.sd-ai{margin-top:9px; background:#F8FAFC; border:1px solid var(--line2); border-radius:11px; padding:10px; font-size:10.5px; line-height:1.7; color:#475569; font-weight:600}
+.sd-ai b{color:var(--ink)}
+.sd-reason{display:grid; gap:4px; margin-top:9px; background:#F8FAFC; border:1px solid var(--line2); border-radius:11px; padding:10px}
+.sd-reason div{display:flex; gap:6px; font-size:10px; color:#475569; font-weight:600; line-height:1.55}
+.sd-reason em{font-style:normal; color:#475569; font-weight:600; font-size:10px}
+.sd-reason span{flex:0 0 auto; font-size:8.5px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border-radius:4px; padding:2px 4px; height:fit-content}
+/* 줄이기 전에 먼저 확인 (보유 활용 · 한국형 공식 혜택) */
+.before{margin-top:11px; border:1px solid #DFE8F4; border-radius:13px; background:linear-gradient(180deg,#FCFDFF 0%,#F7FAFF 100%); padding:10px 11px 9px}
+.before-h{display:flex; align-items:center; gap:5px; font-size:11px; font-weight:800; letter-spacing:-.015em; color:var(--ink)}
+.before-h .em{font-size:11px; line-height:1}
+.before-h .btag{margin-left:auto; font-size:8.5px; font-weight:800; color:#64748B; background:#EDF2F9; border:1px solid #E2E8F0; border-radius:4px; padding:2px 5px; letter-spacing:-.01em}
+.before-g{margin-top:8px}
+.before-k{display:flex; align-items:center; gap:4px; font-size:9.5px; font-weight:800; color:#1D4ED8; letter-spacing:-.01em}
+.before-k i{width:4px; height:4px; border-radius:50%; background:#2563EB; display:block; flex:0 0 auto}
+.before-l{list-style:none; padding:0; margin:4px 0 0; display:grid; gap:3px}
+.before-l li{position:relative; padding-left:9px; font-size:9.8px; line-height:1.6; color:#475569; font-weight:600}
+.before-l li::before{content:"·"; position:absolute; left:0; top:-1px; color:#94A3B8; font-weight:800}
+.before-l b{color:var(--ink); font-weight:800}
+.before-note{margin-top:8px; padding-top:7px; border-top:1px dashed #E2E8F0; font-size:9px; line-height:1.55; color:#94A3B8; font-weight:700}
+.before-note b{color:#64748B}
+.sd-label{display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:800; color:var(--ink); margin:14px 0 6px}
+.sd-label span{font-size:9px; color:var(--muted2); font-weight:700}
+.date-input{flex:1 1 auto; min-width:0; height:41px; border:1px solid var(--line); border-radius:11px; background:#F8FAFC; padding:0 11px; font-size:12.5px; font-weight:800; color:var(--ink)}
+.date-group{display:flex; gap:6px; align-items:center}
+.date-cal{position:relative; flex:0 0 auto; width:41px; height:41px; border:1px solid var(--line); border-radius:11px; background:#F8FAFC; display:grid; place-items:center; cursor:pointer}
+.date-cal:hover{border-color:#BFD3FF; background:#F8FAFF}
+.date-cal svg{width:16px; height:16px; stroke:#64748B; fill:none; stroke-width:2; stroke-linecap:round}
+.date-native{position:absolute; inset:0; width:100%; height:100%; opacity:0; border:0; padding:0; margin:0; cursor:pointer}
+.quick{display:flex; gap:4px; margin-top:6px}
+.quick button{flex:1; height:29px; border-radius:9px; border:1px solid var(--line); background:#fff; font-size:9.5px; font-weight:800; color:#475569; padding:0 2px}
+.quick button:hover{border-color:#BFD3FF; color:#1D4ED8; background:#F8FAFF}
+.sd-actions{display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-top:14px}
+.sd-actions button{height:42px; border-radius:12px; font-size:12px; font-weight:800; letter-spacing:-.02em}
+.btn-ghost{background:#F1F5F9; color:#334155}
+.btn-soft{background:#FFF7ED; color:#B45309; border:1px solid #FDE9C4}
+.btn-danger{background:#FEF2F2; color:#B91C1C; border:1px solid #FBD5D5}
+.sd-actions button:hover{filter:brightness(.97)}
+.btn-open-official{width:100%; height:41px; border-radius:12px; background:var(--navy); color:#fff; font-size:11.5px; font-weight:800; margin-top:6px; display:flex; align-items:center; justify-content:center; gap:5px}
+.chk{width:100%; display:flex; align-items:center; gap:8px; text-align:left; padding:9px 10px; border:1px solid var(--line); border-radius:11px; background:#fff; margin-top:5px}
+.chk .box{flex:0 0 auto; width:16px; height:16px; border-radius:5px; border:1.8px solid #CBD5E1; display:grid; place-items:center; font-size:9px; color:#fff; font-weight:800}
+.chk.on .box{background:#047857; border-color:#047857}
+.chk.on .box::after{content:"✓"}
+.chk b{font-size:10.5px; font-weight:800; color:#334155; display:block; letter-spacing:-.01em}
+.chk span.d{font-size:9px; color:var(--muted2); font-weight:700; display:block; margin-top:2px}
+.chk.on{background:#F6FEFB; border-color:#CBEFDF}
+.sd-foot{font-size:9.5px; color:var(--muted2); font-weight:600; text-align:center; margin-top:8px; line-height:1.55}
+.step4{margin-top:14px; padding-top:12px; border-top:1px solid var(--line2)}
+.survey-box{margin-top:11px; padding:11px 10px 10px; border:1px solid #D9E5FF; background:#F7FAFF; border-radius:13px; text-align:center}
+.survey-box b{display:block; font-size:11px; font-weight:800; color:#1E293B; letter-spacing:-.01em}
+.survey-box .d{display:block; font-size:9px; font-weight:700; color:var(--muted2); line-height:1.5; margin-top:3px}
+.btn-survey{width:100%; height:38px; border-radius:11px; background:#fff; border:1px solid #BFD3FF; color:#1D4ED8; font-size:11px; font-weight:800; letter-spacing:-.01em; display:flex; align-items:center; justify-content:center; gap:5px; margin-top:7px; text-decoration:none}
+.btn-survey:hover{background:#EFF5FF; border-color:#9DBDFF}
+
+/* form */
+.field{margin-bottom:9px}
+.field label{display:block; font-size:10.5px; font-weight:800; color:#475569; margin-bottom:4px}
+.field input{width:100%; height:39px; border:1px solid var(--line); border-radius:10px; background:#F8FAFC; padding:0 11px; font-size:12.5px; font-weight:700}
+.form-actions{display:grid; grid-template-columns:1fr 1.6fr; gap:5px; margin-top:13px}
+.form-actions button{height:42px; border-radius:12px; font-size:12.5px; font-weight:800}
+.btn-cancel{background:#F1F5F9; color:#475569}
+.btn-primary{background:var(--blue); color:#fff}
+
+/* install */
+.inst-h{display:flex; align-items:center; gap:9px; margin-bottom:4px}
+.inst-h .ab-logo{width:34px; height:34px; border-radius:10px}
+.inst-t{font-size:14px; font-weight:800; letter-spacing:-.02em}
+.inst-s{font-size:10px; color:var(--muted); font-weight:700; margin-top:2px}
+.inst-steps{list-style:none; padding:0; margin:13px 0 0; display:grid; gap:8px}
+.inst-steps li{display:grid; grid-template-columns:20px 1fr; gap:9px; font-size:11.5px; line-height:1.6; color:#334155; font-weight:600}
+.inst-steps li::before{content:""; width:20px; height:20px; border-radius:6px; background:#EFF4FF; display:block}
+.inst-steps b{font-weight:800; color:var(--ink)}
+.inst-bar{height:3px; border-radius:99px; background:#E6ECF4; margin-top:15px; overflow:hidden}
+.inst-bar i{display:block; height:100%; background:var(--blue); border-radius:99px; animation:shrink 3s linear forwards}
+@keyframes shrink{from{width:100%}to{width:0%}}
+
+/* toast */
+.toast{position:absolute; left:50%; bottom:84px; transform:translate(-50%,14px); background:rgba(15,23,42,.94); color:#fff; font-size:11px; font-weight:800; padding:9px 13px; border-radius:10px; opacity:0; pointer-events:none; transition:.24s; z-index:50; white-space:nowrap; max-width:84%; overflow:hidden; text-overflow:ellipsis}
+.toast.on{opacity:1; transform:translate(-50%,0)}
+
+
+/* ============ 내 구독 불러오기 (검수용 preview-import) ============ */
+.import-bar{display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:9px}
+.import-bar .add-sub{margin-bottom:0; height:41px; font-size:10.5px; letter-spacing:-.04em; white-space:nowrap; padding:0 4px}
+.add-sub.import{border-style:solid; border-color:#BFD3F5; background:#F4F8FF; color:#1D4ED8}
+.add-sub.import:hover{background:#EAF2FF}
+.imp-reset{width:100%; height:34px; border-radius:10px; border:1px dashed #D9E5FF; background:#F8FBFF; color:#3B6FD4; font-size:10px; font-weight:800; margin:-2px 0 9px; letter-spacing:-.02em}
+.imp-head{display:flex; align-items:flex-start; gap:8px}
+.imp-main{flex:1 1 auto; min-width:0}
+.imp-t{font-size:13px; font-weight:800; letter-spacing:-.02em}
+.imp-s{font-size:9px; font-weight:700; color:var(--muted2); margin-top:2px; line-height:1.4}
+.imp-lock{margin-top:10px; padding:8px 9px; border:1px solid #D9E5FF; background:#F4F8FF; border-radius:11px; font-size:10px; font-weight:800; color:#1D4ED8; line-height:1.5; letter-spacing:-.01em}
+.imp-lock span{display:block; font-weight:700; color:#3B5B96; margin-top:2px}
+.imp-rail{display:grid; grid-template-columns:repeat(4,1fr); gap:3px; margin:10px 0 9px}
+.imp-rail .st{font-size:8.5px; font-weight:800; color:var(--muted2); background:#F4F6FA; border:1px solid var(--line2); border-radius:8px; padding:5px 2px; text-align:center; line-height:1.3; letter-spacing:-.04em}
+.imp-rail .st b{display:block; font-size:10px; color:#94A3B8; margin-bottom:1px}
+.imp-rail .st.done{background:var(--ok-soft); border-color:#CBEFDF; color:var(--ok)}
+.imp-rail .st.done b{color:var(--ok)}
+.imp-rail .st.on{background:var(--navy); border-color:var(--navy); color:#fff}
+.imp-rail .st.on b{color:#BFDBFE}
+.imp-desc{font-size:10.5px; font-weight:700; color:var(--muted); line-height:1.6; margin-bottom:9px}
+.imp-msg{display:flex; align-items:flex-start; gap:5px; border:1px solid var(--line); border-radius:10px; background:#fff; padding:6px 7px; margin-bottom:4px; font-size:9.5px; font-weight:700; color:#334155; line-height:1.4}
+.imp-msg .ch{flex:0 0 auto; font-size:8px; font-weight:800; padding:2px 4px; border-radius:5px; background:#EEF2F7; color:#475569}
+.imp-msg .ch.mail{background:#EFF4FF; color:#1D4ED8}
+.imp-msg .when{flex:0 0 auto; color:var(--muted2)}
+.imp-msg .tx{flex:1 1 auto}
+.imp-note{font-size:9px; font-weight:700; color:var(--muted2); line-height:1.55; margin:6px 0 8px}
+.imp-sec{font-size:10px; font-weight:800; color:#334155; margin:10px 0 5px; display:flex; align-items:center; gap:5px}
+.imp-sec .n{font-size:8.5px; font-weight:800; color:#1D4ED8; background:var(--blue-soft); border-radius:5px; padding:2px 5px}
+.imp-sec .sub{font-weight:700; color:var(--muted2); font-size:9px; margin-left:auto}
+.imp-card{border:1px solid var(--line); border-radius:14px; background:#fff; padding:8px 9px 9px; margin-bottom:6px}
+.imp-card.skip{background:#FAFBFD; border-style:dashed}
+.imp-card.err{border-color:#F5B5B5; background:#FFFAFA}
+.imp-card-top{display:flex; align-items:flex-start; gap:6px}
+.imp-cb{flex:0 0 auto; width:18px; height:18px; border-radius:6px; border:1.8px solid #CBD5E1; background:#fff; display:grid; place-items:center; font-size:10px; color:#fff; font-weight:800; padding:0; margin-top:1px}
+.imp-cb.on{background:var(--blue); border-color:var(--blue)}
+.imp-cb.on::after{content:"✓"}
+.imp-cb[disabled]{opacity:.4; cursor:not-allowed}
+.imp-card-nm{flex:1 1 auto; min-width:0}
+.imp-card-name{font-size:11px; font-weight:800; letter-spacing:-.02em; color:var(--ink)}
+.imp-card-meta{font-size:8.5px; font-weight:700; color:var(--muted2); margin-top:1px; line-height:1.4}
+.imp-card-top .pill{flex:0 0 auto; margin-top:1px}
+.imp-fields{display:grid; grid-template-columns:1fr 1fr; gap:4px 5px; margin-top:7px}
+.imp-f{display:block; min-width:0}
+.imp-f.wide{grid-column:1 / -1}
+.imp-f span{display:block; font-size:8.5px; font-weight:800; color:#64748B; margin-bottom:2px}
+.imp-f input,.imp-f select{width:100%; height:29px; border:1px solid var(--line); border-radius:8px; background:#F8FAFC; padding:0 7px; font-size:10.5px; font-weight:700; color:var(--ink)}
+.imp-f input:focus,.imp-f select:focus{outline:none; border-color:#9DBBF0; background:#fff}
+.imp-f input::placeholder{color:#AEB9C8; font-weight:700}
+.imp-tagline{font-size:8.5px; font-weight:700; color:var(--muted2); margin-top:5px; line-height:1.5}
+.imp-aim{font-size:8.5px; font-weight:700; color:#B45309; margin-top:5px; line-height:1.5}
+.imp-mini-btn{width:100%; height:31px; border-radius:9px; border:1px solid #FDE9C4; background:#FFF7ED; color:#B45309; font-size:9.5px; font-weight:800; margin-top:5px}
+.imp-excl{border:1px dashed #DCE3EC; border-radius:12px; background:#FCFCFD; padding:7px 8px}
+.imp-excl .row{display:flex; align-items:center; gap:5px; font-size:9.5px; font-weight:700; color:#475569}
+.imp-excl .row b{font-weight:800; color:#475569}
+.imp-excl .row .pill{margin-left:auto}
+.imp-excl .why{font-size:8.5px; font-weight:700; color:var(--muted2); margin-top:3px; line-height:1.5}
+.imp-sum{display:flex; align-items:center; justify-content:space-between; gap:5px; border:1px solid #D9E5FF; background:#F7FAFF; border-radius:11px; padding:7px 8px; margin-top:9px; font-size:9.5px; font-weight:800; color:#1D4ED8; letter-spacing:-.02em}
+.imp-sum b{font-size:10.5px}
+.imp-err{margin-top:7px; border:1px solid #FBD5D5; background:#FEF2F2; color:#B91C1C; border-radius:10px; padding:6px 8px; font-size:9px; font-weight:800; line-height:1.5}
+.imp-next{width:100%; height:42px; border-radius:12px; background:var(--blue); color:#fff; font-size:12px; font-weight:800; margin-top:9px}
+.imp-next:active{background:var(--blue-dark)}
+.imp-back{width:100%; height:32px; border-radius:9px; background:none; color:var(--muted); font-size:9.5px; font-weight:800; margin-top:3px}
+.imp-res-row{display:flex; align-items:center; gap:6px; border:1px solid #CBEFDF; background:#F6FEFB; border-radius:11px; padding:7px 8px; margin-bottom:4px}
+.imp-res-row .imp-res-t{flex:1 1 auto; min-width:0; font-size:10.5px; font-weight:800; color:var(--ink); letter-spacing:-.02em}
+.imp-res-row .d{font-size:8.5px; font-weight:700; color:var(--muted2); margin-top:1px}
+.imp-res-row .pill{flex:0 0 auto}
+.imp-step4{border:1px solid var(--line); border-radius:13px; background:#fff; padding:9px}
+.imp-step4 .k{font-size:8.5px; font-weight:800; color:var(--muted2); margin-bottom:2px}
+.imp-foot{font-size:8.5px; font-weight:700; color:var(--muted2); line-height:1.5; margin-top:9px; text-align:center}
+.row.imp-hl{background:#F2F7FF; box-shadow:inset 0 0 0 1.5px #C7D9FF; border-radius:12px}
+
+/* ============ responsive ============ */
+@media (max-width:1023px){
+  .stage{display:block; padding:0; max-width:none; background:var(--bg)}
+  .stage::before{display:none}
+  .intro{display:none}
+  .device-col{padding:0}
+  .phone{position:static; width:100%; height:100dvh; border-radius:0; padding:0; background:transparent; box-shadow:none}
+  .screen{border-radius:0; height:100dvh}
+  .notch{display:none}
+  .statusbar{display:none}
+  .appbar{padding-top:calc(10px + env(safe-area-inset-top))}
+  .app-body{padding-bottom:18px}
+  .tabbar{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  .toast{bottom:calc(78px + env(safe-area-inset-bottom))}
+}
+@media (min-width:1024px) and (max-width:1180px){
+  .stage{padding:32px 28px; gap:36px; grid-template-columns:minmax(320px,440px) 1fr}
+  h1.i-head{font-size:27px}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <!-- ================= LEFT PANEL ================= -->
+  <aside class="intro">
+    <div class="i-brand">
+      <span class="i-logo">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="1" y="1" width="30" height="30" rx="9" fill="#2563EB"/>
+          <circle cx="16" cy="8.8" r="2.1" fill="#fff"/>
+          <rect x="7.5" y="12.5" width="17" height="12.5" rx="5" fill="#fff"/>
+          <circle cx="12.6" cy="18.6" r="1.75" fill="#2563EB"/>
+          <circle cx="19.4" cy="18.6" r="1.75" fill="#2563EB"/>
+        </svg>
+      </span>
+      <div>
+        <div class="i-name">나대신 구독케어</div>
+        <div class="i-sub">구독 종합생애관리 · AI 구독케어 에이전트</div>
+      </div>
+      <span class="i-badge"><i></i>모두의 창업 2R 시제품</span>
+    </div>
+
+    <h1 class="i-head">구독은 한눈에,<br>필요한 도구는 <em>바로 열고</em>,<br>갱신은 다음 작업에 맞춰.</h1>
+    <p class="i-lead">구독의 <b>시작부터 활용·변경·해지·다음 청구 확인</b>까지 — 구독서비스를 종합적으로 관리하는 <b>한국형 개인 맞춤형 구독케어 에이전트</b>입니다. 결제내역만으로는 보이지 않는 AI 도구의 크레딧·한도·용도 중복까지 판단하고, 갱신 전에 유지·하향·중단을 정해 고객이 공식 페이지에서 처리한 뒤 <b>다음 청구까지</b> 확인합니다.</p>
+
+    <div class="axis">
+      <div class="ax">
+        <span class="k">① 한곳에서</span>
+        <b>보고, 바로 연다</b>
+        <span class="d">구독·비용·갱신일·크레딧을 한 화면에서 보고 공식 사이트로 바로 이동</span>
+      </div>
+      <div class="ax">
+        <span class="k">② 내 작업에 맞춰</span>
+        <b>재개일로 판단한다</b>
+        <span class="d">사용률이 낮아도 다음 작업이 가까우면 유지·요금제 변경·중단을 제안</span>
+      </div>
+      <div class="ax on">
+        <span class="k">③ 줄이기 전에</span>
+        <b>이미 가진 것부터 쓴다</b>
+        <span class="d">보유 기능·잔여 크레딧을 먼저 쓰고, 한국 공식 할인·번들·대체 요금제를 함께 비교</span>
+      </div>
+      <div class="ax">
+        <span class="k">④ 끝까지</span>
+        <b>다음 청구까지 확인한다</b>
+        <span class="d">공식 처리 경로로 안내하고 실제 반영 여부를 다음 청구에서 기록</span>
+      </div>
+    </div>
+
+    <ul class="values">
+      <li>
+        <span class="vi"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8.5 14.5l2 2 4.5-4.5"/></svg></span>
+        <span><b>한눈에 보기</b>14개 구독의 금액·갱신일·사용률/크레딧·약정을 한 화면에 (확인되지 않은 사용량은 '미확인')</span>
+      </li>
+      <li>
+        <span class="vi"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-8.5 8.5"/><path d="M18 14.5V19a1.8 1.8 0 0 1-1.8 1.8H5A1.8 1.8 0 0 1 3.2 19V7.8A1.8 1.8 0 0 1 5 6h4.5"/></svg></span>
+        <span><b>바로 열기</b>필요한 도구는 각 서비스 공식 사이트로 즉시 이동</span>
+      </li>
+      <li>
+        <span class="vi"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M8 15.5v-4M13 15.5V7M18 15.5v-2.5"/></svg></span>
+        <span><b>갱신 전 판단</b>다음 작업 일정 기준으로 유지·하향·중단과 그 근거를 제시</span>
+      </li>
+      <li>
+        <span class="vi"><svg viewBox="0 0 24 24"><path d="M20 6.5 10 16.5l-5-5"/><path d="M20 13v5.6A1.4 1.4 0 0 1 18.6 20H5.4A1.4 1.4 0 0 1 4 18.6V5.4A1.4 1.4 0 0 1 5.4 4h9"/></svg></span>
+        <span><b>변경 후 확인</b>공식 페이지에서 처리한 뒤 다음 청구 결과를 기록</span>
+      </li>
+    </ul>
+
+    <div class="card-block">
+      <div class="cb-head">
+        <svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 3 6.5-8"/><path d="M15 7h5v5"/></svg>
+        4단계 핵심 흐름 · 무료와 유료의 경계
+      </div>
+      <p class="cb-desc">홈 점검과 작업판은 무료로, <b>판단이 어려운 지점만 9,900원 심층 리포트</b>로 검증합니다. 9,900원은 2R에서 검증할 가격입니다. 결제·해지 실행은 2R 범위 밖입니다.</p>
+      <div class="flow">
+        <div class="flow-row">
+          <span class="flow-tag free">무료 0원</span>
+          <span class="flow-items"><span class="flow-i on">① 한눈에 보기</span><span class="flow-i on">② 일할 때 열기</span></span>
+        </div>
+        <div class="flow-row">
+          <span class="flow-tag paid">유료 9,900원</span>
+          <span class="flow-items"><span class="flow-i on">③ 결제 전 판단</span><span class="flow-i on">④ 변경 후 확인</span></span>
+        </div>
+      </div>
+      <p class="flow-note">고객이 정한 것은 고객이 하고, 서비스는 <b>판단 근거</b>로 먼저 돕습니다. 심층 리포트 1회 9,900원은 <b>2R에서 검증할 가격</b>입니다 · 작성 18분 이내.</p>
+    </div>
+
+    <div class="card-block">
+      <div class="cb-head">
+        <svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="4.2"/></svg>
+        서비스 확장 로드맵
+      </div>
+      <p class="cb-desc">사업 범위를 <b>시제품 / 제품화 / 안정화 후 확장</b>으로 나눠 봅니다. 지금 시제품은 가상 데이터로 판단 규칙을 시연하는 단계이고, 실제 계정 연동·자동 변경·실청구 확인은 이후 범위입니다.</p>
+      <div class="road">
+        <div class="road-step">
+          <div class="rs-k">1단계</div>
+          <div>
+            <div class="rs-t">가상 시제품 · 고객 조사 <span>완료</span></div>
+            <div class="rs-d">지금 보여주는 것 · 시장 조사 1차 94건·2차 124건 / 별도 시제품 체험 설문 8건(11/24 13:43 기준) · 가상 데이터 14개로 판단 규칙 시연</div>
+          </div>
+        </div>
+        <div class="road-step">
+          <div class="rs-k">2단계</div>
+          <div>
+            <div class="rs-t">2R 직접 입력 웹 MVP · 리포트 검증 <span>진행</span></div>
+            <div class="rs-d">제품화 · 사용량·크레딧 직접 입력, 9,900원 리포트 유료 구매 검증 (사용성 20명)</div>
+          </div>
+        </div>
+        <div class="road-step dim">
+          <div class="rs-k">3단계</div>
+          <div>
+            <div class="rs-t">인허가·승인 기반 변경·해지 지원</div>
+            <div class="rs-d">안정화 후 확장 · 제휴·승인 범위에서 변경·해지 실행, 2028~ 디지털 구독 전반</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-block">
+      <div class="cb-head">
+        <svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.4.3.5.7.5 1.1h6c0-.4.1-.8.5-1.1A6 6 0 0 0 12 3z"/></svg>
+        이렇게 체험해 보세요
+      </div>
+      <ol class="guide">
+        <li><span><b>한눈에 보기</b>홈에서 14개 구독의 금액·갱신일·크레딧과 연결 작업을 보고, <b>[AI 도구 집중]</b>으로 AI 도구 7개만 추려 확인합니다.</span></li>
+        <li><span><b>일할 때 열기</b>카드의 <b>[서비스 열기 ↗]</b>를 누르면 실제 공식 사이트가 새 탭으로 열립니다.</span></li>
+        <li><span><b>결제 전 판단</b><b>[구독 점검]</b>과 심층 리포트 시뮬레이터에서 유지·하향·중단의 근거와 재점검일을 확인합니다.</span></li>
+        <li><span><b>변경 후 확인</b>기록 탭에서 변경 처리와 다음 청구 확인을 체크해 4단계를 닫습니다.</span></li>
+      </ol>
+      <div class="i-actions">
+        <button class="btn-reset" data-act="reset">
+          <svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5V10h5.5"/></svg>
+          데모 데이터 초기화
+        </button>
+      </div>
+    </div>
+
+    <p class="footnote">'모두의 창업' 2라운드 시제품입니다. 화면의 14개 구독은 사업계획서 붙임 1과 같은 가상 데이터이며 실제 결제·변경은 발생하지 않습니다. 판단은 규칙 기반 시연이고, 나대신은 비밀번호·카드번호를 받지 않습니다. 구독 점검의 '줄이기 전에 먼저 확인'은 공식 서비스에서 직접 확인할 항목을 정리한 예시 가이드입니다.</p>
+  </aside>
+
+  <!-- ================= DEVICE ================= -->
+  <section class="device-col">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar">
+          <span id="sbTime">15:00</span>
+          <span class="sb-right">
+            <svg viewBox="0 0 20 14" aria-hidden="true"><rect x="0" y="9" width="3" height="4" rx="1" fill="#fff"/><rect x="4.6" y="6.5" width="3" height="6.5" rx="1" fill="#fff"/><rect x="9.2" y="4" width="3" height="9" rx="1" fill="#fff"/><rect x="13.8" y="1.5" width="3" height="11.5" rx="1" fill="#fff"/></svg>
+            <span style="font-size:10.5px;font-weight:800;letter-spacing:.02em">5G</span>
+            <svg viewBox="0 0 24 12" aria-hidden="true"><rect x="1" y="1.5" width="18" height="9" rx="2.6" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.2"/><rect x="2.8" y="3.3" width="12" height="5.4" rx="1.4" fill="#fff"/><rect x="20.2" y="4.4" width="1.8" height="3.2" rx=".9" fill="#fff" fill-opacity=".65"/></svg>
+          </span>
+        </div>
+
+        <header class="appbar">
+          <span class="ab-logo">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <rect x="1" y="1" width="30" height="30" rx="9" fill="#fff" fill-opacity=".14"/>
+              <circle cx="16" cy="8.8" r="2.1" fill="#fff"/>
+              <rect x="7.5" y="12.5" width="17" height="12.5" rx="5" fill="#fff"/>
+              <circle cx="12.6" cy="18.6" r="1.75" fill="#2563EB"/>
+              <circle cx="19.4" cy="18.6" r="1.75" fill="#2563EB"/>
+            </svg>
+          </span>
+          <span class="ab-name">나대신</span>
+          <span class="ab-badge">2R 시제품</span>
+          <button class="zbtn" id="zoomBtn" data-act="zoompick" aria-haspopup="true" aria-expanded="false" aria-controls="zoomPop" title="화면 크기 조절" aria-label="화면 크기 조절">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.2"/><path d="M20 20l-3.7-3.7"/></svg>
+            <span id="zoomLabel">100%</span>
+          </button>
+          <div class="zpop" id="zoomPop" role="group" aria-label="화면 배율 선택">
+            <button type="button" data-act="zoomset" data-zoom="70">70%</button>
+            <button type="button" data-act="zoomset" data-zoom="100" class="on">100%</button>
+            <button type="button" data-act="zoomset" data-zoom="120">120%</button>
+            <button type="button" data-act="zoomset" data-zoom="150">150%</button>
+          </div>
+          <button class="ab-install" data-act="install">
+            <svg viewBox="0 0 24 24"><path d="M12 4v10"/><path d="M8 11l4 3.5 4-3.5"/><path d="M5 19h14"/></svg>
+            앱 설치
+          </button>
+        </header>
+
+        <main class="app-body" id="appBody"></main>
+
+        <nav class="tabbar" id="tabbar"></nav>
+        <div id="overlay"></div>
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ============================================================
+   나대신 구독케어 · 2R 시제품 (single file, no build)
+   - 기준일: 2026-11-20 (사업계획서 붙임 1과 동일)
+   - 가상 데이터 14개 · 합계 210,000원
+   - 규칙 기반 판단 시연 (실제 AI 분석·결제·변경 없음)
+   ============================================================ */
+const $ = (s, r = document) => r.querySelector(s);
+const fmt = n => Math.round(n).toLocaleString('ko-KR') + '원';
+const num = n => Math.round(n).toLocaleString('ko-KR');
+
+const BASE = new Date(2026, 10, 20);   // 데모 기준일 2026-11-20
+const DAY = 86400000;
+
+/* ---------- 가상 데이터: 사업계획서 p.10 붙임 1 ---------- */
+const SUBS_BASE = [
+  { id:'chatgpt', name:'ChatGPT', plan:'Plus', price:15000, date:'2026-11-23', cat:'AI 도구', usage:60,
+    color:'#10A37F', mark:'GPT', open:'https://chatgpt.com/', manage:'https://chatgpt.com/#settings/Subscription', manageHint:'설정 → 구독' },
+  { id:'claude', name:'Claude', plan:'Pro', price:36000, date:'2026-11-30', cat:'AI 도구',
+    color:'#D97757', mark:'CL', open:'https://claude.ai/', manage:'https://claude.ai/settings/billing', manageHint:'Settings → Billing' },
+  { id:'genspark', name:'Genspark', plan:'Plus', price:12000, date:'2026-12-06', cat:'AI 도구', flag:'dup',
+    color:'#2563EB', mark:'GS', open:'https://www.genspark.ai/', manage:'https://www.genspark.ai/', manageHint:'계정 → 멤버십' },
+  { id:'coupang', name:'쿠팡 와우', plan:'멤버십', price:8000, date:'2026-11-19', cat:'생활·통신',
+    color:'#E11D48', mark:'CP', open:'https://www.coupang.com/', manage:'https://www.coupang.com/', manageHint:'마이쿠팡 → 와우 멤버십' },
+  { id:'higgsfield', name:'Higgsfield', plan:'Creator', price:29000, date:'2026-11-23', cat:'AI 도구', usage:20,
+    color:'#7C3AED', mark:'HF', open:'https://higgsfield.ai/', manage:'https://higgsfield.ai/', manageHint:'Settings → Plan' },
+  { id:'netflix', name:'Netflix', plan:'스탠다드', price:14000, date:'2026-11-18', cat:'영상·음악',
+    color:'#B91C1C', mark:'NF', open:'https://www.netflix.com/', manage:'https://www.netflix.com/account', manageHint:'계정 → 멤버십 해지' },
+  { id:'manus', name:'Manus', plan:'Starter', price:20000, date:'2026-11-27', cat:'AI 도구', credit:{ used:4000, total:20000 },
+    color:'#334155', mark:'MN', open:'https://manus.im/', manage:'https://manus.im/', manageHint:'Settings → Billing' },
+  { id:'vrew', name:'Vrew', plan:'Pro', price:10000, date:'2026-11-23', cat:'AI 도구', usage:40,
+    color:'#F97316', mark:'VR', open:'https://vrew.voyagerx.com/', manage:'https://vrew.voyagerx.com/', manageHint:'요금제 → 구독 관리' },
+  { id:'suno', name:'Suno', plan:'Pro', price:9000, date:'2026-11-20', cat:'AI 도구',
+    color:'#111827', mark:'SN', open:'https://suno.com/', manage:'https://suno.com/account', manageHint:'Account → Subscription' },
+  { id:'youtube', name:'YouTube Premium', plan:'개인', price:10000, date:'2026-11-29', cat:'영상·음악',
+    color:'#FF0033', mark:'YT', open:'https://www.youtube.com/premium', manage:'https://www.youtube.com/paid_memberships', manageHint:'유료 멤버십 관리' },
+  { id:'duolingo', name:'듀오링고', plan:'Super', price:7000, date:'2026-11-26', cat:'저장·학습',
+    color:'#58CC02', mark:'DU', open:'https://www.duolingo.com/', manage:'https://www.duolingo.com/', manageHint:'설정 → 구독' },
+  { id:'skb', name:'SK브로드밴드', plan:'인터넷', price:28000, date:'2026-12-02', cat:'생활·통신', contract:{ end:'2026-12-10' },
+    color:'#EA002C', mark:'SK', open:'https://www.skbroadband.com/', manage:'https://www.skbroadband.com/', manageHint:'마이페이지 → 요금제 변경' },
+  { id:'g1', name:'Google One', plan:'100GB', price:3000, date:'2026-12-15', cat:'저장·학습', storage:{ used:68, total:100 },
+    color:'#4285F4', mark:'G1', open:'https://one.google.com/', manage:'https://one.google.com/storage', manageHint:'저장공간 관리' },
+  { id:'spotify', name:'Spotify Premium', plan:'개인', price:9000, date:'2026-12-04', cat:'영상·음악',
+    color:'#1DB954', mark:'SP', open:'https://www.spotify.com/', manage:'https://www.spotify.com/account', manageHint:'계정 → 요금제' }
+];
+
+const PROJECTS_BASE = [
+  { id:'p1', name:'유튜브 숏폼 시리즈', desc:'주 3회 업로드 · 12월 시리즈 기획', status:'진행 중', due:'2026-12-10', color:'#2563EB', subs:['chatgpt','vrew','suno'] },
+  { id:'p2', name:'석사 논문·데이터 분석', desc:'한성대 4학기 논문 · 중간발표', status:'진행 중', due:'2026-12-05', color:'#7C3AED', subs:['claude'] },
+  { id:'p3', name:'나대신 2R 제품 개발', desc:'심층 리포트·시뮬레이터 고도화 · 사업계획서 제출', status:'진행 중', due:'2026-12-01', color:'#0EA5E9', subs:['chatgpt','manus'] },
+  { id:'p4', name:'브랜드 이미지 리뉴얼', desc:'채널 로고·썸네일 템플릿 재정비', status:'보류', due:'2027-01-15', color:'#F59E0B', subs:['higgsfield','genspark'] },
+  { id:'p5', name:'연말 개인 구독 정리', desc:'가족 공유·연간 결제 전환 검토', status:'완료', due:'2026-11-18', color:'#94A3B8', subs:['netflix','spotify'] }
+];
+
+const CATS = ['전체','AI 도구','영상·음악','생활·통신','저장·학습'];
+const ACTIONS = {
+  keep:{ label:'유지', short:'유지', cls:'ok' },
+  down:{ label:'요금제 하향·변경', short:'하향·변경', cls:'warn' },
+  stop:{ label:'갱신 중단 검토', short:'갱신 중단', cls:'danger' }
+};
+
+const S = {
+  tab:'home',
+  homeFilter:'all',
+  subCat:'전체',
+  q:'',
+  subs: clone(SUBS_BASE),
+  projects: clone(PROJECTS_BASE),
+  decisions: [],
+  simSub:'higgsfield',
+  simAct:null,
+  simDate:'',
+  detailId:null
+};
+
+function clone(a){ return JSON.parse(JSON.stringify(a)); }
+
+/* ---------- 화면 상태 저장(localStorage) : 새로고침해도 결정·재개일·처리 상태 유지 ---------- */
+const STATE_KEY = 'nadaesin.v3.state.v1';
+function saveState(){
+  try {
+    localStorage.setItem(STATE_KEY, JSON.stringify({
+      v:1,
+      tab:S.tab, homeFilter:S.homeFilter, subCat:S.subCat,
+      subs:S.subs, projects:S.projects, decisions:S.decisions,
+      simSub:S.simSub, simAct:S.simAct, simDate:S.simDate
+    }));
+  } catch (e) {}
+}
+function loadState(){
+  let o = null;
+  try { o = JSON.parse(localStorage.getItem(STATE_KEY) || 'null'); } catch (e) { o = null; }
+  if (!o || o.v !== 1) return;
+  if (Array.isArray(o.subs) && o.subs.length && o.subs.every(s => s && s.id && s.name && typeof s.price === 'number')) S.subs = o.subs;
+  if (Array.isArray(o.projects) && o.projects.length) S.projects = o.projects;
+  if (Array.isArray(o.decisions)){
+    S.decisions = o.decisions.filter(d => d && d.subId && ACTIONS[d.action] && /^\d{4}-\d{2}-\d{2}$/.test(d.recheck || ''));
+  }
+  if (o.simSub && S.subs.some(s => s.id === o.simSub)) S.simSub = o.simSub;
+  if (typeof o.simDate === 'string' && (!o.simDate || /^\d{4}-\d{2}-\d{2}$/.test(o.simDate))) S.simDate = o.simDate;
+  if (o.simAct && ACTIONS[o.simAct]) S.simAct = o.simAct;
+  if (o.tab && ['home','report','board','subs','history'].indexOf(o.tab) > -1) S.tab = o.tab;
+  if (['all','ai','soon','past','need'].indexOf(o.homeFilter) > -1) S.homeFilter = o.homeFilter;
+  if (o.subCat) S.subCat = o.subCat;
+}
+
+/* ---------- 날짜 ---------- */
+function toDate(s){ const p = s.split('-').map(Number); return new Date(p[0], p[1]-1, p[2]); }
+function isoOf(d){ const p = n => String(n).padStart(2,'0'); return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate()); }
+function isoAdd(s, days){ const d = toDate(s); d.setDate(d.getDate() + days); return isoOf(d); }
+function addMonths(s, n){ const p = s.split('-').map(Number); return isoOf(new Date(p[0], p[1]-1+n, p[2])); }
+function dday(sub){ return Math.round((toDate(sub.date) - BASE) / DAY); }
+function md(s){ const p = s.split('-').map(Number); return p[1] + '월 ' + p[2] + '일'; }
+function mdw(s){ const p = s.split('-').map(Number); return p[1] + '/' + p[2]; }
+function ddLabel(sub){
+  const d = dday(sub);
+  if (d > 0) return 'D-' + d;
+  if (d === 0) return '오늘';
+  return '경과 ' + (-d) + '일';
+}
+function nextBill(sub){
+  if (dday(sub) >= 0) return sub.date;
+  return addMonths(sub.date, 1);
+}
+/* 결정을 재점검일 기준으로 처리했을 때 결과를 확인할 청구일 */
+function checkBill(sub, recheck){
+  const nb = nextBill(sub);
+  return (recheck && recheck < sub.date) ? nb : addMonths(nb, 1);
+}
+function barColor(p){ return p < 30 ? '#F97316' : (p < 60 ? '#3B82F6' : '#10B981'); }
+/* 직접 타이핑한 날짜를 관대하게 해석: 2026-12-25 / 20261225 / 12-25 / 12/25 */
+function parseDateInput(raw){
+  const t = String(raw == null ? '' : raw).trim();
+  let m = t.match(/^(\d{4})[-\/.\s]?(\d{1,2})[-\/.\s]?(\d{1,2})\.?$/);
+  if (m){
+    const y = +m[1], mo = +m[2], d = +m[3];
+    if (mo >= 1 && mo <= 12 && d >= 1 && d <= 31) return isoOf(new Date(y, mo - 1, d));
+  }
+  m = t.match(/^(\d{1,2})[-\/.\s]?(\d{1,2})\.?$/);
+  if (m){
+    const mo = +m[1], d = +m[2];
+    if (mo >= 1 && mo <= 12 && d >= 1 && d <= 31) return isoOf(new Date(BASE.getFullYear(), mo - 1, d));
+  }
+  return null;
+}
+function setDateFields(id, iso){
+  const t = $('#' + id); if (t && t.value !== iso) t.value = iso;
+  const p = $('#' + id + 'Pick'); if (p) p.value = iso;
+}
+/* 텍스트 날짜 입력: 유효하면 즉시 반영, 확정(blur) 시 형식 정리 · 잘못된 값은 직전 값 복원 */
+function dateTextChanged(id, raw, commit){
+  const isSim = id === 'simDate';
+  const sub = isSim ? (S.subs.find(s => s.id === S.simSub) || S.subs[0]) : S.subs.find(s => s.id === S.detailId);
+  if (!sub) return;
+  const el = $('#' + id);
+  const v = parseDateInput(raw);
+  if (v){
+    if (el) el.dataset.last = v;
+    const p = $('#' + id + 'Pick'); if (p) p.value = v;
+    if (isSim){ S.simDate = v; refreshSim(); } else { refreshDetail(v); }
+  } else if (commit && el){
+    el.value = el.dataset.last || (isSim ? (S.simDate || defaultRecheck(sub)) : defaultRecheck(sub));
+  }
+}
+function timeNow(){
+  const d = new Date();
+  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+function stamp(){
+  const d = new Date();
+  return (d.getMonth()+1) + '/' + d.getDate() + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+
+/* ---------- 지표 ---------- */
+function metric(sub){
+  if (sub.credit){
+    const p = Math.round(sub.credit.used / sub.credit.total * 100);
+    const v = num(sub.credit.used) + '/' + num(sub.credit.total);
+    return { pct:p, measure:'credit', name:'크레딧', label:'크레딧 ' + v, detail:'크레딧 ' + v + ' (' + p + '%)', short:'크레딧 ' + p + '%' };
+  }
+  if (sub.storage){
+    const p = Math.round(sub.storage.used / sub.storage.total * 100);
+    const v = sub.storage.used + '/' + sub.storage.total + 'GB';
+    return { pct:p, measure:'storage', name:'저장공간', label:v, detail:v + ' (' + p + '%)', short:'용량 ' + p + '%' };
+  }
+  if (sub.contract){
+    const d = Math.round((toDate(sub.contract.end) - BASE) / DAY);
+    return { pct:null, measure:'contract', name:'약정 만료', label:'약정 만료 D-' + d, detail:'약정 만료 ' + md(sub.contract.end) + ' (D-' + d + ')', short:'약정 만료 D-' + d, contractDays:d };
+  }
+  if (typeof sub.usage === 'number')
+    return { pct:sub.usage, measure:'usage', name:'사용률', label:'사용률 ' + sub.usage + '%', detail:'사용률 ' + sub.usage + '%', short:'사용 ' + sub.usage + '%' };
+  /* 측정하지 않은 구독은 임의 %를 만들지 않고 '미확인'으로 둡니다 (사업계획서 p.10 기준) */
+  return { pct:null, measure:'unknown', name:'사용량', label:'사용량 미확인', detail:'사용량 미확인', short:'사용량 미확인' };
+}
+
+/* ---------- 판단 규칙 ---------- */
+function linksOf(id){ return S.projects.filter(p => p.subs.indexOf(id) > -1); }
+
+function judge(sub){
+  const mt = metric(sub);
+  const p = mt.pct;
+  const links = linksOf(sub.id);
+  const act = links.filter(x => x.status === '진행 중')[0];
+  const pau = links.filter(x => x.status === '보류')[0];
+
+  if (sub.flag === 'dup')
+    return { key:'check', cls:'warn', label:'용도 중복 점검', basis:'근거 · 범용 AI 3중' };
+  if (sub.contract)
+    return { key:'check', cls:'warn', label:'약정 만료 · 요금제 재검토', basis:'근거 · ' + md(sub.contract.end) + ' 만료' };
+  if (sub.credit && p !== null && p < 30)
+    return { key:'check', cls:'warn', label:'크레딧 낭비 · 요금제 하향', basis:'근거 · ' + mt.short + (act ? ' · ' + act.name : '') };
+  /* 사용량을 측정하지 않은 구독: 임의 판단 대신 '미확인'으로 두고 입력을 안내합니다 */
+  if (mt.measure === 'unknown'){
+    if (act) return { key:'keep', cls:'ok', label:'작업 연결 · 유지', basis:'근거 · ' + act.name + ' · 사용량 미확인' };
+    if (pau) return { key:'check', cls:'warn', label:'사용량 미확인 · 중단 검토', basis:'근거 · ' + pau.name + ' 보류' };
+    return { key:'unknown', cls:'soft', label:'사용량 미확인 · 입력 필요', basis:'근거 · 사용량 미확인' };
+  }
+  if (p !== null && p < 30){
+    if (act) return { key:'keep', cls:'ok', label:'유지 · 재점검', basis:'근거 · ' + act.name + ' 진행 · ' + mt.short };
+    if (pau) return { key:'check', cls:'warn', label:'저사용 · 중단 검토', basis:'근거 · ' + mt.short + ' · ' + pau.name + ' 보류' };
+    return { key:'check', cls:'warn', label:'저사용 · 하향 검토', basis:'근거 · ' + mt.short };
+  }
+  if (act) return { key:'keep', cls:'ok', label:'작업 연결 · 유지', basis:'근거 · ' + act.name };
+  if (pau) return { key:'check', cls:'warn', label:'작업 보류 · 하향 검토', basis:'근거 · ' + pau.name + ' 보류' };
+  if (p !== null && p < 35) return { key:'check', cls:'warn', label:'저사용 · 하향 검토', basis:'근거 · ' + mt.short };
+  return { key:'keep', cls:'ok', label:'사용 정상 · 유지', basis:'근거 · ' + mt.short };
+}
+
+function decisionFor(id){
+  const list = S.decisions.filter(d => d.subId === id);
+  return list.length ? list[list.length - 1] : null;
+}
+function stateOf(sub){
+  const dec = decisionFor(sub.id);
+  if (dec){
+    const m = ACTIONS[dec.action];
+    return { cls:m.cls, label:m.short + ' 확정', basis:'재점검 ' + mdw(dec.recheck) };
+  }
+  return judge(sub);
+}
+
+/* ---------- 날짜 기반 자동 추천 (재개일만 바뀌어도 추천이 전환) ---------- */
+const RECO_GAP = 7;   /* 갱신일로부터 7일 안에 작업이 재개되면 유지, 넘으면 이번 결제 불필요 */
+
+function recommend(sub, rd){
+  if (!rd || !/^\d{4}-\d{2}-\d{2}$/.test(rd)) rd = defaultRecheck(sub);   /* 형식이 깨진 값은 기본 재개일로 */
+  const bill = sub.date;
+  const gap = Math.round((toDate(rd) - toDate(bill)) / DAY);
+  const mt = metric(sub);
+  const link = linksOf(sub.id)[0];
+  const keep = gap <= RECO_GAP;
+  let why, basisShort;
+  if (gap < 0){
+    why = '재개일 <b>' + md(rd) + '</b>이 갱신일 <b>' + md(bill) + '</b>보다 ' + (-gap) + '일 앞입니다. 갱신 전에 다음 작업이 시작되므로 이번 갱신을 유지합니다.';
+    basisShort = '갱신 전 재개';
+  } else if (gap === 0){
+    why = '재개일이 갱신일 <b>' + md(bill) + '</b>과 같습니다. 갱신 직후 다음 작업에 유료 기능이 필요합니다.';
+    basisShort = '갱신일 당일 재개';
+  } else if (keep){
+    why = '갱신일 <b>' + md(bill) + '</b>에서 <b>' + gap + '일</b> 뒤인 <b>' + md(rd) + '</b>에 작업이 재개됩니다. 갱신 직후 쓸 작업이 있어 유지합니다.';
+    basisShort = '갱신 후 ' + gap + '일 내 재개';
+  } else {
+    why = '갱신일 <b>' + md(bill) + '</b>부터 재개일 <b>' + md(rd) + '</b>까지 <b>' + gap + '일</b>입니다. 그 사이 유료 기능을 쓰지 않으므로 이번 결제가 필요하지 않습니다.';
+    basisShort = '갱신 후 ' + gap + '일 미사용';
+  }
+  const basis = [];
+  basis.push(link ? '연결 작업 「' + link.name + '」 ' + link.status + ' · 마감 ' + md(link.due) : '연결된 작업 없음');
+  basis.push(mt.detail);
+  basis.push('기준 · 갱신일 +' + RECO_GAP + '일 안에 재개되면 유지, 넘으면 이번 결제 불필요');
+  if (!keep){
+    basis.push('이번 결제는 건너뛰고 재개일에 다시 켜는 안을 기본으로, 요금제를 낮춰 유지하는 안과 견줘 보세요.');
+    if (mt.pct !== null && mt.pct >= 50) basis.push('지난 기간 사용률은 ' + mt.pct + '%였습니다. 재개일 전에 실제로 쓰는 날이 있으면 재개일을 앞당겨 다시 판단하세요.');
+  } else if (mt.measure === 'unknown'){
+    basis.push('사용량이 확인되지 않았습니다. 유지하더라도 재개일 전에 사용량을 입력해 두면 다음 판단이 정확해집니다.');
+  }
+  return { keep:keep, label:keep ? '유지 검토' : '하향·중단 검토', action:keep ? 'keep' : 'stop',
+    why:why, basis:basis, basisShort:basisShort, gap:gap, mt:mt, link:link };
+}
+
+function recoHTML(sub, rd){
+  const r = recommend(sub, rd);
+  return '<div class="reco">' +
+    '<div class="reco-top"><span class="reco-k">자동 추천</span>' +
+      '<span class="pill ' + (r.keep ? 'ok' : 'warn') + ' big">' + r.label + '</span></div>' +
+    '<div class="reco-why">' + r.why + '</div>' +
+    '<ul class="reco-basis">' + r.basis.map(function(b){ return '<li>' + b + '</li>'; }).join('') + '</ul>' +
+  '</div>';
+}
+
+function verdictHTML(sub, rd){
+  const r = recommend(sub, rd);
+  return '<span class="pill ' + (r.keep ? 'ok' : 'warn') + '">추천 · ' + r.label + '</span>' +
+    '<span class="pill basis">' + r.basisShort + '</span>';
+}
+
+/* ---------- 표시 순서 ----------
+   처음 보는 사람도 바로 공감하는 순서로 고정합니다(사용자 지정 1~14).
+   목록에 없는 새 구독은 맨 뒤에 추가한 순서대로 붙습니다. */
+const SUB_ORDER = ['chatgpt','claude','netflix','coupang','manus','higgsfield','vrew','genspark','suno','youtube','spotify','g1','duolingo','skb'];
+function orderIdx(sub){
+  const i = SUB_ORDER.indexOf(sub.id);
+  return i < 0 ? SUB_ORDER.length : i;
+}
+function byDisplayOrder(a, b){ return orderIdx(a) - orderIdx(b); }
+
+/* ---------- 줄이기 전에 먼저 확인 (③ 보유 활용 · 한국형 공식 혜택) ----------
+   ③ "줄이기 전에, 이미 가진 것부터 잘 쓴다"를 시제품에서 보여주는 블록입니다.
+   실제 요금·혜택을 추정하거나 단정하지 않고, 어떤 항목을 어떤 순서로 확인하면
+   되는지의 '예시 가이드'만 둡니다(최종 확인은 각 서비스 공식 페이지에서).
+   {creditLeft}·{storageLeft}·{contractEnd}는 해당 구독의 가상 데이터로 채웁니다. */
+const GUIDE = {
+  chatgpt: {
+    use:['이번 주 대화·문서 작업을 Plus 한도 안에서 먼저 끝냈는지 확인합니다.',
+         'Claude·Genspark와 같은 용도에 겹쳐 쓰고 있지 않은지 정리합니다.'],
+    official:['월간/연간 주기와 개인·팀 요금제 중 작업량에 맞는 쪽을 공식 요금표에서 비교합니다.',
+              '학생·교육 등 공식 감면 조건에 해당하는지 확인합니다.']
+  },
+  claude: {
+    use:['논문·문서 작업에 Pro 사용 한도를 먼저 다 쓰고, 남은 한도가 있는지 확인합니다.',
+         'Claude에서 끝낼 수 있는 작업을 다른 AI와 나눠 결제하고 있지 않은지 봅니다.'],
+    official:['월간/연간 전환과 팀 요금제 중 실제 사용량에 맞는 조건을 공식 페이지에서 비교합니다.']
+  },
+  netflix: {
+    use:['보고 싶은 작품이 몰린 달에만 시청하고, 남은 기간 프로필·다운로드 혜택을 씁니다.',
+         '가족이 실제로 함께 보는 인원에 프로필 수를 맞춥니다.'],
+    official:['광고형·스탠다드·프리미엄 중 화질·동시 시청 수에 맞는 공식 요금제를 비교합니다.',
+              '통신사 멤버십·카드 제휴의 공식 할인·번들 조건을 확인합니다.']
+  },
+  coupang: {
+    use:['이번 달 로켓배송·쿠팡이츠·쿠팡플레이를 실제로 몇 번 썼는지 보고 유지 여부를 정합니다.',
+         '와우에 딸린 이츠 할인·플레이 혜택을 아직 안 썼다면 먼저 사용합니다.'],
+    official:['연간 결제·카드 제휴 등 공식 멤버십 조건을 비교합니다.']
+  },
+  manus: {
+    use:['남은 크레딧 <b>{creditLeft}</b>을 다음 작업에 먼저 소진합니다.',
+         '크레딧이 소멸·이월되는 조건인지 공식 안내에서 확인합니다.'],
+    official:['정기 결제와 종량(부가 크레딧) 구매 중 작업 빈도에 맞는 쪽을 비교합니다.']
+  },
+  higgsfield: {
+    use:['보유 크레딧·영상 생성 한도를 다음 썸네일·숏폼 작업에 먼저 씁니다.',
+         '작업이 보류된 동안 크레딧이 소멸되지 않는지 확인합니다.'],
+    official:['월간/연간 요금제와 크레딧 충전 중 작업 빈도에 맞는 쪽을 비교합니다.']
+  },
+  vrew: {
+    use:['Pro 한도 안에서 이번 달 자막·편집 작업을 먼저 마무리합니다.'],
+    official:['무료·라이트 요금제로 충분한지 공식 요금표에서 비교하고, 연간 결제 조건도 함께 봅니다.']
+  },
+  genspark: {
+    use:['Genspark에서만 되는 기능(에이전트 결과물)을 먼저 써 보고, ChatGPT·Claude와 겹치는 용도를 정리합니다.'],
+    official:['무료 티어와 월간/연간 요금제 조건을 공식 페이지에서 비교합니다.']
+  },
+  suno: {
+    use:['남은 곡 생성 크레딧을 12월 시리즈 작업에 먼저 씁니다.'],
+    official:['무료 티어 곡 수와 월간/연간 요금제 조건을 비교합니다.']
+  },
+  youtube: {
+    use:['Premium에 포함된 YouTube Music을 Spotify 대신 쓸 수 있는지 확인합니다.',
+         '광고 제거·백그라운드 재생을 실제로 쓰는 기기 수를 확인합니다.'],
+    official:['개인·가족·학생 요금제와 통신사 멤버십 번들 조건을 비교합니다.']
+  },
+  spotify: {
+    use:['YouTube Premium에 포함된 음악 기능과 겹치는 용도를 먼저 확인합니다.'],
+    official:['개인·듀오·패밀리·학생 요금제 중 실제 함께 쓰는 인원에 맞는 조건을 비교합니다.']
+  },
+  g1: {
+    use:['남은 저장공간 <b>{storageLeft}</b>을 먼저 쓰고, 드라이브·사진의 큰 파일을 정리한 뒤 필요 용량을 다시 봅니다.'],
+    official:['100GB·200GB 요금제와 연간 결제 조건을 공식 페이지에서 비교합니다.']
+  },
+  duolingo: {
+    use:['Super 혜택(광고 제거·무제한 하트) 중 실제로 쓰는 기능이 있는지 확인합니다.'],
+    official:['월간/연간(연간 할인)과 가족 요금제 조건을 비교합니다.']
+  },
+  skb: {
+    use:['약정 기간에 받기로 한 공식 사은품·상품권을 모두 받았는지 확인합니다.',
+         '남은 약정 기간과 해지 시 위약금 조건을 공식 안내에서 확인합니다.'],
+    official:['만료 전 재약정 조건, 모바일 결합 할인, 공식 사은품 조건을 만료 전에 나란히 비교합니다.']
+  },
+  _default: {
+    use:['무료·기본 기능으로 처리할 수 있는 일을 먼저 해 보았는지 확인합니다.'],
+    official:['월간/연간·번들·멤버십 등 공식 요금제 조건을 서비스 공식 페이지에서 비교합니다.']
+  }
+};
+
+function guideFor(sub){
+  const g = GUIDE[sub.id] || GUIDE._default;
+  const tok = {
+    '{creditLeft}': sub.credit ? num(sub.credit.total - sub.credit.used) : '',
+    '{storageLeft}': sub.storage ? (sub.storage.total - sub.storage.used) + 'GB' : '',
+    '{contractEnd}': sub.contract ? md(sub.contract.end) : ''
+  };
+  const fill = t => String(t).replace(/\{creditLeft\}|\{storageLeft\}|\{contractEnd\}/g, m => tok[m] || '');
+  return { use:g.use.map(fill), official:g.official.map(fill) };
+}
+
+function beforeHTML(sub){
+  const g = guideFor(sub);
+  const li = arr => arr.map(t => '<li>' + t + '</li>').join('');
+  return '<div class="before">' +
+    '<div class="before-h"><span class="em">💡</span>줄이기 전에 먼저 확인<span class="btag">가상 예시</span></div>' +
+    '<div class="before-g"><div class="before-k"><i></i>보유 기능·크레딧 먼저 쓰기</div>' +
+      '<ul class="before-l">' + li(g.use) + '</ul></div>' +
+    '<div class="before-g"><div class="before-k"><i></i>한국형 공식 할인·번들·대체 요금제</div>' +
+      '<ul class="before-l">' + li(g.official) + '</ul></div>' +
+    '<div class="before-note">실제 요금·혜택은 서비스마다 바뀝니다. 위 항목을 <b>공식 서비스의 요금·혜택 페이지에서 직접 확인</b>하는 예시 가이드입니다.</div>' +
+  '</div>';
+}
+
+/* ---------- 집계 ---------- */
+function totalPrice(){ return S.subs.reduce((a,s) => a + s.price, 0); }
+function aiSubs(){ return S.subs.filter(s => s.cat === 'AI 도구'); }
+function aiSum(){ return aiSubs().reduce((a,s) => a + s.price, 0); }
+function soonCount(){ return S.subs.filter(s => { const d = dday(s); return d >= 0 && d <= 7; }).length; }
+function pastCount(){ return S.subs.filter(s => dday(s) < 0).length; }
+function needCount(){ return S.subs.filter(s => { const d = dday(s); return d < 0 || judge(s).key !== 'keep'; }).length; }
+function judgedCount(){ return S.subs.filter(s => { const d = dday(s); return !!decisionFor(s.id) || (judge(s).key === 'keep' && d >= 0); }).length; }
+function avgUsage(){
+  const list = S.subs.filter(s => metric(s).measure === 'usage').map(s => s.usage);
+  if (!list.length) return 0;
+  return Math.round(list.reduce((a,b) => a + b, 0) / list.length);
+}
+function usageMeasuredCount(){ return S.subs.filter(s => metric(s).measure === 'usage').length; }
+function avgUsageLabel(){
+  return usageMeasuredCount() ? '비교 가능 ' + usageMeasuredCount() + '개 평균 ' + avgUsage() + '%' : '사용률 확인 0개';
+}
+
+/* ---------- icons ---------- */
+const ICON = {
+  home:'<svg viewBox="0 0 24 24"><path d="M3.2 10.6 12 3.4l8.8 7.2"/><path d="M5.6 9.6V20.4h12.8V9.6"/><path d="M10 20.4v-5.2h4v5.2"/></svg>',
+  report:'<svg viewBox="0 0 24 24"><path d="M6.2 3.4h8.2l4.4 4.4v12.6a1.4 1.4 0 0 1-1.4 1.4H6.2a1.4 1.4 0 0 1-1.4-1.4V4.8a1.4 1.4 0 0 1 1.4-1.4z"/><path d="M14 3.6v4.6h4.6"/><path d="M8.4 13.4h7M8.4 17h4.6"/></svg>',
+  board:'<svg viewBox="0 0 24 24"><rect x="3.2" y="4" width="7.2" height="7" rx="1.8"/><rect x="13.6" y="4" width="7.2" height="7" rx="1.8"/><rect x="3.2" y="14.6" width="7.2" height="5.4" rx="1.8"/><rect x="13.6" y="14.6" width="7.2" height="5.4" rx="1.8"/></svg>',
+  subs:'<svg viewBox="0 0 24 24"><path d="M8.4 6.4h11.4"/><path d="M8.4 12h11.4"/><path d="M8.4 17.6h11.4"/><circle cx="4.4" cy="6.4" r="1.1"/><circle cx="4.4" cy="12" r="1.1"/><circle cx="4.4" cy="17.6" r="1.1"/></svg>',
+  history:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3.2 2"/></svg>'
+};
+const TABS = [
+  { id:'home', label:'홈' },
+  { id:'report', label:'심층 리포트' },
+  { id:'board', label:'작업판' },
+  { id:'subs', label:'내 구독' },
+  { id:'history', label:'기록' }
+];
+
+/* ---------- render shell ---------- */
+function renderTabbar(){
+  $('#tabbar').innerHTML = TABS.map(t =>
+    '<button class="tab ' + (S.tab === t.id ? 'on' : '') + '" data-act="tab" data-tab="' + t.id + '">' +
+      ICON[t.id] + '<span>' + t.label + '</span>' +
+    '</button>'
+  ).join('');
+}
+
+let lastTab = null;
+function render(){
+  renderTabbar();
+  const body = $('#appBody');
+  const keep = (lastTab === S.tab) ? body.scrollTop : 0;
+  lastTab = S.tab;
+  if (S.tab === 'home') body.innerHTML = viewHome();
+  else if (S.tab === 'report') body.innerHTML = viewReport();
+  else if (S.tab === 'board') body.innerHTML = viewBoard();
+  else if (S.tab === 'subs') body.innerHTML = viewSubs();
+  else body.innerHTML = viewHistory();
+  body.scrollTop = keep;
+  saveState();
+}
+
+/* ---------- 공통 조각 ---------- */
+function duePill(sub){
+  const d = dday(sub);
+  if (d < 0) return '<span class="pill past">' + (-d) + '일 경과</span>';
+  if (d === 0) return '<span class="pill today">오늘 결제</span>';
+  if (d <= 3) return '<span class="pill soon">D-' + d + '</span>';
+  return '<span class="pill soft">D-' + d + '</span>';
+}
+
+function subCard(sub){
+  const mt = metric(sub);
+  const st = stateOf(sub);
+  return '' +
+  '<div class="sub">' +
+    '<button class="sub-hit" data-act="detail" data-id="' + sub.id + '">' +
+      '<span class="brand" style="background:' + sub.color + '">' + sub.mark + '</span>' +
+      '<span class="sub-main">' +
+        '<span class="sub-top"><span class="sub-name">' + sub.name + '</span>' + duePill(sub) + '</span>' +
+        '<span class="sub-meta">' + md(sub.date) + ' 결제 · ' + sub.plan + ' · ' + sub.cat + '</span>' +
+        '<span class="sub-bottom"><b class="price">' + fmt(sub.price) + '</b><span class="pct">' + mt.label + '</span></span>' +
+        (mt.pct === null
+          ? ''
+          : '<span class="gauge"><i style="width:' + Math.min(100, mt.pct) + '%;background:' + barColor(mt.pct) + '"></i></span>') +
+        '<span class="sub-badges"><span class="pill ' + st.cls + '">' + st.label + '</span>' +
+          '<span class="pill basis" title="판단 근거">' + st.basis + '</span></span>' +
+      '</span>' +
+    '</button>' +
+    '<div class="sub-actions">' +
+      '<a href="' + sub.open + '" target="_blank" rel="noopener">서비스 열기 ↗</a>' +
+      '<button data-act="detail" data-id="' + sub.id + '">구독 점검</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function privacyStrip(){
+  return '<div class="privacy">' +
+    '<svg viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10.5" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg>' +
+    '<span><b>비밀번호·카드번호는 받지 않습니다.</b> 나대신은 결제·변경을 실행하지 않고, 각 서비스 공식 페이지에서 고객이 직접 처리한 결과만 기록합니다.</span>' +
+  '</div>';
+}
+
+/* ---------- view: home ---------- */
+function filteredHome(){
+  /* 홈 목록은 지정 순서. 단 [갱신 임박]은 갱신일이 임박한 순서로 봐야 하므로 D-day 순 유지 */
+  const list = S.subs.slice().sort((S.homeFilter === 'soon' || S.homeFilter === 'past')
+    ? ((a,b) => dday(a) - dday(b))
+    : byDisplayOrder);
+  return list.filter(s => {
+    const d = dday(s);
+    if (S.homeFilter === 'ai') return s.cat === 'AI 도구';
+    if (S.homeFilter === 'soon') return d >= 0 && d <= 7;
+    if (S.homeFilter === 'past') return d < 0;
+    if (S.homeFilter === 'need') return d < 0 || judge(s).key !== 'keep';
+    return true;
+  });
+}
+
+function homeFilterGo(f, scroll){
+  if (['all','ai','soon','past','need'].indexOf(f) < 0) return;
+  S.homeFilter = f;
+  render();
+  if (!scroll) return;
+  setTimeout(function () {
+    const t = $('#homeResult'), body = $('#appBody');
+    if (!t || !body) return;
+    const rt = t.getBoundingClientRect(), bt = body.getBoundingClientRect();
+    body.scrollTo({ top: body.scrollTop + (rt.top - bt.top) - 6, behavior:'smooth' });
+  }, 40);
+}
+
+function filterNote(){
+  if (S.homeFilter === 'ai'){
+    const share = Math.round(aiSum() / totalPrice() * 100);
+    return '<div class="filter-note"><b>AI 도구 ' + aiSubs().length + '개 · 월 ' + fmt(aiSum()) + '</b> · 전체 구독료의 ' + share + '%를 AI 도구가 차지합니다. 결제내역에는 보이지 않는 크레딧·한도·용도 중복을 함께 봅니다.</div>';
+  }
+  if (S.homeFilter === 'soon'){
+    return '<div class="filter-note"><b>7일 이내 갱신 ' + soonCount() + '개</b> · 갱신 전에 다음 작업과 견주어 판단이 필요한 구독만 모았습니다.</div>';
+  }
+  if (S.homeFilter === 'past'){
+    return '<div class="filter-note"><b>결제일이 지난 ' + pastCount() + '개</b> · 갱신일이 지나 이번 청구가 실제로 결제되었는지 확인하고, 다음 작업에 맞춰 재개일을 정하세요.</div>';
+  }
+  if (S.homeFilter === 'need'){
+    return '<div class="filter-note"><b>판단 ' + (needCount() - pastCount()) + '개 + 결제 경과 ' + pastCount() + '개 = ' + needCount() + '개</b> · 판단 근거를 눌러 [구독 점검]에서 확인하세요.</div>';
+  }
+  return '';
+}
+
+function viewHome(){
+  const list = filteredHome();
+  const chips = [
+    { id:'all', label:'전체', n:S.subs.length },
+    { id:'ai', label:'AI 도구 집중', n:aiSubs().length },
+    { id:'soon', label:'갱신 임박', n:soonCount() },
+    { id:'past', label:'경과 확인', n:pastCount() },
+    { id:'need', label:'판단 필요', n:needCount() }
+  ];
+  const hf = S.subs.find(s => s.id === 'higgsfield') || S.subs[0];
+  const hfLinks = linksOf(hf.id);
+  const hfNote = hfLinks.length ? '「' + hfLinks[0].name + '」 ' + hfLinks[0].status : '연결 작업 없음';
+
+  return '' +
+  '<div class="hero">' +
+    '<div class="hero-top"><span>월 환산 구독료</span><span class="lock">2026년 11월 20일 기준</span></div>' +
+    '<div class="hero-total">' + fmt(totalPrice()) + ' <span>' + S.subs.length + '개 구독</span></div>' +
+    '<div class="hero-tiles">' +
+      '<button type="button" class="ht' + (S.homeFilter === 'soon' ? ' on' : '') + '" data-act="tile" data-filter="soon" aria-label="갱신 임박 ' + soonCount() + '개 목록 보기">' +
+        '<span class="go">›</span><span class="k">갱신 임박</span><span class="v">' + soonCount() + '<span class="u">개</span></span><span class="s">7일 이내</span></button>' +
+      '<button type="button" class="ht red' + (S.homeFilter === 'past' ? ' on' : '') + '" data-act="tile" data-filter="past" aria-label="결제일 지난 ' + pastCount() + '개 목록 보기">' +
+        '<span class="go">›</span><span class="k">경과 확인</span><span class="v">' + pastCount() + '<span class="u">개</span></span><span class="s">결제일 지남</span></button>' +
+      '<button type="button" class="ht amber' + (S.homeFilter === 'need' ? ' on' : '') + '" data-act="tile" data-filter="need" aria-label="판단 필요 ' + needCount() + '개 목록 보기">' +
+        '<span class="go">›</span><span class="k">판단 필요</span><span class="v">' + needCount() + '<span class="u">개</span></span><span class="s">다음 작업 연동</span></button>' +
+    '</div>' +
+    '<div class="hero-foot"><span>' + avgUsageLabel() + '</span><span>점검 완료 <b>' + judgedCount() + '/' + S.subs.length + '</b></span></div>' +
+    '<span class="gauge"><i style="width:' + avgUsage() + '%"></i></span>' +
+  '</div>' +
+  '<button class="banner" data-act="detail" data-id="' + hf.id + '">' +
+    '<span class="banner-txt">' +
+      '<span class="banner-kicker">다음 결제 전 점검 · 무료</span>' +
+      '<b>' + hf.name + ' 결제 전 점검하기 ›</b>' +
+      '<span class="banner-sub">' + md(hf.date) + ' ' + ddLabel(hf) + ' · 사용률 ' + hf.usage + '% · ' + hfNote + '</span>' +
+    '</span>' +
+    '<span class="banner-ic">!</span>' +
+  '</button>' +
+  '<div id="homeResult">' +
+  '<div class="chips">' + chips.map(f =>
+      '<button class="chip ' + (S.homeFilter === f.id ? 'on' : '') + '" data-act="hfilter" data-filter="' + f.id + '">' +
+        f.label + '<span class="n">' + f.n + '</span></button>'
+    ).join('') + '</div>' +
+  filterNote() +
+  '<div class="list">' + (list.length ? list.map(subCard).join('') : '<div class="empty">조건에 맞는 구독이 없습니다.<br>필터를 바꿔 보세요.</div>') + '</div>' +
+  '</div>' +
+  privacyStrip() +
+  '<div class="footnote" style="text-align:center;margin-top:9px">판단 기준: 다음 작업 연결 · 사용률/크레딧 · 갱신일(7일) · 약정 만료<br>사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>';
+}
+
+/* ---------- view: 심층 리포트 ---------- */
+const REPORT = {
+  recheck: [
+    { work:'석사 논문 중간발표', due:'2026-12-05', sub:'Claude', when:'2026-12-01' },
+    { work:'유튜브 숏폼 12월 시리즈', due:'2026-12-10', sub:'Vrew · Suno', when:'2026-12-06' },
+    { work:'나대신 2R 사업계획서 제출', due:'2026-12-01', sub:'ChatGPT', when:'2026-11-22' }
+  ]
+};
+
+function viewReport(){
+  const sub = S.subs.find(s => s.id === S.simSub) || S.subs[0];
+  const act = S.simAct;
+  const rd = S.simDate || defaultRecheck(sub);
+  const links = linksOf(sub.id);
+  const link = links[0];
+  const mt = metric(sub);
+  const man = S.subs.find(s => s.id === 'manus');
+  const hf = S.subs.find(s => s.id === 'higgsfield');
+  const g1 = S.subs.find(s => s.id === 'g1');
+
+  return '' +
+  '<span class="insight">유료 시연 · 9,900원</span>' +
+  '<div class="rep-title">"같은 결제내역이라도, 다음 작업이 달라지면<br> 판단이 달라집니다"</div>' +
+  '<div class="rep-sub">계정 연동·결제 실행 없이, 다음 작업 일정과 크레딧·한도·용도 중복을 함께 보고 유지·하향·중단과 재점검일을 한 장에 정리합니다.</div>' +
+
+  '<div class="rep-card">' +
+    '<div class="rep-tags"><span class="rep-tag paid">유료 과업</span><span class="rep-tag">1회 9,900원 · 2R 검증 예정 가격</span><span class="rep-tag">작성 18분 이내</span></div>' +
+    '<div class="rep-card-t">AI 도구 구독 점검 리포트 <span>샘플</span></div>' +
+    '<div class="rep-card-m">2026-11-20 기준 · 구독 ' + S.subs.length + '개 · AI 도구 ' + aiSubs().length + '개 / 월 ' + fmt(aiSum()) + '</div>' +
+
+    '<div class="rep-sec"><div class="rep-h"><span class="no">1</span>용도 중복</div>' +
+      '<div class="rep-li"><span class="ar">›</span><span>범용 AI 3중 구독: <b>ChatGPT · Claude · Genspark</b> — 같은 목적(대화·검색·문서)으로 3개가 겹칩니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span>그중 <b>Genspark</b>는 연결된 「브랜드 이미지 리뉴얼」이 보류 상태 — 정리 후보 1순위.</span></div>' +
+    '</div>' +
+
+    '<div class="rep-sec"><div class="rep-h"><span class="no">2</span>크레딧·한도 낭비</div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><b>Manus 크레딧 4,000/20,000 (20%)</b> — 결제 대비 사용이 적어 남은 크레딧이 이월·소멸됩니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><b>Higgsfield 사용률 20%</b> — 영상 생성 작업이 「브랜드 이미지 리뉴얼」 보류로 멈춰 있습니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><b>Google One 68/100GB</b> — 한도 임박이 아니므로 유지.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span>Claude·Genspark·쿠팡 와우·Netflix·Suno·YouTube Premium·듀오링고·Spotify Premium 8개는 <b>사용량 미확인</b> — 확인되기 전에는 숫자를 만들지 않고 판단만 보류합니다.</span></div>' +
+    '</div>' +
+
+    '<div class="rep-sec"><div class="rep-h"><span class="no">3</span>보유 활용 → 공식 혜택·요금제 전환 제안</div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step">먼저</span><b>Manus 크레딧 4,000/20,000</b> — 남은 16,000을 다음 작업에 먼저 쓰고, 다 쓴 뒤 정기 결제·종량 중 맞는 쪽을 정합니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step">먼저</span><b>ChatGPT · Claude · Genspark</b> — 겹치는 용도는 한 곳으로 몰고, 각 서비스에만 있는 기능을 먼저 써 봅니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>SK브로드밴드</b> 약정 만료 ' + md('2026-12-10') + ' — 재약정·모바일 결합·공식 사은품 조건을 만료 전에 비교합니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>YouTube · Spotify · Netflix</b> — 통신사 멤버십, 패밀리·학생·광고형 등 공식 요금제 대안을 비교합니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>AI 도구 7개 · 쿠팡 와우</b> — 작업·이용 빈도에 맞춘 월간/연간·종량·무료 티어 전환을 검토합니다.</span></div>' +
+      '<div class="rep-note">보유 크레딧·기능을 먼저 쓰고, 그래도 남는 비용만 <b>공식 할인·번들·대체 요금제</b>로 비교합니다. 실제 요금·혜택은 각 서비스 공식 페이지에서 직접 확인하는 예시입니다.</div>' +
+    '</div>' +
+
+    '<div class="rep-sec"><div class="rep-h"><span class="no">4</span>다음 작업일 기준 갱신 전 재점검일</div>' +
+      REPORT.recheck.map(r =>
+        '<div class="rep-li"><span class="ar">›</span><span>' + r.work + ' (' + mdw(r.due) + ') → <b>' + r.sub + '</b> 재점검 ' + mdw(r.when) + '</span></div>'
+      ).join('') +
+    '</div>' +
+    '<div class="rep-foot">담긴 것: 중복 · 크레딧·한도 · 보유 활용 · 공식 혜택·대체 요금제 · 재점검일 / 담지 않은 것: 결제·변경·해지 실행, 계정 연동, 비밀번호·카드번호</div>' +
+  '</div>' +
+
+  '<div class="panel">' +
+    '<div class="panel-h"><span class="dot"></span>작업 일정 연동 시뮬레이터</div>' +
+    '<div class="panel-d">재개일(다음 작업일)만 바꿔 보세요. 추천 판정과 그 근거가 자동으로 바뀌고, 아래에서 내 최종 결정만 저장하면 됩니다.</div>' +
+    '<select class="sel" data-act="simsub">' + S.subs.map(s =>
+      '<option value="' + s.id + '"' + (s.id === sub.id ? ' selected' : '') + '>' + s.name + ' · ' + fmt(s.price) + ' · ' + metric(s).label + '</option>'
+    ).join('') + '</select>' +
+    '<div class="ctx"><span class="k">연결 작업</span><span>' +
+      (link ? '「' + link.name + '」 ' + link.status + ' · 마감 ' + md(link.due) : '연결된 작업 없음') +
+      ' · ' + mt.label + '</span></div>' +
+    '<div class="sd-label" style="margin-top:11px">재개일 <span>' + md(sub.date) + ' 갱신 기준</span></div>' +
+    '<div class="date-group">' +
+      '<input type="text" id="simDate" class="date-input" inputmode="numeric" autocomplete="off" placeholder="YYYY-MM-DD" value="' + rd + '">' +
+      '<label class="date-cal" title="달력에서 선택">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>' +
+        '<input type="date" id="simDatePick" class="date-native" value="' + rd + '" tabindex="-1" aria-label="달력에서 선택">' +
+      '</label>' +
+    '</div>' +
+    '<div class="quick">' +
+      '<button data-act="simquick" data-days="7">1주 후</button>' +
+      '<button data-act="simquick" data-days="14">2주 후</button>' +
+      '<button data-act="simquick" data-days="30">한 달 후</button>' +
+      '<button data-act="simquick" data-days="0">갱신일</button>' +
+    '</div>' +
+    '<div id="simResult" style="margin-top:9px">' + simResultHTML(sub, act, rd) + '</div>' +
+    '<div class="sd-label" style="margin-top:11px">내 최종 결정 <span>추천과 달라도 됩니다</span></div>' +
+    '<div class="opts" id="simOpts">' + simOptsHTML(sub, act, rd) + '</div>' +
+    '<button class="save-btn" data-act="simsave">내 결정 기록에 저장</button>' +
+    '<div class="mini-note">저장하면 기록 탭과 홈 상태에 즉시 반영됩니다. 결정을 고르지 않으면 추천대로 저장됩니다.</div>' +
+    (simSaved
+      ? surveyBoxHTML('결정을 저장했습니다 · 체험 의견을 들려주세요', '기록 탭에서 4단계를 이어갈 수 있습니다. 1분 의견을 남겨 주세요.')
+      : '') +
+    '<button class="undo" data-act="simexample">예시 다시 체험 (재개일만 초기화 · 저장한 기록 유지)</button>' +
+  '</div>' +
+  privacyStrip();
+}
+
+function defaultRecheck(sub){ return isoAdd(sub.date, 14); }
+function phaseOf(sub, rd){
+  if (rd < sub.date) return 'before';
+  if (rd === sub.date) return 'same';
+  return 'after';
+}
+
+/* 시뮬레이터에서 결정을 저장한 직후 보이는 안내 박스(새로고침하면 사라짐) */
+let simSaved = false;
+
+function simOptsHTML(sub, act, rd){
+  const rec = recommend(sub, rd);
+  const opts = [
+    { id:'keep', title:'진행 과제 있음 (유지)', d:'작업이 이어지는 동안 그대로 씁니다' },
+    { id:'down', title:'요금제 하향·변경', d:'한도·크레딧에 맞는 낮은 요금제로 바꿉니다' },
+    { id:'stop', title:'갱신 중단 검토', d:'다음 갱신을 건너뛰고 재개일을 정합니다' }
+  ];
+  return opts.map(function(o){
+    return '<button class="opt ' + (act === o.id ? 'on' : '') + '" data-act="simopt" data-choice="' + o.id + '">' +
+      '<span class="rd"></span><span><b>' + o.title + (o.id === rec.action ? ' <span class="reco-chip">추천</span>' : '') +
+      '</b><span class="d">' + o.d + '</span></span>' +
+    '</button>';
+  }).join('');
+}
+
+function simResultHTML(sub, act, rd){
+  const bill = sub.date;
+  const mt = metric(sub);
+  const link = linksOf(sub.id)[0];
+  const rec = recommend(sub, rd);
+  const eff = act || rec.action;          /* 결정을 고르지 않아도 추천으로 바로 계산 */
+  const A = ACTIONS[eff];
+  const nb = nextBill(sub);
+  const check = checkBill(sub, rd);
+  const ph = phaseOf(sub, rd);
+  const w = link ? '「' + link.name + '」' : '연결 작업';
+  let when, billTxt, reason;
+
+  if (eff === 'keep'){
+    when = '변경 없음';
+    billTxt = md(nb) + ' · 금액 그대로 확인';
+    reason = w + '이 ' + md(rd) + '까지 이어지므로 ' + md(bill) + ' 갱신도 유지가 적정합니다. ' +
+      '재점검일(' + md(rd) + ')에 ' + mt.detail + ' 기준으로 다시 확인합니다.';
+  } else if (eff === 'down'){
+    when = ph === 'before' ? '갱신 전 (' + mdw(bill) + ' 이전) 처리'
+         : (ph === 'same' ? '갱신일 당일 (' + mdw(bill) + ') 처리'
+         : '갱신 후 (' + mdw(rd) + ') 처리');
+    billTxt = md(check) + ' · 변경된 금액 반영 확인';
+    reason = mt.detail + ' 기준으로 한 단계 낮은 요금제가 맞습니다. ' +
+      (ph === 'before'
+        ? md(bill) + ' 갱신 전에 공식 페이지에서 하향하면 다음 청구(' + md(nb) + ')부터 바뀐 금액이 찍힙니다.'
+        : (ph === 'same'
+          ? '갱신일 당일이라 결제 시각에 따라 현재 요금으로 이미 청구되었을 수 있습니다. 오늘 하향하면 ' + md(check) + ' 금액부터 바뀌었는지 확인하세요.'
+          : '이번 갱신(' + md(bill) + ')은 현재 요금으로 결제되었습니다. ' + md(rd) + '에 하향하면 반영은 그다음 청구(' + md(check) + ')부터입니다.')) +
+      ' 변경 뒤 청구 금액을 확인해 기록하세요.';
+  } else {
+    when = ph === 'before' ? '갱신 전 (' + mdw(bill) + ' 이전) 처리'
+         : (ph === 'same' ? '갱신일 당일 (' + mdw(bill) + ') 처리'
+         : '갱신 후 (' + mdw(rd) + ') 처리');
+    billTxt = ph === 'before' ? md(nb) + ' 청구 건너뜀 확인' : md(check) + ' 청구 없음 확인';
+    reason = mt.detail + '로 이번 작업 구간에는 필요하지 않습니다. ' +
+      (ph === 'before'
+        ? md(bill) + ' 갱신 전에 중단하면 이번 결제를 건너뜁니다. 재개일(' + md(rd) + ')에 다시 켤 수 있는지 요금제 조건을 함께 확인하세요.'
+        : (ph === 'same'
+          ? '갱신일 당일이라 이미 청구되었을 수 있습니다. 오늘 중단하면 ' + md(check) + ' 청구가 생성되지 않는지 확인하세요. '
+          : '이번 갱신(' + md(bill) + ')은 결제되었고, ' + md(rd) + '에 중단하면 다음 청구(' + md(check) + ')부터 반영됩니다. ')) +
+      (rd > isoAdd(bill, 30) ? '재개일이 한 달 이상 뒤이므로 재개 시 요금제·할인 조건이 유지되는지 확인이 필요합니다.' : '');
+  }
+  return recoHTML(sub, rd) +
+    '<div class="result">' +
+      '<div class="res-row"><span>내 판단</span><b class="big ' + (A.cls === 'warn' ? 'warn' : '') + '">' + A.label +
+        (act ? '' : ' <span class="reco-inline">추천</span>') + '</b></div>' +
+      '<div class="res-row"><span>처리 시점</span><b>' + when + '</b></div>' +
+      '<div class="res-row"><span>다음 청구</span><b>' + billTxt + '</b></div>' +
+      '<div class="reason">' + reason + '</div>' +
+    '</div>' +
+    (act && act !== rec.action
+      ? '<div class="diff-note">추천(' + rec.label + ')과 다른 결정입니다. 저장하면 내가 고른 결정이 기록에 남고, 추천은 날짜 기준 그대로 유지됩니다.</div>'
+      : '');
+}
+
+/* ---------- view: 작업판 ---------- */
+function viewBoard(){
+  const tip = '<div class="board-tip"><b>Tip</b> 과제 상태를 바꾸면 연결된 구독의 판단 배지가 즉시 바뀝니다. (홈 · 심층 리포트에 함께 반영)</div>';
+  return '' +
+  '<div class="sec-head"><div><div class="sec-title">작업판</div><div class="sec-desc">진행 중인 작업과 연결된 구독을 한눈에 봅니다.</div></div>' +
+    '<span class="sec-count">' + S.projects.length + '개 과제</span></div>' +
+  tip +
+  S.projects.map(p => {
+    const stCls = p.status === '진행 중' ? 'blue' : (p.status === '보류' ? 'warn' : 'soft');
+    const tags = p.subs.map(id => {
+      const s = S.subs.find(x => x.id === id);
+      return s ? '<span class="tag"><i style="background:' + s.color + '"></i>' + s.name + '</span>' : '';
+    }).join('');
+    return '<div class="proj">' +
+      '<div class="proj-h"><span class="dot" style="background:' + p.color + '"></span><b>' + p.name + '</b>' +
+        '<span class="pill ' + stCls + '">' + p.status + '</span></div>' +
+      '<div class="proj-d">' + p.desc + ' · 마감 ' + md(p.due) + '</div>' +
+      '<div class="proj-subs">' + (tags || '<span class="tag">연결 구독 없음</span>') + '</div>' +
+      '<div class="seg">' + ['진행 중','보류','완료'].map(st =>
+        '<button data-act="pstatus" data-id="' + p.id + '" data-status="' + st + '" class="' + (p.status === st ? 'on' : '') + '">' + st + '</button>'
+      ).join('') + '</div>' +
+    '</div>';
+  }).join('') +
+  '<div class="footnote" style="text-align:center">연결 구독이 보류·완료로 바뀌면 그 구독의 판단은 「하향·중단 검토」로, 다시 진행 중이면 「유지」로 돌아갑니다.</div>';
+}
+
+/* ---------- view: 내 구독 ---------- */
+function subRows(){
+  const q = S.q.trim().toLowerCase();
+  const list = S.subs.filter(s => {
+    if (S.subCat !== '전체' && s.cat !== S.subCat) return false;
+    if (q && s.name.toLowerCase().indexOf(q) === -1 && s.cat.indexOf(q) === -1) return false;
+    return true;
+  }).sort(byDisplayOrder);   /* 내 구독도 지정 순서(새 구독은 맨 뒤) */
+  if (!list.length) return '<div class="empty">검색 결과가 없습니다.<br>다른 이름이나 카테고리로 찾아보세요.</div>';
+  return list.map(s => {
+    const st = stateOf(s);
+    return '<button class="row' + (S.impHl === s.id ? ' imp-hl' : '') + '" data-act="detail" data-id="' + s.id + '">' +
+      '<span class="brand" style="background:' + s.color + '">' + s.mark + '</span>' +
+      '<span class="row-main"><span class="row-name">' + s.name + '</span>' +
+        '<span class="row-meta">' + md(s.date) + ' 결제 · ' + ddLabel(s) + '</span></span>' +
+      '<span class="row-right"><span class="row-price">' + fmt(s.price) + '</span>' +
+        '<span class="pill ' + st.cls + '">' + st.label + '</span></span>' +
+    '</button>';
+  }).join('');
+}
+
+function viewSubs(){
+  return '' +
+  '<div class="sec-head"><div><div class="sec-title">내 구독</div><div class="sec-desc">' + S.subs.length + '개 · 총 월 ' + fmt(totalPrice()) + ' · AI 도구 ' + aiSubs().length + '개</div></div>' +
+    '<span class="sec-count">' + avgUsageLabel() + '</span></div>' +
+  '<div class="search-wrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>' +
+    '<input class="search" id="q" type="search" placeholder="구독 이름·카테고리 검색" value="' + S.q.replace(/"/g,'&quot;') + '"></div>' +
+  '<div class="chips">' + CATS.map(c =>
+    '<button class="chip ' + (S.subCat === c ? 'on' : '') + '" data-act="subcat" data-cat="' + c + '">' + c + '</button>'
+  ).join('') + '</div>' +
+  '<div class="import-bar">' +
+    '<button class="add-sub" data-act="addopen">+ 새 구독 추가 (데모)</button>' +
+    '<button class="add-sub import" data-act="importopen">내 구독 불러오기</button>' +
+  '</div>' +
+  (S.subs.some(s => s.importKey) ? '<button class="imp-reset" data-act="impreset">불러온 샘플 초기화 (가져온 항목만 삭제 · 직접 추가한 구독과 결정 기록은 유지)</button>' : '') +
+  '<div id="subList">' + subRows() + '</div>' +
+  privacyStrip();
+}
+
+/* ---------- view: 기록 ---------- */
+function viewHistory(){
+  if (!S.decisions.length){
+    return '<div class="sec-head"><div class="sec-title">기록</div></div>' +
+      surveyBoxHTML('체험 의견 남기기', '결정을 저장해 보시고, 느끼신 점을 1분으로 남겨 주세요.') +
+      '<div class="empty">아직 저장한 결정이 없습니다.<br>심층 리포트의 시뮬레이터나 구독 점검에서 결정을 저장해 보세요.</div>' +
+      '<div class="footnote" style="text-align:center">결정 → 공식 페이지에서 변경 처리 → 다음 청구 확인, 3단계로 기록됩니다.</div>' +
+      '<button class="undo" data-act="reset">데모 데이터 초기화</button>';
+  }
+  const list = S.decisions.slice().reverse().map(d => {
+    const s = S.subs.find(x => x.id === d.subId);
+    if (!s) return '';
+    const m = ACTIONS[d.action] || { label:d.action, cls:'soft' };
+    const tail = d.action === 'keep' ? ' · 다음 청구 ' + md(nextBill(s)) : ' · 청구 확인 ' + md(checkBill(s, d.recheck));
+    return '<div class="tl-item"><div class="tl-card">' +
+      '<div class="tl-top"><span class="brand" style="width:23px;height:23px;font-size:8px;background:' + s.color + '">' + s.mark + '</span>' +
+        '<span class="tl-name">' + s.name + '</span><span class="tl-time">' + d.at + '</span></div>' +
+      '<div class="tl-body"><span class="pill ' + m.cls + '">' + m.label + '</span> ' +
+        '재점검 <b>' + md(d.recheck) + '</b>' + tail + '</div>' +
+      '<div class="prog">' +
+        '<span class="step done">① 판단 저장</span>' +
+        '<button class="step ' + (d.handled ? 'done' : 'cur') + '" data-act="mark" data-id="' + d.id + '" data-kind="handled">' + (d.handled ? '② 변경 처리 ✓' : '② 변경 처리') + '</button>' +
+        '<button class="step ' + (d.billing ? 'done' : (d.handled ? 'cur' : '')) + '" data-act="mark" data-id="' + d.id + '" data-kind="billing">' + (d.billing ? '③ 청구 확인 ✓' : '③ 청구 확인') + '</button>' +
+      '</div>' +
+      '<div class="tl-foot"><span class="tl-src">' + d.source + '</span>' +
+        '<a class="tl-link" href="' + s.manage + '" target="_blank" rel="noopener">공식 페이지 ↗</a>' +
+        '<button class="del" data-act="del" data-id="' + d.id + '">삭제</button></div>' +
+    '</div></div>';
+  }).join('');
+  return '<div class="sec-head"><div><div class="sec-title">기록</div><div class="sec-desc">저장한 결정 ' + S.decisions.length + '건 · 변경 처리 ' + S.decisions.filter(d => d.handled).length + '건 · 청구 확인 ' + S.decisions.filter(d => d.billing).length + '건</div></div>' +
+    '<span class="sec-count">최신순</span></div>' +
+    surveyBoxHTML('체험 의견 남기기', '이 화면까지 써 보셨다면, 1분 의견을 남겨 주세요.') +
+    '<div class="tl">' + list + '</div>' +
+    '<button class="undo" data-act="reset">데모 데이터 초기화</button>';
+}
+
+/* ---------- detail sheet ---------- */
+function detailSheet(sub){
+  const r = judge(sub);
+  const d = dday(sub);
+  const dec = decisionFor(sub.id);
+  const mt = metric(sub);
+  const links = linksOf(sub.id);
+  const linkTxt = links.length ? links.map(p => p.name + ' (' + p.status + ')').join(', ') : '없음';
+  const nb = nextBill(sub);
+  const rdNow = dec ? dec.recheck : defaultRecheck(sub);
+  const actLink = links.filter(p => p.status === '진행 중')[0];
+  const pauLink = links.filter(p => p.status === '보류')[0];
+  const doneLink = links.filter(p => p.status === '완료')[0];
+  let note;
+  if (dec){
+    note = dec.action === 'keep'
+      ? '유지로 정리했습니다. 재점검일(' + md(dec.recheck) + ')에 ' + mt.detail + ' 기준으로 다시 확인하세요.'
+      : (dec.action === 'down'
+        ? '공식 페이지에서 한 단계 낮은 요금제로 바꾼 뒤, 다음 청구 금액이 의도대로 바뀌었는지 확인해 기록하세요.'
+        : '갱신을 건너뛰고, 재개일(' + md(dec.recheck) + ') 이후 다시 켜는 조건이 그대로인지 확인하세요.');
+  } else if (sub.contract){
+    note = '약정 만료일 <b>' + md(sub.contract.end) + '</b>이 다가옵니다. 만료 전에 재약정·요금제 조건을 비교하세요.';
+  } else if (sub.flag === 'dup'){
+    note = '같은 목적의 범용 AI를 <b>3개</b> 함께 결제하고 있습니다. 연결된 「브랜드 이미지 리뉴얼」이 보류 상태라 이 구독이 정리 후보입니다.';
+  } else if (r.key === 'keep'){
+    note = actLink
+      ? '진행 중인 <b>' + actLink.name + '</b> 작업에 쓰이고 있어 유지가 적정합니다. 작업이 길어지면 재점검일만 미루면 됩니다.'
+      : '사용량은 확인되지 않았지만 연결된 작업이 진행 중입니다. 마감 뒤 사용량을 입력하면 하향·중단 판단까지 볼 수 있습니다.';
+  } else if (r.key === 'unknown'){
+    note = '사용량이 확인되지 않았습니다. 최근 사용 화면을 보고 사용률을 입력하면 유지·하향 판단이 바로 바뀝니다.' +
+      (doneLink ? ' 연결된 「' + doneLink.name + '」 작업은 완료 상태입니다.' : '');
+  } else if (pauLink){
+    note = '연결된 <b>' + pauLink.name + '</b> 작업이 보류 상태입니다. 갱신을 건너뛰고 재개일을 정해 두세요.';
+  } else {
+    note = '최근 사용이 <b>' + mt.detail + '</b>로 적습니다. 한 단계 낮은 요금제로 바꿀지 검토하세요.';
+  }
+
+  return '<div class="sheet-grip"></div>' +
+    '<div class="sd-head"><span class="brand lg" style="background:' + sub.color + '">' + sub.mark + '</span>' +
+      '<div><div class="sd-name">' + sub.name + ' <span style="font-size:11px;font-weight:700;color:#94A3B8">' + sub.plan + '</span></div>' +
+        '<div class="sd-meta">' + sub.cat + ' · ' + md(sub.date) + ' 결제 · ' + ddLabel(sub) + '</div></div>' +
+      '<button class="x" data-act="close">✕</button></div>' +
+    '<div class="sd-price">' + fmt(sub.price) + ' <span>/ 월</span></div>' +
+    '<div class="sd-verdict" id="sdVerdict">' + verdictHTML(sub, rdNow) + duePill(sub) + '</div>' +
+    '<div class="sd-block"><div class="sd-row"><span>' + mt.name + '</span><b>' +
+      (sub.contract ? md(sub.contract.end) : (mt.pct === null ? '미확인' : mt.pct + '%')) + '</b></div>' +
+      (mt.pct === null ? '' : '<span class="gauge"><i style="width:' + Math.min(100, mt.pct) + '%;background:' + barColor(mt.pct) + '"></i></span>') + '</div>' +
+    '<div class="sd-block"><div class="sd-row"><span>연결된 작업</span><b>' + linkTxt + '</b></div>' +
+      '<div class="sd-ai">' + (dec ? '저장된 결정: <b>' + ACTIONS[dec.action].short + '</b> (재점검 ' + md(dec.recheck) + '). ' : '') + note + '</div></div>' +
+    '<div class="sd-reason">' +
+      '<div><span>작업</span><em>' + (links.length ? '「' + links[0].name + '」 ' + links[0].status + ' · 마감 ' + md(links[0].due) : '연결된 작업 없음') + '</em></div>' +
+      '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
+      '<div><span>갱신</span><em>' + md(sub.date) + ' · ' + (d >= 0 ? '갱신까지 ' + d + '일' : '결제 완료 · 다음 청구 ' + md(nextBill(sub))) + '</em></div>' +
+    '</div>' +
+    beforeHTML(sub) +
+    '<div class="sd-label">재개일 (다음 작업일) <span>날짜만 바뀌어도 추천이 자동으로 바뀝니다</span></div>' +
+    '<div class="date-group">' +
+      '<input type="text" id="dRecheck" class="date-input" inputmode="numeric" autocomplete="off" placeholder="YYYY-MM-DD" value="' + rdNow + '">' +
+      '<label class="date-cal" title="달력에서 선택">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>' +
+        '<input type="date" id="dRecheckPick" class="date-native" value="' + rdNow + '" tabindex="-1" aria-label="달력에서 선택">' +
+      '</label>' +
+    '</div>' +
+    '<div class="quick">' +
+      '<button data-act="quick" data-days="7">1주 후</button>' +
+      '<button data-act="quick" data-days="14">2주 후</button>' +
+      '<button data-act="quick" data-days="30">한 달 후</button>' +
+      '<button data-act="quick" data-days="0">갱신일</button>' +
+    '</div>' +
+    '<div id="sdReco" style="margin-top:9px">' + recoHTML(sub, rdNow) + '</div>' +
+    '<div class="sd-label">내 최종 결정 <span>추천과 달라도 됩니다</span></div>' +
+    '<div class="sd-actions" style="margin-top:2px">' +
+      '<button class="btn-ghost" data-act="decide" data-choice="keep">유지</button>' +
+      '<button class="btn-soft" data-act="decide" data-choice="down">하향·변경</button>' +
+      '<button class="btn-danger" data-act="decide" data-choice="stop">갱신 중단</button>' +
+    '</div>' +
+    (dec ? step4Block(sub, dec, nb) : '<p class="sd-foot">결정을 저장하면 4단계(변경 후 다음 청구 확인) 기록이 열립니다.</p>') +
+    '<p class="sd-foot" style="margin-top:10px">나대신은 비밀번호·카드번호를 받지 않고 결제·변경을 실행하지 않습니다. 변경은 고객이 공식 페이지에서 직접 처리합니다.</p>' +
+    (dec ? '<button class="undo" data-act="undecide">저장한 결정 되돌리기</button>' : '');
+}
+
+/* 체험 의견 설문(Google Forms) — 결정 저장 결과·기록 탭에서 안내 */
+const SURVEY_URL = 'https://forms.gle/PywqwfAhsXDdQDMp9';
+function surveyBoxHTML(title, desc){
+  return '<div class="survey-box">' +
+    '<b>' + title + '</b>' +
+    '<span class="d">' + desc + '</span>' +
+    '<a class="btn-survey" href="' + SURVEY_URL + '" target="_blank" rel="noopener noreferrer">체험 의견 남기기 ↗</a>' +
+  '</div>';
+}
+
+function step4Block(sub, dec, nb){
+  const cb = checkBill(sub, dec.recheck);
+  const billLabel = dec.action === 'stop' ? '청구 중단 확인 (' + md(cb) + ')' : '다음 청구 확인 (' + md(cb) + ')';
+  return '<div class="step4">' +
+    '<div class="sd-label" style="margin-top:0">4단계 · 변경 후 다음 청구 확인 <span>' + ACTIONS[dec.action].short + ' · 재점검 ' + md(dec.recheck) + '</span></div>' +
+    '<a class="btn-open-official" href="' + sub.manage + '" target="_blank" rel="noopener">공식 변경·해지 페이지 열기 ↗</a>' +
+    '<div style="font-size:9px;color:#94A3B8;font-weight:700;margin-top:4px;text-align:center">' + sub.manageHint + ' · ' + sub.manage.replace(/^https?:\/\//,'') + '</div>' +
+    '<button class="chk ' + (dec.handled ? 'on' : '') + '" data-act="markone" data-kind="handled">' +
+      '<span class="box"></span><span><b>변경 처리함</b><span class="d">공식 페이지에서 직접 변경·중단을 마쳤습니다</span></span></button>' +
+    '<button class="chk ' + (dec.billing ? 'on' : '') + '" data-act="markone" data-kind="billing">' +
+      '<span class="box"></span><span><b>' + billLabel + '</b><span class="d">' + (dec.action === 'stop' ? '청구가 생성되지 않은 것을 확인했습니다' : '청구 금액·결제일이 의도대로 찍혔는지 확인했습니다') + '</span></span></button>' +
+    surveyBoxHTML('결정을 저장했습니다 · 체험 의견을 들려주세요', '여기까지 직접 눌러 보셨다면 1분 의견이 큰 도움이 됩니다.') +
+  '</div>';
+}
+
+function renderSheet(){
+  const sub = S.subs.find(s => s.id === S.detailId);
+  if (!sub) return;
+  openSheetDOM(detailSheet(sub));
+}
+function openDetail(id){
+  const sub = S.subs.find(s => s.id === id);
+  if (!sub) return;
+  navOpenOverlay('detail', id, function(){ openDetailDOM(id); });
+}
+function openDetailDOM(id){
+  const sub = S.subs.find(s => s.id === id);
+  if (!sub) return;
+  S.detailId = id;
+  openSheetDOM(detailSheet(sub));
+}
+
+/* ---------- sheet plumbing (화면만) ---------- */
+function openSheetDOM(html){
+  const ov = $('#overlay');
+  ov.innerHTML = '<div class="sheet" data-bg="1"><div class="sheet-panel">' + html + '</div></div>';
+  ov.querySelector('.sheet-panel').scrollTop = 0;
+}
+function closeSheetDOM(){ $('#overlay').innerHTML = ''; S.detailId = null; }
+
+/* ============================================================
+   모바일 뒤로가기(Back) 지원 — history.pushState + popstate
+   히스토리 한 칸 = 화면 한 상태(tab + overlay)
+   - 오버레이(구독 점검 모달·앱 설치·새 구독·배율 팝오버)를 열면 한 칸을 쌓고,
+     뒤로가기는 그 칸만 되돌려 모달만 닫히고 지금 화면에 그대로 머문다.
+   - 홈이 아닌 탭도 한 칸씩 쌓아, 다른 탭에서 뒤로가기하면 홈(이전 탭)으로 돌아온다.
+   - × 버튼·배경 클릭처럼 화면에서 직접 닫을 때는 쌓은 칸을 history.back()으로 정리한다
+     (popstate로 닫히는 경우에는 중복 호출하지 않는다).
+   ============================================================ */
+const NAV = { seq:0, pending:false, stack:[{ id:0, nav:1, tab:'home', ov:null, oid:null }] };
+const NAV_TABS = ['home','report','board','subs','history'];
+
+function navTop(){ return NAV.stack[NAV.stack.length - 1] || { tab:'home', ov:null, oid:null }; }
+
+function navPush(st){
+  const top = navTop();
+  const s = { nav:1, id:++NAV.seq, tab:st.tab || top.tab || 'home', ov:st.ov || null, oid:st.oid || null };
+  try {
+    if (top.ov && !s.ov){
+      /* 모달이 열린 채 탭을 옮기면 그 모달 칸을 새 탭 칸으로 바꿔
+         뒤로가기가 이미 닫힌 모달로 되돌아가지 않게 한다 */
+      NAV.stack[NAV.stack.length - 1] = s;
+      history.replaceState(s, '');
+    } else {
+      NAV.stack.push(s);
+      history.pushState(s, '');
+    }
+  } catch (e) { NAV.stack.push(s); }
+  return s;
+}
+
+/* 화면에서 직접 닫을 때: 쌓아 둔 칸 하나를 정리 */
+function navBack(){
+  if (NAV.pending) return true;
+  if (NAV.stack.length <= 1) return false;
+  NAV.pending = true;
+  NAV.stack.pop();
+  try { history.back(); } catch (e) { NAV.pending = false; applyNav(navTop()); return false; }
+  /* popstate가 오지 않는 환경(iframe 래퍼 등)에서도 닫히도록 하는 안전장치 */
+  setTimeout(function () {
+    if (!NAV.pending) return;
+    NAV.pending = false;
+    applyNav(navTop());
+  }, 260);
+  return true;
+}
+
+function navOpenOverlay(ov, oid, paint){
+  navPush({ tab:S.tab, ov:ov, oid:oid || null });
+  paint();
+}
+
+/* 탭 이동: 홈이 아닌 탭은 히스토리 한 칸을 차지한다 */
+function navGoTab(t){
+  if (NAV_TABS.indexOf(t) < 0) return;
+  if (S.tab === t && !navTop().ov){ closeSheetDOM(); zoomPopSet(false); return; }
+  navPush({ tab:t, ov:null });
+  closeSheetDOM();
+  zoomPopSet(false);
+  S.tab = t;
+  render();
+}
+
+function navCloseOverlay(){
+  if (navTop().ov) return navBack();
+  closeSheetDOM();
+  zoomPopSet(false);
+  return false;
+}
+
+function navCloseZoom(){
+  if (navTop().ov === 'zoom') return navBack();
+  zoomPopSet(false);
+  return false;
+}
+
+/* 히스토리 칸 → 화면 */
+function applyNav(st){
+  const tab = (st && st.tab) || 'home';
+  const ov = st && st.ov;
+  const oid = st && st.oid;
+  if (!ov){
+    closeSheetDOM();
+    zoomPopSet(false);
+  } else if (ov === 'detail'){
+    zoomPopSet(false);
+    if (S.detailId !== oid) openDetailDOM(oid);
+  } else if (ov === 'install'){
+    zoomPopSet(false);
+    if (!$('#overlay .inst-h')) openInstallDOM();
+  } else if (ov === 'add'){
+    zoomPopSet(false);
+    if (!$('#fName')) openAddDOM();
+  } else if (ov === 'import'){
+    zoomPopSet(false);
+    if (!$('#overlay .imp-panel')){ if (!IMP) IMP = impNewState(); renderImportDOM(); }
+  } else if (ov === 'zoom'){
+    zoomPopSet(true);
+  }
+  if (S.tab !== tab){
+    S.tab = NAV_TABS.indexOf(tab) > -1 ? tab : 'home';
+    render();
+  }
+}
+
+window.addEventListener('popstate', function (e) {
+  NAV.pending = false;
+  const st = e.state;
+  if (st && st.nav){
+    for (let i = NAV.stack.length - 1; i >= 0; i--){
+      if (NAV.stack[i].id === st.id){
+        NAV.stack.length = i + 1;
+        applyNav(NAV.stack[i]);
+        return;
+      }
+    }
+    NAV.stack = [{ nav:1, id:st.id, tab:st.tab || 'home', ov:st.ov || null, oid:st.oid || null }];
+    applyNav(NAV.stack[0]);
+    return;
+  }
+  /* 우리가 만든 칸을 모두 지나 페이지 밖으로 나가는 경우 */
+  NAV.stack = [{ id:0, nav:1, tab:'home', ov:null, oid:null }];
+  applyNav(NAV.stack[0]);
+});
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(t._tm);
+  t._tm = setTimeout(function () { t.classList.remove('on'); }, 2200);
+}
+
+/* ---------- decisions ---------- */
+function pushDecision(subId, action, recheck, source){
+  const sub = S.subs.find(s => s.id === subId);
+  if (!sub) return null;
+  S.decisions = S.decisions.filter(d => d.subId !== subId);
+  const d = {
+    id:'d' + Date.now() + Math.random().toString(36).slice(2,6),
+    subId:subId, action:action, recheck:recheck, source:source, at:stamp(),
+    handled:false, billing:false
+  };
+  S.decisions.push(d);
+  return d;
+}
+
+/* ---------- 화면 배율 (70 / 100 / 120 / 150%) ---------- */
+const ZOOMS = [70, 100, 120, 150];
+const ZOOM_KEY = 'nadaesin.v3.zoom';
+let zoomPct = 100;
+
+function savedZoom(){
+  try {
+    const v = Number(localStorage.getItem(ZOOM_KEY));
+    return ZOOMS.indexOf(v) > -1 ? v : 100;
+  } catch (e) { return 100; }
+}
+
+function zoomPopSet(open){
+  const pop = $('#zoomPop'), btn = $('#zoomBtn');
+  if (!pop || !btn) return;
+  pop.classList.toggle('on', !!open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function applyZoom(p, persist){
+  const v = Number(p);
+  zoomPct = ZOOMS.indexOf(v) > -1 ? v : 100;
+  const body = $('#appBody');
+  if (body){
+    /* CSS zoom: 레이아웃이 줄어든 폭으로 다시 계산되어 flex/grid가 자연스럽게 줄바꿈된다 */
+    body.classList.toggle('zoomed', zoomPct !== 100);
+    body.classList.toggle('bigzoom', zoomPct > 100);
+    body.dataset.zoom = String(zoomPct);
+    if (zoomPct === 100) body.style.removeProperty('zoom');
+    else body.style.zoom = String(zoomPct / 100);
+  }
+  const lab = $('#zoomLabel');
+  if (lab) lab.textContent = zoomPct + '%';
+  const btn = $('#zoomBtn');
+  if (btn) btn.classList.toggle('mod', zoomPct !== 100);
+  const pop = $('#zoomPop');
+  if (pop){
+    Array.prototype.forEach.call(pop.querySelectorAll('button'), function(b){
+      b.classList.toggle('on', Number(b.dataset.zoom) === zoomPct);
+    });
+  }
+  zoomPopSet(false);
+  if (persist){
+    try { localStorage.setItem(ZOOM_KEY, String(zoomPct)); } catch (e) {}
+  }
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', function (e) {
+  const el = e.target.closest('[data-act]');
+  const bg = e.target.closest('[data-bg]');
+
+  if (!el) {
+    if (!e.target.closest('.zpop') && !e.target.closest('.zbtn')) navCloseZoom();
+    if (bg && e.target.classList && e.target.classList.contains('sheet')) navCloseOverlay();
+    return;
+  }
+  const act = el.dataset.act;
+
+  if (act === 'zoompick'){
+    const pop = $('#zoomPop');
+    if (pop && pop.classList.contains('on')) navCloseZoom();
+    else navOpenOverlay('zoom', null, function(){ zoomPopSet(true); });
+    return;
+  }
+  if (act === 'zoomset'){
+    applyZoom(Number(el.dataset.zoom), true);
+    navCloseZoom();                 /* 팝오버 칸 정리(뒤로가기가 꼬이지 않게) */
+    toast('화면 크기 ' + zoomPct + '%');
+    return;
+  }
+  if (!e.target.closest('.zpop')) navCloseZoom();
+
+  if (act === 'tab') { navGoTab(el.dataset.tab); return; }
+  if (act === 'hfilter') { S.homeFilter = el.dataset.filter; render(); return; }
+  if (act === 'tile') { homeFilterGo(el.dataset.filter, true); return; }
+  if (act === 'subcat') { S.subCat = el.dataset.cat; render(); return; }
+  if (act === 'detail') { openDetail(el.dataset.id); return; }
+  if (act === 'close') { navCloseOverlay(); return; }
+
+  if (act === 'quick'){
+    const days = Number(el.dataset.days);
+    const inp = $('#dRecheck');
+    if (!inp || !S.detailId) return;
+    const sub = S.subs.find(s => s.id === S.detailId);
+    const iso = days === 0 ? sub.date : isoAdd(sub.date, days);
+    setDateFields('dRecheck', iso);
+    refreshDetail(iso);
+    return;
+  }
+
+  if (act === 'decide'){
+    const sub = S.subs.find(s => s.id === S.detailId);
+    if (!sub) return;
+    const inp = $('#dRecheck');
+    const rdDec = (inp && parseDateInput(inp.value)) || defaultRecheck(sub);
+    pushDecision(sub.id, el.dataset.choice, rdDec, '구독 점검');
+    renderSheet();
+    const body = $('#overlay .sheet-panel');
+    if (body) body.scrollTop = body.scrollHeight;
+    render();
+    toast(sub.name + ' · ' + ACTIONS[el.dataset.choice].label + ' 결정을 저장했습니다');
+    return;
+  }
+
+  if (act === 'markone'){
+    const dec = S.decisions.filter(d => d.subId === S.detailId).pop();
+    if (!dec) return;
+    const kind = el.dataset.kind;
+    dec[kind] = !dec[kind];
+    if (kind === 'billing' && dec.billing) dec.handled = true;
+    renderSheet();
+    render();
+    const body = $('#overlay .sheet-panel');
+    if (body) body.scrollTop = body.scrollHeight;
+    toast(kind === 'billing' ? '다음 청구 확인을 기록했습니다' : (dec.handled ? '변경 처리 기록' : '변경 처리 기록 해제'));
+    return;
+  }
+
+  if (act === 'mark'){
+    const dec = S.decisions.find(d => d.id === el.dataset.id);
+    if (!dec) return;
+    const kind = el.dataset.kind;
+    dec[kind] = !dec[kind];
+    if (kind === 'billing' && dec.billing) dec.handled = true;
+    render();
+    toast(kind === 'billing' ? '다음 청구 확인을 기록했습니다' : (dec.handled ? '변경 처리 기록' : '변경 처리 기록 해제'));
+    return;
+  }
+
+  if (act === 'undecide'){
+    S.decisions = S.decisions.filter(d => d.subId !== S.detailId);
+    navCloseOverlay(); render();
+    toast('저장한 결정을 되돌렸습니다');
+    return;
+  }
+
+  if (act === 'simopt'){
+    S.simAct = el.dataset.choice;
+    simSaved = false;
+    render();
+    const body = $('#appBody'), res = body.querySelector('#simResult');
+    if (res){
+      const rt = res.getBoundingClientRect(), bt = body.getBoundingClientRect();
+      body.scrollTo({ top: body.scrollTop + (rt.top - bt.top) - 70, behavior:'smooth' });
+    }
+    return;
+  }
+
+  if (act === 'simquick'){
+    const days = Number(el.dataset.days);
+    const sub = S.subs.find(s => s.id === S.simSub);
+    S.simDate = days === 0 ? sub.date : isoAdd(sub.date, days);
+    simSaved = false;
+    setDateFields('simDate', S.simDate);
+    refreshSim();
+    return;
+  }
+
+  if (act === 'simsave'){
+    const inp = $('#simDate');
+    const sub = S.subs.find(s => s.id === S.simSub);
+    if (!sub) return;
+    const rd = (inp && parseDateInput(inp.value)) || S.simDate || defaultRecheck(sub);
+    const fromReco = !S.simAct;
+    const choice = S.simAct || recommend(sub, rd).action;
+    pushDecision(sub.id, choice, rd, '심층 리포트 시뮬레이터');
+    S.simAct = null;
+    simSaved = true;
+    render();
+    toast(sub.name + ' · ' + ACTIONS[choice].label + ' 결정을 저장했습니다' + (fromReco ? ' (추천대로)' : ''));
+    return;
+  }
+
+  if (act === 'simexample'){
+    S.simSub = 'higgsfield';
+    S.simAct = null;
+    S.simDate = '';                 /* 재개일만 초기값으로, 저장한 결정 기록은 그대로 */
+    simSaved = false;
+    render();
+    toast('예시 상태로 되돌렸습니다 · 저장한 결정 ' + S.decisions.length + '건은 그대로입니다');
+    return;
+  }
+
+  if (act === 'pstatus'){
+    const p = S.projects.find(x => x.id === el.dataset.id);
+    if (!p) return;
+    p.status = el.dataset.status;
+    render();
+    toast('「' + p.name + '」 → ' + p.status + ' · 연결 구독 판단 갱신');
+    return;
+  }
+
+  if (act === 'del'){
+    const id = el.dataset.id;
+    S.decisions = S.decisions.filter(d => d.id !== id);
+    render();
+    toast('기록을 삭제했습니다');
+    return;
+  }
+
+  if (act === 'importopen'){
+    IMP = impNewState();
+    navOpenOverlay('import', null, openImportDOM);
+    return;
+  }
+
+  if (act === 'implo'){
+    impCollect();
+    IMP.loaded = true; IMP.err = ''; IMP.errKey = '';
+    renderImportDOM();
+    return;
+  }
+
+  if (act === 'impstep2'){
+    impCollect();
+    IMP.step = 2; IMP.err = ''; IMP.errKey = '';
+    renderImportDOM();
+    return;
+  }
+
+  if (act === 'impstep1'){
+    impCollect();
+    IMP.step = 1; IMP.err = ''; IMP.errKey = '';
+    renderImportDOM();
+    return;
+  }
+
+  if (act === 'imptoggle'){
+    const key = el.dataset.key;
+    impCollect();
+    const sm = IMP_SAMPLES.filter(function (x) { return x.key === key; })[0];
+    const it = IMP.items[key];
+    if (!sm || !it) return;
+    if (impRegistered(key)){ toast('이미 등록됨 · 같은 샘플은 다시 등록되지 않습니다'); return; }
+    if (sm.kind === 'unknown' && !it.confirmed){ toast('확인 필요 · 서비스명·갱신일을 입력해 확정해야 선택됩니다'); return; }
+    it.checked = !it.checked;
+    IMP.err = ''; IMP.errKey = '';
+    renderImportDOM(true);
+    return;
+  }
+
+  if (act === 'impconfirm'){
+    const key = el.dataset.key;
+    impCollect();
+    const sm = IMP_SAMPLES.filter(function (x) { return x.key === key; })[0];
+    const it = IMP.items[key];
+    if (!sm || !it) return;
+    const v = impValidate(it, sm);
+    if (v.err){
+      IMP.errKey = key; IMP.err = sm.label + ' · ' + v.err;
+      renderImportDOM(true); toast(v.err);
+      return;
+    }
+    it.name = v.name; it.price = v.price; it.paidRaw = v.paid; it.nextRaw = v.next; it.cat = v.cat;
+    it.confirmed = true; it.checked = true;
+    IMP.err = ''; IMP.errKey = '';
+    renderImportDOM(true);
+    toast('확인 완료 · ' + v.name + ' 선택됨 (월 ' + fmt(v.price) + ' · ' + md(v.next) + ' 갱신)');
+    return;
+  }
+
+  if (act === 'impreg'){
+    impCollect();
+    const picks = []; let err = '';
+    IMP_SAMPLES.forEach(function (sm) {
+      if (sm.kind === 'oneoff') return;
+      const it = IMP.items[sm.key];
+      if (!it || !it.checked) return;
+      if (impRegistered(sm.key)) return;
+      const v = impValidate(it, sm);
+      if (v.err){ err = err || (sm.kind === 'unknown' ? '확인 필요 항목 · ' : '') + v.err; IMP.errKey = sm.key; return; }
+      picks.push({ sm:sm, v:v });
+    });
+    if (err){ IMP.err = err; renderImportDOM(true); toast(err); return; }
+    const added = [];
+    picks.forEach(function (p) {
+      const sm = p.sm, v = p.v;
+      S.subs.push({
+        id:'imp-' + sm.key, name:v.name, plan:'불러온 샘플', price:v.price, date:v.next, cat:v.cat,
+        color:(sm.key === 's1' ? '#0EA5E9' : '#6366F1'), mark:v.name.slice(0, 2),
+        open:'#', manage:'#',
+        importKey:'import:' + sm.key, source:'가상 결제 알림(샘플)', paidOn:v.paid
+      });
+      added.push('imp-' + sm.key);
+    });
+    IMP.reg = added;
+    IMP.regKeys = picks.map(function (p) { return p.sm.key; });
+    IMP.err = ''; IMP.errKey = '';
+    IMP.step = 3;
+    renderImportDOM();
+    render();
+    toast(added.length
+      ? added.length + '건 등록 · 내 구독 ' + S.subs.length + '개 · 월 ' + fmt(totalPrice())
+      : '추가 등록 0건 · 이미 등록된 샘플입니다');
+    return;
+  }
+
+  if (act === 'impstep4'){
+    IMP.step = 4;
+    renderImportDOM();
+    return;
+  }
+
+  if (act === 'impgo'){
+    const last = (IMP.reg && IMP.reg.length) ? IMP.reg[IMP.reg.length - 1] : ((S.subs.filter(function (s) { return s.importKey; })[0] || {}).id || null);
+    S.q = ''; S.subCat = '전체';
+    S.impHl = last;
+    navGoTab('subs');
+    render();
+    toast('내 구독 ' + S.subs.length + '개 · 월 ' + fmt(totalPrice()) + '에 반영했습니다');
+    setTimeout(function () { if (S.impHl){ S.impHl = null; if (S.tab === 'subs') render(); } }, 7000);
+    return;
+  }
+
+  if (act === 'impreset'){
+    const keys = S.subs.filter(function (s) { return s.importKey; }).map(function (s) { return s.id; });
+    if (!keys.length){ toast('불러온 샘플이 없습니다'); return; }
+    S.subs = S.subs.filter(function (s) { return !s.importKey; });
+    S.decisions = S.decisions.filter(function (d) { return keys.indexOf(d.subId) === -1; });
+    if (S.impHl && keys.indexOf(S.impHl) > -1) S.impHl = null;
+    if (S.simSub && keys.indexOf(S.simSub) > -1) S.simSub = 'higgsfield';
+    IMP = null;
+    S.q = ''; S.subCat = '전체';
+    render();
+    toast('불러온 샘플 ' + keys.length + '건 초기화 · ' + S.subs.length + '개 · 월 ' + fmt(totalPrice()));
+    return;
+  }
+
+  if (act === 'addopen'){
+    navOpenOverlay('add', null, openAddDOM);
+    return;
+  }
+
+  if (act === 'addsave'){
+    const name = ($('#fName').value || '').trim();
+    const price = Number($('#fPrice').value || 0);
+    const day = Math.min(28, Math.max(1, Number($('#fDay').value || 1)));
+    if (!name || !price) { toast('이름과 금액을 입력해 주세요'); return; }
+    const colors = ['#2563EB','#7C3AED','#0EA5E9','#059669','#F59E0B','#DB2777'];
+    const p = String(day).padStart(2,'0');
+    let date = '2026-11-' + p;
+    if (day < 20) date = '2026-12-' + p;
+    S.subs.push({
+      id:'x' + Date.now().toString(36), name:name, plan:'직접 입력', price:price, date:date,
+      cat:'AI 도구', color:colors[S.subs.length % colors.length],
+      mark:name.slice(0,2).toUpperCase(), open:'#', manage:'#'
+    });
+    navGoTab('subs');                 /* 모달 칸을 내 구독 탭 칸으로 바꾼다 */
+    S.q = ''; S.subCat = '전체'; render();
+    toast(name + ' 구독을 추가했습니다 · 사용량 미확인 · 연결 작업 없음');
+    return;
+  }
+
+  if (act === 'install') { showInstall(); return; }
+
+  if (act === 'reset'){
+    S.subs = clone(SUBS_BASE);
+    S.projects = clone(PROJECTS_BASE);
+    S.decisions = [];
+    S.homeFilter = 'all'; S.subCat = '전체'; S.q = '';
+    S.simSub = 'higgsfield'; S.simAct = null; S.simDate = '';
+    simSaved = false;
+    S.tab = 'home';
+    /* 되돌리기 뒤에도 뒤로가기 기준 칸을 홈으로 다시 맞춥니다
+       (저장된 탭이 홈이 아니었던 경우 남아 있던 히스토리 칸 때문에
+        모달을 닫으면 그 탭으로 돌아가 버리는 문제 방지) */
+    try { history.replaceState({ nav:1, id:0, tab:'home', ov:null, oid:null }, ''); } catch (e) {}
+    NAV.pending = false;
+    NAV.stack = [{ id:0, nav:1, tab:'home', ov:null, oid:null }];
+    applyZoom(100, true);
+    try { localStorage.removeItem(STATE_KEY); } catch (e) {}
+    navGoTab('home');
+    render();
+    toast('데모 데이터를 초기화했습니다');
+    return;
+  }
+});
+
+/* 시뮬레이터: 날짜 입력은 결과 영역만 갱신해 포커스를 유지 */
+function refreshSim(){
+  const sub = S.subs.find(s => s.id === S.simSub) || S.subs[0];
+  const rd = S.simDate || defaultRecheck(sub);
+  const box = $('#simResult');
+  if (box) box.innerHTML = simResultHTML(sub, S.simAct, rd);
+  const opt = $('#simOpts');
+  if (opt) opt.innerHTML = simOptsHTML(sub, S.simAct, rd);
+  saveState();
+}
+
+/* 구독 점검 모달: 재개일만 바꿔도 추천 배지·근거가 즉시 바뀝니다 */
+function refreshDetail(rd){
+  const sub = S.subs.find(s => s.id === S.detailId);
+  if (!sub) return;
+  const v = $('#sdVerdict'); if (v) v.innerHTML = verdictHTML(sub, rd) + duePill(sub);
+  const b = $('#sdReco'); if (b) b.innerHTML = recoHTML(sub, rd);
+  saveState();
+}
+
+document.addEventListener('change', function (e) {
+  const el = e.target.closest('[data-act="simsub"]');
+  if (el){
+    S.simSub = el.value;
+    S.simDate = '';
+    simSaved = false;
+    render();
+    return;
+  }
+  if (e.target.id === 'simDate' || e.target.id === 'dRecheck'){ dateTextChanged(e.target.id, e.target.value, true); return; }
+  if (e.target.id === 'simDatePick'){
+    const v = e.target.value; if (!v) return;
+    setDateFields('simDate', v); S.simDate = v; refreshSim(); return;
+  }
+  if (e.target.id === 'dRecheckPick'){
+    const v = e.target.value; if (!v) return;
+    setDateFields('dRecheck', v); refreshDetail(v); return;
+  }
+});
+
+document.addEventListener('input', function (e) {
+  if (e.target.id === 'simDate' || e.target.id === 'dRecheck'){ dateTextChanged(e.target.id, e.target.value, false); return; }
+  if (e.target.id === 'q'){
+    S.q = e.target.value;
+    const list = $('#subList');
+    if (list) list.innerHTML = subRows();
+  }
+});
+
+/* ---------- 새 구독 추가(데모) / install ---------- */
+function openAddDOM(){
+  openSheetDOM('<div class="sheet-grip"></div>' +
+    '<div class="sd-head"><div><div class="sd-name">새 구독 추가 (데모)</div>' +
+      '<div class="sd-meta">결제 문자·메일 자동 수집은 후속 로드맵입니다</div></div>' +
+      '<button class="x" data-act="close">✕</button></div>' +
+    '<div class="field" style="margin-top:14px"><label>서비스 이름</label><input id="fName" type="text" placeholder="예: Suno Pro"></div>' +
+    '<div class="field"><label>월 결제액 (원)</label><input id="fPrice" type="number" inputmode="numeric" placeholder="예: 15000"></div>' +
+    '<div class="field"><label>결제일 (1~28)</label><input id="fDay" type="number" inputmode="numeric" min="1" max="28" placeholder="예: 20"></div>' +
+    '<div class="form-actions"><button class="btn-cancel" data-act="close">취소</button>' +
+      '<button class="btn-primary" data-act="addsave">추가하기</button></div>');
+}
+
+function showInstall(){
+  navOpenOverlay('install', null, function(){ openInstallDOM(); });
+}
+function openInstallDOM(){
+  openSheetDOM('<div class="sheet-grip"></div>' +
+    '<div class="inst-h"><span class="ab-logo"><svg viewBox="0 0 32 32"><circle cx="16" cy="8.8" r="2.1" fill="#fff"/><rect x="7.5" y="12.5" width="17" height="12.5" rx="5" fill="#fff"/><circle cx="12.6" cy="18.6" r="1.75" fill="#2563EB"/><circle cx="19.4" cy="18.6" r="1.75" fill="#2563EB"/></svg></span>' +
+      '<div><div class="inst-t">홈 화면에 추가</div><div class="inst-s">앱처럼 전체 화면으로 열립니다 (PWA)</div></div>' +
+      '<button class="x" data-act="close">✕</button></div>' +
+    '<ol class="inst-steps">' +
+      '<li><b>Android Chrome</b> — 오른쪽 위 ⋮ → "홈 화면에 추가"</li>' +
+      '<li><b>iPhone Safari</b> — 하단 공유 → "홈 화면에 추가"</li>' +
+      '<li><b>PC Chrome</b> — 주소창 오른쪽 설치 아이콘 클릭</li>' +
+    '</ol>' +
+    '<div class="inst-bar"><i></i></div>');
+  clearTimeout(window._instTm);
+  window._instTm = setTimeout(function () {
+    if ($('#overlay .inst-h')) navCloseOverlay();
+  }, 3000);
+}
+
+
+/* ============================================================
+   내 구독 불러오기 (검수용 · preview-import.html 전용)
+   - 실제 계정·결제 연동 없음: 준비된 '가상 결제 알림' 샘플 3종만 사용합니다.
+   - 날짜 원칙: 결제일을 갱신일로 쓰지 않고, 빈 날짜를 매월 1일로 채우지 않고,
+     29~31일을 28일로 바꾸지 않습니다(형식·존재하지 않는 날짜는 입력을 되돌려 받습니다).
+   - 자동 불러오기 항목은 importKey('import:s1')와 출처 태그(source)로 중복 등록을 막습니다.
+   - 기존 수동 등록(addopen)·저장 공간(STATE_KEY)은 그대로 두고, 불러온 항목만 따로 초기화합니다.
+   ============================================================ */
+const IMP_SAMPLES = [
+  { key:'s1', kind:'clear', label:'명확한 월 구독',
+    name:'샘플 영상툴 Pro', price:9900, paid:'2026-11-05', next:'2026-12-05', cat:'AI 도구',
+    msgs:[ { ch:'문자', when:'11/05', text:'샘플 영상툴 Pro 9,900원 (정기결제)' },
+           { ch:'이메일', when:'11/05', text:'샘플 영상툴 Pro 9,900원 결제 완료' } ] },
+  { key:'s2', kind:'unknown', label:'결제대행사명만 있는 건', vendor:'KCP*결제대행',
+    name:'', price:'', paid:'2026-11-12', next:'', cat:'AI 도구',
+    msgs:[ { ch:'문자', when:'11/12', text:'KCP*결제대행 14,900원 승인' } ] },
+  { key:'s3', kind:'oneoff', label:'일회성 구매',
+    name:'○○스토어', price:32000, paid:'2026-11-14', next:'',
+    msgs:[ { ch:'문자', when:'11/14', text:'○○스토어 단품 구매 32,000원' } ] }
+];
+const IMP_CATS = ['AI 도구','영상·음악','생활·통신','저장·학습'];
+let IMP = null;
+
+function impEsc(v){
+  return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+}
+function impPrice(v){
+  const n = Number(String(v == null ? '' : v).replace(/[^\d]/g, ''));
+  return isNaN(n) ? 0 : n;
+}
+/* YYYY-MM-DD만 인정하고, 존재하지 않는 날짜(2/30 등)와 자동 보정(29→1, 31→28)을 하지 않습니다 */
+function parseStrictDate(raw){
+  const t = String(raw == null ? '' : raw).trim();
+  const m = t.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})$/);
+  if (!m) return null;
+  const y = +m[1], mo = +m[2], d = +m[3];
+  if (mo < 1 || mo > 12 || d < 1 || d > 31) return null;
+  const dt = new Date(y, mo - 1, d);
+  if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+  return isoOf(dt);
+}
+function impNewState(){
+  const items = {};
+  IMP_SAMPLES.forEach(function (sm) {
+    if (sm.kind === 'oneoff') return;
+    items[sm.key] = {
+      checked: sm.kind === 'clear',
+      confirmed: sm.kind === 'clear',
+      name: sm.name, price: sm.price, paidRaw: sm.paid, nextRaw: sm.next, cat: sm.cat || 'AI 도구'
+    };
+  });
+  return { step:1, loaded:false, items:items, reg:[], regKeys:[], err:'', errKey:'' };
+}
+function impSubById(key){
+  const k = 'import:' + key;
+  return S.subs.filter(function (s) { return s.importKey === k; })[0] || null;
+}
+function impRegistered(key){ return !!impSubById(key); }
+function impSample(key){ return IMP_SAMPLES.filter(function (s) { return s.key === key; })[0] || null; }
+
+function impCollect(){
+  if (!IMP) return;
+  IMP_SAMPLES.forEach(function (sm) {
+    if (sm.kind === 'oneoff') return;
+    const it = IMP.items[sm.key];
+    if (!it) return;
+    const n = $('#impN_' + sm.key), p = $('#impP_' + sm.key), d = $('#impD_' + sm.key),
+          x = $('#impX_' + sm.key), c = $('#impC_' + sm.key);
+    if (n) it.name = n.value;
+    if (p) it.price = p.value;
+    if (d) it.paidRaw = d.value;
+    if (x) it.nextRaw = x.value;
+    if (c) it.cat = c.value;
+  });
+}
+function impValidate(it, sm){
+  const name = String(it.name || '').trim();
+  if (!name) return { err:'서비스명을 입력해 주세요 (자동으로 추정하지 않습니다)' };
+  const price = impPrice(it.price);
+  if (!price) return { err:'월 구독료를 숫자로 입력해 주세요' };
+  const paid = parseStrictDate(it.paidRaw || sm.paid);
+  if (!paid) return { err:'최근 결제일이 올바른 날짜가 아닙니다 (예: 2026-11-05)' };
+  const next = parseStrictDate(it.nextRaw);
+  if (!next) return { err:'다음 갱신일을 YYYY-MM-DD로 입력해 주세요 (빈 날짜를 1일로 채우지 않습니다)' };
+  return { name:name, price:price, paid:paid, next:next, cat:it.cat || 'AI 도구' };
+}
+function impSelection(){
+  let count = 0, price = 0;
+  if (!IMP) return { count:0, price:0 };
+  IMP_SAMPLES.forEach(function (sm) {
+    if (sm.kind === 'oneoff') return;
+    const it = IMP.items[sm.key];
+    if (!it || !it.checked) return;
+    if (impRegistered(sm.key)) return;
+    count++;
+    price += impPrice(it.price);
+  });
+  return { count:count, price:price };
+}
+
+/* ---------- 화면 ---------- */
+function openImportDOM(){
+  if (!IMP) IMP = impNewState();
+  renderImportDOM();
+}
+function renderImportDOM(keepScroll){
+  const panel = $('#overlay .sheet-panel');
+  const top = (panel && keepScroll) ? panel.scrollTop : 0;
+  if (panel && panel.querySelector('.imp-panel')){
+    panel.innerHTML = impHTML();
+    panel.scrollTop = top;
+  } else {
+    openSheetDOM(impHTML());
+  }
+}
+function impRailHTML(){
+  const defs = [ ['1','알림 불러오기'], ['2','찾은 구독 확인'], ['3','선택 항목 등록'], ['4','내 구독 점검'] ];
+  return '<div class="imp-rail">' + defs.map(function (d, i) {
+    const n = i + 1;
+    const cls = IMP.step === n ? 'on' : (IMP.step > n ? 'done' : '');
+    return '<div class="st ' + cls + '"><b>' + (IMP.step > n ? '✓' : d[0]) + '</b>' + d[1] + '</div>';
+  }).join('') + '</div>';
+}
+function impHTML(){
+  return '<div class="imp-panel">' +
+    '<div class="sheet-grip"></div>' +
+    '<div class="imp-head"><div class="imp-main">' +
+      '<div class="imp-t">내 구독 불러오기</div>' +
+      '<div class="imp-s">결제 알림에서 찾은 구독을 골라 등록하는 4단계 · 검수용 샘플</div>' +
+    '</div><button class="x" data-act="close">✕</button></div>' +
+    '<div class="imp-lock">가상 결제 알림으로 체험합니다. 실제 계정이나 결제 정보는 연결하지 않습니다.' +
+      '<span>문자·이메일 원문을 읽어 오지 않고, 준비된 샘플 3종(가상)만 사용합니다.</span></div>' +
+    impRailHTML() +
+    (IMP.step === 1 ? impStep1HTML() :
+     IMP.step === 2 ? impStep2HTML() :
+     IMP.step === 3 ? impStep3HTML() : impStep4HTML()) +
+    '<div class="imp-foot">나대신은 비밀번호·카드번호를 받지 않습니다 · 검수용 미리보기(preview-import.html)</div>' +
+  '</div>';
+}
+function impStep1HTML(){
+  let h = '<div class="imp-desc">최근 결제 알림에서 구독 후보를 찾는 ①단계입니다. 아래 버튼을 누르면 준비된 <b>가상 결제 알림 4건</b>(샘플 3종)이 나타납니다.</div>';
+  if (!IMP.loaded){
+    return h + '<button class="imp-next" data-act="implo">가상 결제 알림 불러오기</button>';
+  }
+  h += '<div class="imp-sec"><span class="n">불러옴</span>가상 결제 알림 4건<span class="sub">문자 3 · 이메일 1</span></div>';
+  IMP_SAMPLES.forEach(function (sm) {
+    sm.msgs.forEach(function (m) {
+      h += '<div class="imp-msg"><span class="ch' + (m.ch === '이메일' ? ' mail' : '') + '">' + m.ch + '</span>' +
+        '<span class="when">' + m.when + '</span><span class="tx">' + m.text + '</span></div>';
+    });
+  });
+  h += '<div class="imp-note">샘플 1의 문자·이메일 2건은 같은 날·같은 금액의 <b>같은 청구</b>입니다. 후보 목록에서는 1건으로 묶습니다.</div>' +
+    '<button class="imp-next" data-act="impstep2">② 찾은 구독 확인하기 ›</button>';
+  return h;
+}
+function impCardHTML(sm){
+  const it = IMP.items[sm.key];
+  const reg = impRegistered(sm.key);
+  const clear = sm.kind === 'clear';
+  const need = sm.kind === 'unknown';
+  const confirmed = clear || it.confirmed;
+  const on = it.checked && !reg;
+  const cls = (!confirmed || !on) ? ' skip' : '';
+  let badges = '';
+  if (clear) badges += '<span class="pill blue">명확한 월 구독</span>';
+  if (need && !confirmed) badges += '<span class="pill warn">확인 필요</span>';
+  if (need && confirmed) badges += '<span class="pill ok">확인 완료</span>';
+  if (reg) badges += '<span class="pill soft">이미 등록됨</span>';
+  let h = '<div class="imp-card' + cls + (IMP.errKey === sm.key ? ' err' : '') + '">' +
+    '<div class="imp-card-top">' +
+      '<button class="imp-cb' + (on ? ' on' : '') + '" data-act="imptoggle" data-key="' + sm.key + '"' +
+        ((!confirmed || reg) ? ' disabled' : '') + ' aria-label="등록 대상 선택"></button>' +
+      '<div class="imp-card-nm"><div class="imp-card-name">' + impEsc(it.name || '이름 미확인') + '</div>' +
+        '<div class="imp-card-meta">' + (clear
+          ? '문자·이메일 2건 → 1건으로 병합 · 같은 청구'
+          : '결제대행사명만 표시 · 서비스명 자동 추정 안 함') + '</div></div>' +
+      badges +
+    '</div>' +
+    '<div class="imp-fields">' +
+      '<label class="imp-f wide"><span>서비스명</span><input id="impN_' + sm.key + '" type="text" autocomplete="off" value="' + impEsc(it.name) + '" placeholder="' + (need ? '서비스명 직접 입력' : '서비스명') + '"></label>' +
+      '<label class="imp-f"><span>월 구독료 (원)</span><input id="impP_' + sm.key + '" type="text" inputmode="numeric" autocomplete="off" value="' + impEsc(it.price) + '" placeholder="예: 14900"></label>' +
+      '<label class="imp-f"><span>카테고리</span><select id="impC_' + sm.key + '">' +
+        IMP_CATS.map(function (c) { return '<option' + (c === it.cat ? ' selected' : '') + '>' + c + '</option>'; }).join('') +
+      '</select></label>' +
+      '<label class="imp-f"><span>최근 결제일</span><input id="impD_' + sm.key + '" type="text" inputmode="numeric" autocomplete="off" value="' + impEsc(it.paidRaw) + '" placeholder="YYYY-MM-DD"></label>' +
+      '<label class="imp-f"><span>다음 갱신일</span><input id="impX_' + sm.key + '" type="text" inputmode="numeric" autocomplete="off" value="' + impEsc(it.nextRaw) + '" placeholder="YYYY-MM-DD"></label>' +
+    '</div>';
+  const pdIso = parseStrictDate(it.paidRaw) || sm.paid;
+  const nxIso = parseStrictDate(it.nextRaw) || sm.next;
+  if (clear){
+    h += '<div class="imp-tagline">결제일 <b>' + mdw(pdIso) + '</b>는 결제가 찍힌 날입니다. 갱신일은 결제일이 아니라 알림에 있는 다음 갱신일(<b>' + mdw(nxIso) + '</b>)로 등록합니다. 29~31일도 28일로 바꾸지 않습니다.</div>';
+  } else if (!confirmed){
+    h += '<div class="imp-aim">결제 알림 금액은 <b>14,900원</b>입니다. 서비스명·월 구독료(월 결제인지 확인)·다음 갱신일을 직접 입력해 확정하면 선택할 수 있습니다. 확정 전에는 <b>월 합계·갱신 알림·추천에 반영하지 않습니다.</b></div>' +
+      '<button class="imp-mini-btn" data-act="impconfirm" data-key="' + sm.key + '">입력값으로 확정하기</button>';
+  } else {
+    h += '<div class="imp-tagline">확인한 값으로 확정했습니다. 빈 날짜를 1일로 채우지 않고, 입력한 갱신일을 그대로 씁니다.</div>';
+  }
+  if (reg){
+    h += '<div class="imp-tagline">이미 등록된 샘플입니다. 다시 불러와도 <b>중복 등록되지 않습니다.</b> (중복 방지 키 import:' + sm.key + ')</div>';
+  }
+  return h + '</div>';
+}
+function impExcludedHTML(){
+  const sm = IMP_SAMPLES[2];
+  return '<div class="imp-excl">' +
+    '<div class="row"><span class="imp-msg ch" style="flex:0 0 auto">문자</span><b>11/14 ' + sm.name + ' 단품 구매 32,000원</b>' +
+      '<span class="pill soft">등록 불가</span></div>' +
+    '<div class="why">일회성 구매(단품)라 반복 결제가 아닙니다. 구독 후보에 넣지 않고, 등록 대상에서도 제외합니다.</div>' +
+  '</div>';
+}
+function impSumHTML(){
+  const sel = impSelection();
+  return '<span>선택 <b>' + sel.count + '건</b> · 추가 월 <b>' + fmt(sel.price) + '</b></span>' +
+    '<span>등록 후 <b>' + (S.subs.length + sel.count) + '개 · ' + fmt(totalPrice() + sel.price) + '</b></span>';
+}
+function impStep2HTML(){
+  const sel = impSelection();
+  const regCount = IMP_SAMPLES.filter(function (sm) { return sm.kind !== 'oneoff' && impRegistered(sm.key); }).length;
+  let h = '<div class="imp-desc">찾은 후보를 확인합니다. 확인되지 않는 항목은 추정하지 않고 <b>확인 필요</b>로 보류합니다.</div>' +
+    '<div class="imp-sec"><span class="n">후보</span>등록 후보 2건' + (regCount ? '<span class="sub">이미 등록됨 ' + regCount + '건</span>' : '') + '</div>' +
+    impCardHTML(IMP_SAMPLES[0]) +
+    impCardHTML(IMP_SAMPLES[1]) +
+    '<div class="imp-sec"><span class="n">제외</span>구독 후보에서 제외 1건</div>' +
+    impExcludedHTML() +
+    '<div class="imp-sum" id="impSumBox">' + impSumHTML() + '</div>';
+  if (IMP.err) h += '<div class="imp-err">' + impErrHTML(IMP.err) + '</div>';
+  h += '<button class="imp-next" data-act="impreg">' + (sel.count ? '③ 선택한 ' + sel.count + '건 등록하기' : '등록할 항목 없음 · 결과 확인') + '</button>' +
+    '<button class="imp-back" data-act="impstep1">‹ 결제 알림 다시 보기</button>';
+  return h;
+}
+function impErrHTML(t){
+  return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+}
+function impStep3HTML(){
+  const reg = IMP.reg || [];
+  let h = '<div class="imp-sec"><span class="n">③</span>선택한 항목 등록</div>';
+  if (!reg.length){
+    h += '<div class="imp-err">추가로 등록한 항목이 없습니다 — 이미 등록된 샘플은 중복 등록하지 않았습니다.</div>';
+  }
+  reg.forEach(function (id) {
+    const s = S.subs.filter(function (x) { return x.id === id; })[0];
+    if (!s) return;
+    h += '<div class="imp-res-row"><div class="imp-res-t">' + impEsc(s.name) + ' · ' + fmt(s.price) +
+      '<div class="d">' + md(s.date) + ' 갱신 · 출처 ' + impEsc(s.source) + '</div></div><span class="pill ok">등록됨</span></div>';
+  });
+  h += '<div class="imp-sum"><span>내 구독 <b>' + S.subs.length + '개</b></span><span>월 <b>' + fmt(totalPrice()) + '</b></span></div>' +
+    '<div class="imp-note">저장 위치: 이 브라우저(localStorage) · 중복 방지 키: <b>import:' + ((IMP.regKeys || []).join(', import:') || '-') + '</b><br>새로고침해도 유지되고, 같은 샘플을 다시 불러와도 한 번만 등록됩니다.</div>' +
+    '<button class="imp-next" data-act="impstep4">④ 내 구독에서 점검하기 ›</button>';
+  return h;
+}
+function impStep4HTML(){
+  const ids = (IMP.reg && IMP.reg.length) ? IMP.reg : S.subs.filter(function (s) { return s.importKey; }).map(function (s) { return s.id; });
+  let h = '<div class="imp-sec"><span class="n">④</span>내 구독에서 점검</div>' +
+    '<div class="imp-step4">' +
+      '<div class="k">홈 · 내 구독 합계</div>' +
+      '<div style="font-size:15px;font-weight:800;letter-spacing:-.02em">' + fmt(totalPrice()) +
+        ' <span style="font-size:9.5px;font-weight:800;color:#64748B">' + S.subs.length + '개 구독</span></div>';
+  ids.forEach(function (id) {
+    const s = S.subs.filter(function (x) { return x.id === id; })[0];
+    if (!s) return;
+    const st = stateOf(s);
+    h += '<div class="imp-res-row" style="background:#fff;border-color:#E2E8F0;margin-top:5px"><div class="imp-res-t">' + impEsc(s.name) + ' · ' + fmt(s.price) +
+      '<div class="d">' + md(s.date) + ' 갱신 · ' + mdw(s.date) + ' · ' + st.label + ' · 출처 ' + impEsc(s.source) + '</div></div>' +
+      '<span class="pill blue">내 구독</span></div>';
+  });
+  h += '</div>' +
+    '<div class="imp-note">내 구독 탭에서 같은 값을 확인할 수 있습니다. 새로고침해도 유지되고, <b>불러온 샘플 초기화</b>는 가져온 항목만 지우며 직접 추가한 구독·결정 기록은 그대로 둡니다.</div>' +
+    '<button class="imp-next" data-act="impgo">내 구독 탭에서 보기</button>' +
+    '<button class="imp-back" data-act="close">닫기</button>';
+  return h;
+}
+
+/* 입력 중에는 합계 줄만 갱신합니다(포커스 유지) */
+document.addEventListener('input', function (e) {
+  const id = e.target && e.target.id;
+  if (!id || !/^imp[NPCXDX]_/.test(id)) return;
+  impCollect();
+  const box = $('#impSumBox');
+  if (box) box.innerHTML = impSumHTML();
+});
+
+/* ---------- init ---------- */
+$('#sbTime').textContent = timeNow();
+applyZoom(savedZoom(), false);   /* 저장된 배율 복원(기본 100%) */
+loadState();                     /* 저장된 결정·재개일·처리 상태 복원 */
+render();
+/* 히스토리 기준 칸 = 홈. 저장된 탭이 홈이 아니면 그 탭 칸을 더 쌓아
+   새로고침 뒤에도 뒤로가기로 홈에 돌아오게 한다 */
+try { history.replaceState({ nav:1, id:0, tab:'home', ov:null, oid:null }, ''); } catch (e) {}
+NAV.pending = false;
+NAV.stack = [{ id:0, nav:1, tab:'home', ov:null, oid:null }];
+if (S.tab !== 'home') navPush({ tab:S.tab, ov:null });
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  if (navTop().ov === 'zoom') navCloseZoom();
+  else if (navTop().ov) navCloseOverlay();
+  else zoomPopSet(false);
+});
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
+</script>
+</body>
+</html>
