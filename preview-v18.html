@@ -735,7 +735,8 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .btnrow.three{grid-template-columns:1fr 1fr 1fr; gap:4px}
 .btnrow.three button{font-size:8.5px; padding:0 2px; letter-spacing:-.03em}
 .imgcard{display:grid; grid-template-columns:96px 1fr; gap:8px; border:1px solid var(--line); border-radius:11px; padding:7px; margin-bottom:7px; background:#fff}
-.imgthumb{height:104px; overflow:hidden; border-radius:8px; background:#EEF2F7; display:flex; align-items:center; justify-content:center; padding:5px}
+.imgthumb{height:104px; width:100px; overflow:hidden; border-radius:8px; background:#EEF2F7; display:flex; align-items:center; justify-content:center; padding:3px}
+.imgthumb .mock-phone,.imgthumb .mock-bill{transform:scale(.6); flex:0 0 auto}
 .imgcard-b{min-width:0}
 .imgcard-t{font-size:10px; font-weight:800; letter-spacing:-.02em; line-height:1.35}
 .imgcard-s{font-size:8px; color:#94A3B8; font-weight:700; margin-top:2px}
@@ -1582,6 +1583,7 @@ function viewReport(){
   const link = linksOf(sub.id)[0];
   const counts = { keep:0, down:0, stop:0, hold:0 };
   allSubs().forEach(s => { counts[recFor(s).key]++; });
+  const unknownUsage = allSubs().filter(s => metric(s).measure === 'unknown').length;
 
   return '' +
   '<span class="insight">유료 시연 · 9,900원</span>' +
@@ -1602,7 +1604,7 @@ function viewReport(){
       '<div class="rep-li"><span class="ar">›</span><span><b>ChatGPT 60% · Higgsfield 20% · Vrew 40%</b> — 사용률이 확인된 3개입니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><b>Manus 잔여 크레딧 16,000</b> (4,000/20,000) · 만료 <b>12/27</b> — 남은 크레딧을 다음 작업에 먼저 씁니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><b>Google One 68/100GB</b> — 저장공간은 아직 여유가 있습니다.</span></div>' +
-      '<div class="rep-li"><span class="ar">›</span><span>나머지 8개는 <b>사용량 미확인</b> — 확인되기 전에는 숫자를 만들지 않습니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span>나머지 ' + unknownUsage + '개는 <b>사용량 미확인</b> — 확인되기 전에는 숫자를 만들지 않습니다.</span></div>' +
     '</div>' +
 
     '<div class="rep-sec"><div class="rep-h"><span class="no">3</span>보유 활용 → 공식 혜택·요금제 전환 제안</div>' +
@@ -1610,7 +1612,7 @@ function viewReport(){
       '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step">먼저</span><b>ChatGPT · Claude · Genspark</b> — 겹치는 용도는 한 곳으로 몰고, 각 서비스에만 있는 기능을 먼저 써 봅니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>SK브로드밴드</b> 약정 만료 ' + md('2026-12-10') + ' — 재약정·모바일 결합·공식 사은품 조건을 만료 전에 비교합니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>YouTube · Spotify · Netflix</b> — 통신사 멤버십, 패밀리·학생·광고형 등 공식 요금제 대안을 비교합니다.</span></div>' +
-      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>AI 도구 7개 · 쿠팡 와우</b> — 작업·이용 빈도에 맞춘 월간/연간·종량·무료 티어 전환을 검토합니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>AI 도구 ' + aiSubs().length + '개 · 쿠팡 와우</b> — 작업·이용 빈도에 맞춘 월간/연간·종량·무료 티어 전환을 검토합니다.</span></div>' +
       '<div class="rep-note">보유 크레딧·기능을 먼저 쓰고, 그래도 남는 비용만 <b>공식 할인·번들·대체 요금제</b>로 비교합니다. 실제 요금·혜택은 각 서비스 공식 페이지에서 직접 확인하는 예시입니다.</div>' +
     '</div>' +
 
