@@ -500,8 +500,9 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .imp-lock{margin-top:9px; padding:7px 9px; border:1px solid #D9E5FF; background:#F4F8FF; border-radius:11px; font-size:10px; font-weight:800; color:#1D4ED8; line-height:1.45; letter-spacing:-.01em}
 .imp-lock span{display:block; font-weight:700; color:#3B5B96; margin-top:2px}
 .imp-lock.compact{margin-top:6px; padding:4px 8px; font-size:8.5px; font-weight:800; color:#3B6FD4; background:#F7FAFF; line-height:1.4}
-.imp-rail{display:grid; grid-template-columns:repeat(4,1fr); gap:3px; margin:10px 0 9px}
-.imp-rail .st{font-size:8px; font-weight:800; color:var(--muted2); background:#F4F6FA; border:1px solid var(--line2); border-radius:7px; padding:3px 1px; text-align:center; line-height:1.25; letter-spacing:-.05em}
+.imp-rail{display:grid; grid-template-columns:repeat(4,1fr); gap:3px; margin:8px 0 6px}
+.imp-rail .st{font-size:7.5px; font-weight:800; color:var(--muted2); background:#F4F6FA; border:1px solid var(--line2); border-radius:6px; padding:4px 1px; text-align:center; line-height:1.2; letter-spacing:-.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.sheet-panel.imp-sheet{max-height:96%; padding-bottom:14px}
 .imp-rail .st b{display:block; font-size:10px; color:#94A3B8; margin-bottom:1px}
 .imp-rail .st.done{background:var(--ok-soft); border-color:#CBEFDF; color:var(--ok)}
 .imp-rail .st.done b{color:var(--ok)}
@@ -2500,6 +2501,8 @@ function renderImportDOM(keepScroll){
     panel.scrollTop = top;
   } else {
     openSheetDOM(impHTML());
+    const np = $('#overlay .sheet-panel');
+    if (np) np.classList.add('imp-sheet');
   }
 }
 function impRailHTML(){
@@ -2507,7 +2510,7 @@ function impRailHTML(){
   return '<div class="imp-rail">' + defs.map(function (d, i) {
     const n = i + 1;
     const cls = IMP.step === n ? 'on' : (IMP.step > n ? 'done' : '');
-    return '<div class="st ' + cls + '"><b>' + (IMP.step > n ? '✓' : d[0]) + '</b>' + d[1] + '</div>';
+    return '<div class="st ' + cls + '">' + (IMP.step > n ? '✓' : d[0]) + ' ' + d[1] + '</div>';
   }).join('') + '</div>';
 }
 function impHTML(){
@@ -2525,7 +2528,7 @@ function impHTML(){
     (IMP.step === 1 ? impStep1HTML() :
      IMP.step === 2 ? impStep2HTML() :
      IMP.step === 3 ? impStep3HTML() : impStep4HTML()) +
-    '<div class="imp-foot">나대신은 비밀번호·카드번호를 받지 않습니다 · 검수용 미리보기(preview-import.html)</div>' +
+    (IMP.step === 1 ? '<div class="imp-foot">나대신은 비밀번호·카드번호를 받지 않습니다 · 검수용 미리보기(preview-import.html)</div>' : '') +
   '</div>';
 }
 function impStep1HTML(){
