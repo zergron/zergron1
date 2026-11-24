@@ -2,7 +2,8 @@
 
 일정에 맞춰 AI 구독을 켜고 끄는, 나만의 구독 비서 — **'모두의 창업' 지원용 시제품(MVP) 데모**입니다.
 
-- 데모: https://zergron.github.io/nadacare-v3/
+- 데모: **https://zergron.github.io/zergron1/**
+- 모바일(390px) 검수용: https://zergron.github.io/zergron1/mobile.html
 - 빌드 없음: 순수 HTML/CSS/JS 정적 파일 (GitHub Pages에서 그대로 동작)
 
 ## 화면
@@ -17,7 +18,12 @@
 | --- | --- |
 | `index.html` | 앱 전체 (PC 좌측 사업설명 패널 + 스마트폰 목업 / 모바일 풀스크린) |
 | `manifest.json`, `sw.js`, `icon-*.png` | PWA(홈 화면 추가)용 |
-| `mobile.html` | 로컬 검수용 390px 뷰 래퍼 (배포물 아님, GitHub Pages에서도 접근 가능) |
+| `mobile.html` | 모바일 390px 뷰 검수용 래퍼 |
+
+## 배포 구조
+- `main` : 소스 기준 브랜치
+- `gh-pages` : **실제 게시되는 브랜치** (GitHub Pages → Deploy from a branch → gh-pages / root)
+- 사이트를 갱신하려면 `main` 변경 후 `gh-pages`에도 반영해야 합니다.
 
 ## 로컬 실행
 ```
