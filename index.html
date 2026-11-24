@@ -136,6 +136,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .ht{background:rgba(255,255,255,.055); border:1px solid rgba(147,197,253,.14); border-radius:11px; padding:8px 7px 7px}
 .ht .k{font-size:9px; color:#93A4BE; font-weight:800; letter-spacing:-.01em; white-space:nowrap}
 .ht .v{font-size:18px; font-weight:800; color:#fff; letter-spacing:-.03em; margin-top:2px; line-height:1.1}
+.ht .u{font-size:10.5px; font-weight:800; letter-spacing:0; margin-left:1.5px}
 .ht .s{font-size:8.5px; color:#7F93B0; font-weight:700; margin-top:2px; line-height:1.35}
 .ht.amber .v{color:#FDBA74}
 .ht.red .v{color:#FCA5A5}
@@ -885,9 +886,9 @@ function viewHome(){
     '<div class="hero-top"><span>월 환산 구독료</span><span class="lock">2026년 11월 20일 기준</span></div>' +
     '<div class="hero-total">' + fmt(totalPrice()) + ' <span>' + S.subs.length + '개 구독</span></div>' +
     '<div class="hero-tiles">' +
-      '<div class="ht"><div class="k">갱신 임박</div><div class="v">' + soonCount() + '<span style="font-size:10px">개</span></div><div class="s">7일 이내</div></div>' +
-      '<div class="ht red"><div class="k">경과 확인</div><div class="v">' + pastCount() + '<span style="font-size:10px">개</span></div><div class="s">결제일 지남</div></div>' +
-      '<div class="ht amber"><div class="k">판단 필요</div><div class="v">' + needCount() + '<span style="font-size:10px">개</span></div><div class="s">다음 작업 연동</div></div>' +
+      '<div class="ht"><div class="k">갱신 임박</div><div class="v">' + soonCount() + '<span class="u">개</span></div><div class="s">7일 이내</div></div>' +
+      '<div class="ht red"><div class="k">경과 확인</div><div class="v">' + pastCount() + '<span class="u">개</span></div><div class="s">결제일 지남</div></div>' +
+      '<div class="ht amber"><div class="k">판단 필요</div><div class="v">' + needCount() + '<span class="u">개</span></div><div class="s">다음 작업 연동</div></div>' +
     '</div>' +
     '<div class="hero-foot"><span>전체 평균 사용률 <b>' + avgUsage() + '%</b></span><span>점검 완료 <b>' + judgedCount() + '/' + S.subs.length + '</b></span></div>' +
     '<span class="gauge"><i style="width:' + avgUsage() + '%"></i></span>' +
@@ -937,8 +938,8 @@ function viewReport(){
 
   return '' +
   '<span class="insight">유료 시연 · 9,900원</span>' +
-  '<div class="rep-title">"AI 도구 구독 점검 리포트 (1회 9,900원 샘플)"</div>' +
-  '<div class="rep-sub">계정 연동·해지 실행 없이, 결제내역만으로는 보이지 않는 크레딧·한도·용도 중복까지 판단해 한 장에 담습니다.</div>' +
+  '<div class="rep-title">"같은 결제내역이라도, 다음 작업이 달라지면<br> 판단이 달라집니다"</div>' +
+  '<div class="rep-sub">계정 연동·결제 실행 없이, 다음 작업 일정과 크레딧·한도·용도 중복을 함께 보고 유지·하향·중단과 재점검일을 한 장에 정리합니다.</div>' +
 
   '<div class="rep-card">' +
     '<div class="rep-tags"><span class="rep-tag paid">유료 과업</span><span class="rep-tag">1회 9,900원</span><span class="rep-tag">작성 18분 이내</span></div>' +
