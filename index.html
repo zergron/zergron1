@@ -454,6 +454,11 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .chk.on{background:#F6FEFB; border-color:#CBEFDF}
 .sd-foot{font-size:9.5px; color:var(--muted2); font-weight:600; text-align:center; margin-top:8px; line-height:1.55}
 .step4{margin-top:14px; padding-top:12px; border-top:1px solid var(--line2)}
+.survey-box{margin-top:11px; padding:11px 10px 10px; border:1px solid #D9E5FF; background:#F7FAFF; border-radius:13px; text-align:center}
+.survey-box b{display:block; font-size:11px; font-weight:800; color:#1E293B; letter-spacing:-.01em}
+.survey-box .d{display:block; font-size:9px; font-weight:700; color:var(--muted2); line-height:1.5; margin-top:3px}
+.btn-survey{width:100%; height:38px; border-radius:11px; background:#fff; border:1px solid #BFD3FF; color:#1D4ED8; font-size:11px; font-weight:800; letter-spacing:-.01em; display:flex; align-items:center; justify-content:center; gap:5px; margin-top:7px; text-decoration:none}
+.btn-survey:hover{background:#EFF5FF; border-color:#9DBDFF}
 
 /* form */
 .field{margin-bottom:9px}
@@ -598,7 +603,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
           <div class="rs-k">1단계</div>
           <div>
             <div class="rs-t">가상 시제품 · 고객 조사 <span>완료</span></div>
-            <div class="rs-d">지금 보여주는 것 · 2차 설문 218건 · 체험 설문 8명 · 가상 데이터 14개로 판단 규칙 시연</div>
+            <div class="rs-d">지금 보여주는 것 · 시장 조사 1차 94건·2차 124건 / 별도 시제품 체험 설문 8건(11/24 13:43 기준) · 가상 데이터 14개로 판단 규칙 시연</div>
           </div>
         </div>
         <div class="road-step">
@@ -1379,6 +1384,9 @@ function viewReport(){
     '<div class="opts" id="simOpts">' + simOptsHTML(sub, act, rd) + '</div>' +
     '<button class="save-btn" data-act="simsave">내 결정 기록에 저장</button>' +
     '<div class="mini-note">저장하면 기록 탭과 홈 상태에 즉시 반영됩니다. 결정을 고르지 않으면 추천대로 저장됩니다.</div>' +
+    (simSaved
+      ? surveyBoxHTML('결정을 저장했습니다 · 체험 의견을 들려주세요', '기록 탭에서 4단계를 이어갈 수 있습니다. 1분 의견을 남겨 주세요.')
+      : '') +
     '<button class="undo" data-act="simexample">예시 다시 체험 (재개일만 초기화 · 저장한 기록 유지)</button>' +
   '</div>' +
   privacyStrip();
@@ -1390,6 +1398,9 @@ function phaseOf(sub, rd){
   if (rd === sub.date) return 'same';
   return 'after';
 }
+
+/* 시뮬레이터에서 결정을 저장한 직후 보이는 안내 박스(새로고침하면 사라짐) */
+let simSaved = false;
 
 function simOptsHTML(sub, act, rd){
   const rec = recommend(sub, rd);
@@ -1527,6 +1538,7 @@ function viewSubs(){
 function viewHistory(){
   if (!S.decisions.length){
     return '<div class="sec-head"><div class="sec-title">기록</div></div>' +
+      surveyBoxHTML('체험 의견 남기기', '결정을 저장해 보시고, 느끼신 점을 1분으로 남겨 주세요.') +
       '<div class="empty">아직 저장한 결정이 없습니다.<br>심층 리포트의 시뮬레이터나 구독 점검에서 결정을 저장해 보세요.</div>' +
       '<div class="footnote" style="text-align:center">결정 → 공식 페이지에서 변경 처리 → 다음 청구 확인, 3단계로 기록됩니다.</div>' +
       '<button class="undo" data-act="reset">데모 데이터 초기화</button>';
@@ -1552,7 +1564,9 @@ function viewHistory(){
     '</div></div>';
   }).join('');
   return '<div class="sec-head"><div><div class="sec-title">기록</div><div class="sec-desc">저장한 결정 ' + S.decisions.length + '건 · 변경 처리 ' + S.decisions.filter(d => d.handled).length + '건 · 청구 확인 ' + S.decisions.filter(d => d.billing).length + '건</div></div>' +
-    '<span class="sec-count">최신순</span></div><div class="tl">' + list + '</div>' +
+    '<span class="sec-count">최신순</span></div>' +
+    surveyBoxHTML('체험 의견 남기기', '이 화면까지 써 보셨다면, 1분 의견을 남겨 주세요.') +
+    '<div class="tl">' + list + '</div>' +
     '<button class="undo" data-act="reset">데모 데이터 초기화</button>';
 }
 
@@ -1637,6 +1651,16 @@ function detailSheet(sub){
     (dec ? '<button class="undo" data-act="undecide">저장한 결정 되돌리기</button>' : '');
 }
 
+/* 체험 의견 설문(Google Forms) — 결정 저장 결과·기록 탭에서 안내 */
+const SURVEY_URL = 'https://forms.gle/PywqwfAhsXDdQDMp9';
+function surveyBoxHTML(title, desc){
+  return '<div class="survey-box">' +
+    '<b>' + title + '</b>' +
+    '<span class="d">' + desc + '</span>' +
+    '<a class="btn-survey" href="' + SURVEY_URL + '" target="_blank" rel="noopener noreferrer">체험 의견 남기기 ↗</a>' +
+  '</div>';
+}
+
 function step4Block(sub, dec, nb){
   const cb = checkBill(sub, dec.recheck);
   const billLabel = dec.action === 'stop' ? '청구 중단 확인 (' + md(cb) + ')' : '다음 청구 확인 (' + md(cb) + ')';
@@ -1648,6 +1672,7 @@ function step4Block(sub, dec, nb){
       '<span class="box"></span><span><b>변경 처리함</b><span class="d">공식 페이지에서 직접 변경·중단을 마쳤습니다</span></span></button>' +
     '<button class="chk ' + (dec.billing ? 'on' : '') + '" data-act="markone" data-kind="billing">' +
       '<span class="box"></span><span><b>' + billLabel + '</b><span class="d">' + (dec.action === 'stop' ? '청구가 생성되지 않은 것을 확인했습니다' : '청구 금액·결제일이 의도대로 찍혔는지 확인했습니다') + '</span></span></button>' +
+    surveyBoxHTML('결정을 저장했습니다 · 체험 의견을 들려주세요', '여기까지 직접 눌러 보셨다면 1분 의견이 큰 도움이 됩니다.') +
   '</div>';
 }
 
@@ -1959,6 +1984,7 @@ document.addEventListener('click', function (e) {
 
   if (act === 'simopt'){
     S.simAct = el.dataset.choice;
+    simSaved = false;
     render();
     const body = $('#appBody'), res = body.querySelector('#simResult');
     if (res){
@@ -1972,6 +1998,7 @@ document.addEventListener('click', function (e) {
     const days = Number(el.dataset.days);
     const sub = S.subs.find(s => s.id === S.simSub);
     S.simDate = days === 0 ? sub.date : isoAdd(sub.date, days);
+    simSaved = false;
     setDateFields('simDate', S.simDate);
     refreshSim();
     return;
@@ -1986,6 +2013,7 @@ document.addEventListener('click', function (e) {
     const choice = S.simAct || recommend(sub, rd).action;
     pushDecision(sub.id, choice, rd, '심층 리포트 시뮬레이터');
     S.simAct = null;
+    simSaved = true;
     render();
     toast(sub.name + ' · ' + ACTIONS[choice].label + ' 결정을 저장했습니다' + (fromReco ? ' (추천대로)' : ''));
     return;
@@ -1995,6 +2023,7 @@ document.addEventListener('click', function (e) {
     S.simSub = 'higgsfield';
     S.simAct = null;
     S.simDate = '';                 /* 재개일만 초기값으로, 저장한 결정 기록은 그대로 */
+    simSaved = false;
     render();
     toast('예시 상태로 되돌렸습니다 · 저장한 결정 ' + S.decisions.length + '건은 그대로입니다');
     return;
@@ -2050,6 +2079,7 @@ document.addEventListener('click', function (e) {
     S.decisions = [];
     S.homeFilter = 'all'; S.subCat = '전체'; S.q = '';
     S.simSub = 'higgsfield'; S.simAct = null; S.simDate = '';
+    simSaved = false;
     S.tab = 'home';
     /* 되돌리기 뒤에도 뒤로가기 기준 칸을 홈으로 다시 맞춥니다
        (저장된 탭이 홈이 아니었던 경우 남아 있던 히스토리 칸 때문에
@@ -2091,6 +2121,7 @@ document.addEventListener('change', function (e) {
   if (el){
     S.simSub = el.value;
     S.simDate = '';
+    simSaved = false;
     render();
     return;
   }
