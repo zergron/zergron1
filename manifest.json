@@ -1,0 +1,17 @@
+{
+  "name": "나대신 구독케어",
+  "short_name": "나대신",
+  "description": "일정에 맞춰 AI 구독을 켜고 끄는, 나만의 구독 비서 — 모두의 창업 시제품(MVP) 데모",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F8FAFC",
+  "theme_color": "#0F172A",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
