@@ -803,20 +803,6 @@ h1.i-head em{font-style:normal; color:var(--blue)}
   .ab-install{padding:6px 5px; font-size:9.4px}
 }
 
-/* 홈 이미지 등록 진입 */
-.imgentry{width:100%; display:flex; align-items:center; gap:9px; margin-top:9px; text-align:left;
-  background:#fff; border:1px solid #DCE6F6; border-radius:14px; padding:9px 10px;
-  box-shadow:0 10px 26px -28px rgba(37,99,235,.85); transition:border-color .12s, background .12s}
-.imgentry .ic{flex:0 0 auto; width:31px; height:31px; border-radius:9px; display:grid; place-items:center;
-  background:linear-gradient(150deg,#EFF4FF,#E1EBFF); border:1px solid #D7E4FF}
-.imgentry .ic svg{width:16px; height:16px; stroke:#2563EB; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
-.imgentry .tx{min-width:0; display:grid; gap:2px}
-.imgentry .t{font-size:11.6px; font-weight:800; letter-spacing:-.025em; color:#0F172A}
-.imgentry .s{font-size:8.3px; color:#68788F; font-weight:700; line-height:1.35}
-.imgentry .go{margin-left:auto; flex:0 0 auto; font-size:16px; font-weight:800; color:#2563EB}
-.imgentry:hover{border-color:#BFD3FF; background:#FBFDFF}
-.imgentry:active{background:#F4F8FF}
-
 /* 서비스 특징 팝업 */
 .fm-head{display:flex; align-items:flex-start; gap:9px}
 .fm-title{font-size:15.5px; font-weight:800; letter-spacing:-.03em; color:#0F172A}
@@ -1734,13 +1720,6 @@ function featGo(go){
   }
   navGoTab(go === 'report' ? 'report' : (go === 'board' ? 'board' : 'home'));
 }
-function imgEntryHTML(){
-  return '<button type="button" class="imgentry" data-act="imgopen" aria-label="이미지로 구독 등록 열기">' +
-    '<span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="3"/><circle cx="8.8" cy="9.9" r="1.5"/><path d="M4.6 17.2l4.5-4.5a1.7 1.7 0 012.4 0l4.3 4.3"/><path d="M15 13.3l1.9-1.9a1.6 1.6 0 012.3 0l1.2 1.2"/></svg></span>' +
-    '<span class="tx"><span class="t">이미지로 구독 등록</span><span class="s">결제문자·영수증·청구서·계약서 샘플 4종에서 불러오기</span></span>' +
-    '<span class="go">›</span>' +
-  '</button>';
-}
 function doneBarHTML(){
   const s = S.justAdded ? subById(S.justAdded) : null;
   if (!s) return '';
@@ -1777,8 +1756,6 @@ function viewHome(){
     '<div class="hero-foot"><span>' + avgUsageLabel() + '</span><span>내 결정 <b>' + judgedCount() + '/' + allSubs().length + '</b></span></div>' +
     '<span class="gauge"><i style="width:' + avgUsage() + '%"></i></span>' +
   '</div>' +
-  imgEntryHTML() +
-
   '<button class="nextact" data-act="detail" data-id="' + na.id + '">' +
     '<span class="na-ic">!</span>' +
     '<span class="na-txt">' +
