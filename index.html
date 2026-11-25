@@ -123,30 +123,30 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .sb-right svg{width:15px; height:11px}
 
 /* app bar */
-.appbar{flex:0 0 auto; background:var(--navy); color:#fff; padding:6px 14px 13px; display:flex; align-items:center; gap:7px}
+.appbar{flex:0 0 auto; background:var(--navy); color:#fff; padding:6px 11px 13px; display:flex; align-items:center; gap:5px; min-width:0}
 .ab-logo{width:29px; height:29px; border-radius:9px; background:var(--blue); display:grid; place-items:center; flex:0 0 auto}
 .ab-logo svg{width:20px;height:20px}
 .ab-name{font-size:15px; font-weight:800; letter-spacing:-.02em}
-.ab-feat{flex:0 0 auto; display:inline-flex; align-items:center; gap:2px; height:26px; padding:0 5px 0 7px; border-radius:8px;
+.ab-feat{flex:0 0 auto; display:inline-flex; align-items:center; gap:2px; height:26px; padding:0 5px 0 6px; border-radius:8px;
   background:rgba(37,99,235,.30); border:1px solid rgba(147,197,253,.55); color:#EAF3FF;
-  font-size:9px; font-weight:800; letter-spacing:-.015em; white-space:nowrap; transition:background .12s, border-color .12s}
-.ab-feat svg{width:10px; height:10px; stroke:currentColor; fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; opacity:.95}
+  font-size:9px; font-weight:800; letter-spacing:-.03em; white-space:nowrap; transition:background .12s, border-color .12s}
+.ab-feat svg{width:9.5px; height:9.5px; stroke:currentColor; fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; opacity:.95}
 .ab-feat:hover{background:rgba(37,99,235,.48); border-color:rgba(191,219,254,.85)}
 .ab-feat:active{background:rgba(37,99,235,.6)}
-.ab-install{margin-left:auto; display:flex; align-items:center; gap:4px; background:#fff; color:var(--navy); border-radius:8px; padding:6px 8px; font-size:10.5px; font-weight:800; white-space:nowrap}
-.ab-install svg{width:12px; height:12px; stroke:var(--navy); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+.ab-install{margin-left:auto; display:flex; align-items:center; gap:3px; background:#fff; color:var(--navy); border-radius:8px; padding:6px 7px; font-size:10.2px; font-weight:800; letter-spacing:-.02em; white-space:nowrap; flex:0 0 auto}
+.ab-install svg{width:11.5px; height:11.5px; stroke:var(--navy); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
 
 /* 화면 배율 (70/100/120/150%) */
 .appbar{position:relative; z-index:24}
 .appbar .zbtn{margin-left:auto}
-.ab-install{margin-left:6px}
-.zbtn{flex:0 0 auto; display:inline-flex; align-items:center; gap:3px; height:26px; padding:0 7px 0 6px; border-radius:8px;
-  background:rgba(255,255,255,.10); border:1px solid rgba(148,163,184,.38); color:#DCE5F3; font-size:10.5px; font-weight:800; letter-spacing:-.01em}
-.zbtn svg{width:12px; height:12px; stroke:currentColor; fill:none; stroke-width:2.3; stroke-linecap:round}
+.ab-install{margin-left:4px}
+.zbtn{flex:0 0 auto; display:inline-flex; align-items:center; gap:2px; height:26px; padding:0 6px 0 5px; border-radius:8px;
+  background:rgba(255,255,255,.10); border:1px solid rgba(148,163,184,.38); color:#DCE5F3; font-size:10.2px; font-weight:800; letter-spacing:-.02em}
+.zbtn svg{width:11.5px; height:11.5px; stroke:currentColor; fill:none; stroke-width:2.3; stroke-linecap:round}
 .zbtn:hover{background:rgba(255,255,255,.17)}
 .zbtn[aria-expanded="true"]{background:rgba(255,255,255,.2); border-color:rgba(191,219,254,.65)}
 .zbtn.mod{background:rgba(37,99,235,.45); border-color:rgba(147,197,253,.75); color:#fff}
-.zpop{position:absolute; top:calc(100% - 2px); right:11px; display:none; gap:2px; padding:4px; background:#fff;
+.zpop{position:absolute; top:calc(100% - 2px); right:8px; display:none; gap:2px; padding:4px; background:#fff;
   border:1px solid var(--line); border-radius:11px; box-shadow:0 16px 30px -16px rgba(15,23,42,.5); z-index:60}
 .zpop.on{display:flex}
 .zpop button{font-size:10.5px; font-weight:800; color:#475569; padding:6px 7px; border-radius:7px; letter-spacing:-.01em; white-space:nowrap}
@@ -790,9 +790,18 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .origin-tag.img{color:#7C3AED; background:#F5F3FF}
 
 /* ===================== v21 추가 ===================== */
-.ab-nm{display:flex; flex-direction:column; min-width:0; line-height:1.14}
-.ab-nm .ab-name{font-size:15px; font-weight:800; letter-spacing:-.025em; white-space:nowrap}
-.ab-sub{font-size:8.3px; font-weight:700; color:#9CB2D0; letter-spacing:-.015em; white-space:nowrap; margin-top:2px}
+/* v23: 360px 폭에서도 부제가 온전히 보이도록 브랜드 영역은 남는 폭만 차지하고,
+   겹침이 생기면 말줄임으로 물러난다(버튼 위로 글자가 올라가지 않게). */
+.ab-nm{display:flex; flex-direction:column; flex:1 1 auto; min-width:0; overflow:hidden; line-height:1.14}
+.ab-nm .ab-name{display:block; font-size:14.5px; font-weight:800; letter-spacing:-.03em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.ab-sub{display:block; font-size:8px; font-weight:700; color:#A3B6D2; letter-spacing:-.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px}
+/* 360px 미만(초소형)에서만 부제를 한 단계 더 줄여 겹침을 막는다 */
+@media (max-width:339px){
+  .ab-nm .ab-name{font-size:13.5px}
+  .ab-sub{font-size:7.4px}
+  .ab-feat{font-size:8.4px; padding:0 3px 0 4px}
+  .ab-install{padding:6px 5px; font-size:9.4px}
+}
 
 /* 홈 이미지 등록 진입 */
 .imgentry{width:100%; display:flex; align-items:center; gap:9px; margin-top:9px; text-align:left;
@@ -1054,7 +1063,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
             <span class="ab-sub">구독 하나에 특화된 전문 서비스</span>
           </span>
           <button type="button" class="ab-feat" data-act="featopen" aria-haspopup="dialog" aria-controls="overlay" title="서비스 특징 4가지 보기">
-            서비스 특징
+            서비스특징
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg>
           </button>
           <button class="zbtn" id="zoomBtn" data-act="zoompick" aria-haspopup="true" aria-expanded="false" aria-controls="zoomPop" title="화면 크기 조절" aria-label="화면 크기 조절">
@@ -1085,7 +1094,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 
 <script>
 /* ============================================================
-   나대신 구독케어 · 출시형 공개 체험판 (v22, single file)
+   나대신 구독케어 · 출시형 공개 체험판 (v23, single file)
    - 데모 기준일 2026-11-20 · 가상 구독 14개 · 월 환산 210,000원
    - 샘플 / 불러온 샘플 / 직접 입력을 분리 저장 (샘플 초기화가 내 입력을 지우지 않음)
    - 판단: 유지 · 하향 · 중단 · 판단 보류 (정보가 부족하면 보류)
