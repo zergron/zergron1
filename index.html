@@ -2491,9 +2491,9 @@ function imgHTML(){
     '<div class="sd-head"><div><div class="sd-name">이미지로 구독 등록</div>' +
       '<div class="sd-meta">이미지를 첨부하면 항목을 읽어 채우고, 확인·수정해 등록합니다 · 가상 체험</div></div>' +
       '<button class="x" data-act="close">✕</button></div>' +
-    (ph === 'check'
-      ? '<div class="imp-lock compact">가상 샘플 이미지로만 체험 · 개인정보는 <b>홍*동 · 010-****-****</b>처럼 가립니다 · 실제 인식·저장 없음</div>'
-      : '<div class="imp-lock">실제 이미지 인식·저장은 하지 않습니다. 직접 그린 <b>가상 샘플 이미지 4종</b>으로만 체험합니다.<span>개인정보는 <b>홍*동 · 010-****-****</b>처럼 가려서 표시합니다.</span></div>') +
+    (ph === 'pick'
+      ? '<div class="imp-lock">실제 이미지 인식·저장은 하지 않습니다. 직접 그린 <b>가상 샘플 이미지 4종</b>으로만 체험합니다.<span>개인정보는 <b>홍*동 · 010-****-****</b>처럼 가려서 표시합니다.</span></div>'
+      : '<div class="imp-lock compact">가상 샘플 이미지로만 체험 · 개인정보는 <b>홍*동 · 010-****-****</b>처럼 가립니다 · 실제 인식·저장 없음</div>') +
     imgRailHTML() +
     (ph === 'pick' ? imgPickHTML() : ph === 'read' ? imgReadHTML() : imgCheckHTML()) +
     imgLegalHTML() + legalHTML();
