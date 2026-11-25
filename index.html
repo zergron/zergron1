@@ -546,6 +546,14 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .nextact .na-t{font-size:12.5px; font-weight:800; letter-spacing:-.02em; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .nextact .na-s{font-size:9.5px; color:var(--muted); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .nextact .na-go{margin-left:auto; flex:0 0 auto; font-size:16px; color:#94A3B8; font-weight:800}
+/* 홈 '먼저 쓸 혜택' 카드 */
+.benefitcard{width:100%; display:flex; align-items:center; gap:8px; text-align:left; margin-top:7px; background:linear-gradient(120deg,#13233F,#0F172A); border:1px solid rgba(147,197,253,.18); border-radius:13px; padding:9px 11px; color:#fff; box-shadow:0 10px 22px -20px rgba(15,23,42,.75)}
+.benefitcard:hover{border-color:rgba(147,197,253,.38)}
+.benefitcard .bc-tag{flex:0 0 auto; font-size:8px; font-weight:800; letter-spacing:.02em; color:#BFD3FF; background:rgba(96,165,250,.16); border:1px solid rgba(147,197,253,.26); border-radius:6px; padding:3px 5px}
+.benefitcard .bc-main{min-width:0; display:grid; gap:1px}
+.benefitcard .bc-t{font-size:11.5px; font-weight:800; letter-spacing:-.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.benefitcard .bc-s{font-size:8.5px; color:#9FB3CE; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.benefitcard .bc-go{margin-left:auto; flex:0 0 auto; font-size:15px; color:#93C5FD; font-weight:800}
 
 /* 금액·상태 요약 */
 .amt{display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-top:10px}
@@ -1052,7 +1060,8 @@ const S = {
   simAct:null,
   simDate:'',
   detailId:null,
-  detailChoice:null
+  detailChoice:null,
+  detailRd:null
 };
 function clone(a){ return JSON.parse(JSON.stringify(a)); }
 function allSubs(){ return SAMPLES.concat(S.imports, S.userSubs); }
@@ -1120,6 +1129,7 @@ function nextChargeDate(sub){
 }
 function alreadyPaidOn(sub){
   if (sub.paidOn) return sub.paidOn;
+  if (sub.paidUnknown) return null;
   return (dday(sub) != null && dday(sub) < 0) ? sub.date : null;
 }
 function defaultRecheck(sub){ return sub.date ? isoAdd(sub.date, 14) : null; }
@@ -1157,7 +1167,7 @@ function dateTextChanged(id, raw, commit){
   if (v){
     if (el) el.dataset.last = v;
     const p = $('#' + id + 'Pick'); if (p) p.value = v;
-    if (isSim){ S.simDate = v; refreshSim(); } else { refreshDetail(v); }
+    if (isSim){ S.simDate = v; refreshSim(); } else { S.detailRd = v; refreshDetail(v); }
   } else if (commit && el){
     el.value = el.dataset.last || (isSim ? (S.simDate || defaultRecheck(sub)) : (defaultRecheck(sub) || ''));
   }
@@ -1431,14 +1441,19 @@ function recPillText(sub, rec){
   if (rec.key === 'stop' && dday(sub) != null && dday(sub) < 0) return '중단 · 다음 청구부터';
   return '추천 · ' + rec.label;
 }
+function isContractSub(sub){ return sub.manageKind === 'contract' || !!sub.contract; }
 function openActionHTML(sub){
-  if (sub.open && sub.open !== '#') return '<a href="' + sub.open + '" target="_blank" rel="noopener">서비스 열기 ↗</a>';
-  if (sub.manageKind === 'contract') return '<button data-act="detail" data-id="' + sub.id + '">계약 관리</button>';
+  if (isContractSub(sub)){
+    const url = sub.manage || sub.open;
+    if (url && url !== '#') return '<a href="' + url + '" target="_blank" rel="noopener">공식 계약 관리 ↗</a>';
+    return '<button data-act="detail" data-id="' + sub.id + '">공식 계약 관리</button>';
+  }
+  if (sub.open && sub.open !== '#') return '<a href="' + sub.open + '" target="_blank" rel="noopener">공식 서비스 열기 ↗</a>';
   return '<button data-act="detail" data-id="' + sub.id + '">서비스 주소 입력</button>';
 }
 function subMeta(sub){
   const parts = [];
-  parts.push(sub.date ? md(sub.date) + ' 결제' : '결제일 미확인');
+  parts.push(sub.date ? (sub.billDay ? md(sub.date) + ' 청구 예정' : md(sub.date) + ' 결제') : (sub.billDay ? '월 청구 ' + sub.billDay + '일' : '결제일 미확인'));
   parts.push(sub.plan || '직접 입력');
   parts.push(channelOf(sub).label);
   if (sub.origin === 'imgsample') parts.push('샘플 시연');
@@ -1517,6 +1532,29 @@ function nextActionSub(){
   const need = ups.filter(s => recFor(s).key !== 'keep');
   return need[0] || ups[0] || allSubs().find(s => recFor(s).key === 'hold') || allSubs()[0];
 }
+function benefitSpotlight(){
+  const cand = allSubs().filter(function(s){ return s.benefit && s.benefit.creditLeft != null && s.benefit.creditLeft > 0; });
+  cand.sort(function(a,b){
+    const ax = a.benefit.creditExpiry || '9999-12-31', bx = b.benefit.creditExpiry || '9999-12-31';
+    if (ax !== bx) return ax < bx ? -1 : 1;
+    return (b.benefit.creditLeft || 0) - (a.benefit.creditLeft || 0);
+  });
+  return cand[0] || null;
+}
+function benefitCardHTML(){
+  const bs = benefitSpotlight();
+  if (!bs) return '';
+  const b = bs.benefit || {};
+  const proj = activeProjects(bs.id)[0] || heldProjects(bs.id)[0];
+  return '<button class="benefitcard" data-act="detail" data-id="' + bs.id + '" aria-label="먼저 쓸 혜택 · ' + esc(bs.name) + ' 잔여 크레딧 ' + fmt(b.creditLeft) + '">' +
+    '<span class="bc-tag">먼저 쓸 혜택</span>' +
+    '<span class="bc-main">' +
+      '<span class="bc-t">' + esc(bs.name) + ' 잔여 크레딧 ' + fmt(b.creditLeft) + '</span>' +
+      '<span class="bc-s">만료 ' + (b.creditExpiry ? mdw(b.creditExpiry) : '확인 필요') + (proj ? ' · 「' + esc(proj.name) + '」에 먼저 쓰기' : ' · 다음 작업에 먼저 쓰기') + '</span>' +
+    '</span>' +
+    '<span class="bc-go">›</span>' +
+  '</button>';
+}
 function viewHome(){
   const list = filteredHome();
   const chips = [
@@ -1558,6 +1596,7 @@ function viewHome(){
     '</span>' +
     '<span class="na-go">›</span>' +
   '</button>' +
+  benefitCardHTML() +
 
   '<div id="homeResult">' +
   '<div class="chips">' + chips.map(f =>
@@ -1675,7 +1714,7 @@ function simResultHTML(sub, rd){
   '</div>' +
   '<div class="result">' +
     '<div class="res-row"><span>내 결정</span><b class="big' + (choice ? '' : ' warn') + '">' + (choice ? ACTIONS[choice].label : '아직 선택 안 함') + '</b></div>' +
-    '<div class="res-row"><span>이미 낸 금액</span><b>' + (paid ? fmt(sub.price) + ' · ' + md(paid) + ' (확인 전)' : '없음 · 확인 전') + '</b></div>' +
+    '<div class="res-row"><span>이미 낸 금액</span><b>' + (paid ? fmt(sub.price) + ' · ' + md(paid) + ' (확인 전)' : (sub.paidUnknown ? '미확인 · 확인 전' : '없음 · 확인 전')) + '</b></div>' +
     '<div class="res-row"><span>다음 청구 예정</span><b>' + (nd ? md(nd) + ' · ' + fmt(sub.price) : '결제일 미확인') + '</b></div>' +
     '<div class="res-row"><span>다음에 피할 수 있는 청구</span><b class="' + (choice === 'stop' ? 'warn' : '') + '">' + avoid + '</b></div>' +
     '<div class="reason">' + (choice ? '내가 고른 <b>' + ACTIONS[choice].label + '</b> 기준입니다. ' : '결정을 고르기 전에는 어떤 금액도 확정하지 않습니다. ') +
@@ -1751,7 +1790,7 @@ function subRows(){
         '<button class="srow-main" data-act="detail" data-id="' + s.id + '">' +
           '<span class="brand" style="background:' + s.color + '">' + esc(s.mark) + '</span>' +
           '<span class="srow-nm"><span class="srow-name"><span class="t">' + esc(s.name) + '</span>' + channelBadge(s) + originTag(s) + '</span>' +
-            '<span class="srow-meta">' + (s.date ? md(s.date) + ' 결제 · ' + ddLabel(s) : '결제일 미확인') + ' · 추천 ' + st.rec.label + '</span></span>' +
+            '<span class="srow-meta">' + (s.date ? md(s.date) + (s.billDay ? ' 청구 예정' : ' 결제') + ' · ' + ddLabel(s) : (s.billDay ? '월 청구 ' + s.billDay + '일 · 다음 결제일 미확인' : '결제일 미확인')) + ' · 추천 ' + st.rec.label + '</span></span>' +
           '<span class="srow-price">' + fmt(monthlyOf(s)) + '<small>' + (s.cycle === 'yearly' ? '월 환산' : '월') + '</small></span>' +
         '</button>' +
       '</div>' +
@@ -1848,7 +1887,7 @@ function amountsHTML(sub, rd){
   return '<div class="amt">' +
     '<div class="amt-i hl"><span class="k">월 환산액</span><span class="v">' + monthlyLabel(sub) + '</span><span class="s">' + (sub.cycle === 'yearly' ? '연 결제를 12로 나눈 값' : '월 결제 기준') + '</span></div>' +
     '<div class="amt-i"><span class="k">실제 다음 청구액</span><span class="v">' + (sub.price == null ? '미확인' : fmt(nextChargeAmount(sub))) + '</span><span class="s">' + (nd ? md(nd) + ' 예정' : '결제일 미확인') + '</span></div>' +
-    '<div class="amt-i"><span class="k">이미 낸 금액</span><span class="v">' + (paid ? fmt(sub.price) : '없음') + '</span><span class="s">' + (paid ? md(paid) + ' 결제 · 확인 전' : '이번 주기 결제 전') + '</span></div>' +
+    '<div class="amt-i"><span class="k">이미 낸 금액</span><span class="v">' + (paid ? fmt(sub.price) : (sub.paidUnknown ? '미확인' : '없음')) + '</span><span class="s">' + (paid ? md(paid) + ' 결제 · 확인 전' : (sub.paidUnknown ? '납부일 미확인 · 직접 확인 필요' : '이번 주기 결제 전')) + '</span></div>' +
     '<div class="amt-i ' + avoid.cls + '"><span class="k">다음에 피할 수 있는 청구</span><span class="v">' + avoid.v + '</span><span class="s">' + avoid.s + '</span></div>' +
     '<div class="amt-i ' + confirmed.cls + '" style="grid-column:1/-1"><span class="k">실제로 확인한 청구</span><span class="v">' + confirmed.v + '</span><span class="s">' + confirmed.s + '</span></div>' +
   '</div>';
@@ -1926,13 +1965,13 @@ function detailSheet(sub){
   const dec = decisionFor(sub.id);
   const links = linksOf(sub.id);
   const linkTxt = links.length ? links.map(function(p){ return p.name + ' (' + p.status + ')'; }).join(', ') : '없음';
-  const rdNow = (dec && dec.recheck) ? dec.recheck : (defaultRecheck(sub) || '');
+  const rdNow = (S.detailId === sub.id && S.detailRd) ? S.detailRd : ((dec && dec.recheck) ? dec.recheck : (defaultRecheck(sub) || ''));
   const rec = recommend(sub, rdNow);
   const choice = S.detailChoice;
   return '' +
     '<div class="sd-head"><span class="brand lg" style="background:' + sub.color + '">' + esc(sub.mark) + '</span>' +
       '<div><div class="sd-name">' + esc(sub.name) + ' <span style="font-size:11px;font-weight:700;color:#94A3B8">' + esc(sub.plan || '') + '</span></div>' +
-        '<div class="sd-meta">' + esc(sub.cat || '카테고리 미확인') + ' · ' + channelBadge(sub) + (sub.cycle === 'yearly' ? ' <span class="pill ch">연 결제</span>' : '') + (sub.origin === 'imgsample' ? ' <span class="pill blue">샘플 시연</span>' : '') + ' · ' + (sub.date ? md(sub.date) + ' 결제 · ' + ddLabel(sub) : '결제일 미확인') + '</div></div>' +
+        '<div class="sd-meta">' + esc(sub.cat || '카테고리 미확인') + ' · ' + channelBadge(sub) + (sub.cycle === 'yearly' ? ' <span class="pill ch">연 결제</span>' : '') + (sub.origin === 'imgsample' ? ' <span class="pill blue">샘플 시연</span>' : '') + ' · ' + (sub.date ? md(sub.date) + (sub.billDay ? ' 청구 예정 · ' : ' 결제 · ') + ddLabel(sub) : (sub.billDay ? '월 청구 ' + sub.billDay + '일 · 다음 결제일 미확인' : '결제일 미확인')) + '</div></div>' +
       '<button class="x" data-act="close">✕</button></div>' +
     (sub.dayCaveat ? '<div class="warnbox"><b>말일 기준 변동 가능 · 확인 필요</b> · 29~31일 결제는 다음 달 말일에 맞춰 결제일이 바뀔 수 있어 임의로 확정하지 않습니다.</div>' : '') +
     amountsHTML(sub, rdNow) +
@@ -1941,7 +1980,16 @@ function detailSheet(sub){
       '<div><span>작업</span><em>' + (links.length ? '「' + links[0].name + '」 ' + links[0].status + ' · 마감 ' + md(links[0].due) : '연결된 작업 없음') + '</em></div>' +
       '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
       '<div><span>갱신</span><em>' + (sub.date ? md(sub.date) + ' · ' + (dday(sub) >= 0 ? '갱신까지 ' + dday(sub) + '일' : '이미 지난 결제 · 다음 청구 ' + md(nextChargeDate(sub))) : '결제일 미확인') + '</em></div>' +
-      (sub.billDay ? '<div><span>계약</span><em>월 청구일 ' + sub.billDay + '일 · 약정 종료 ' + md(sub.contract && sub.contract.end) + ' (별도 항목)</em></div>' : '') +
+      (sub.billDay ? '<div><span>계약</span><em>월 청구 예정일 매월 ' + sub.billDay + '일 · 약정 종료 ' + md(sub.contract && sub.contract.end) + '</em></div>' : '') +
+      (sub.paidUnknown ? '<div><span>납부</span><em>미확인 · 청구서에 납부일 없음</em></div>' : '') +
+    '</div>' +
+    '<div class="sd-label" style="margin-top:9px">프로젝트에 추가 <span>작업판에 연결하면 추천에 반영됩니다</span></div>' +
+    '<div class="chips" style="margin-top:0">' +
+      '<button class="chip ' + (links.length ? '' : 'on') + '" data-act="linkproj" data-id="' + sub.id + '" data-proj="none">추가 안 함</button>' +
+      S.projects.filter(function(p){ return p.status === '진행 중'; }).map(function(p){
+        const on = links.some(function(x){ return x.id === p.id; });
+        return '<button class="chip ' + (on ? 'on' : '') + '" data-act="linkproj" data-id="' + sub.id + '" data-proj="' + p.id + '">' + esc(p.name) + '</button>';
+      }).join('') +
     '</div>' +
     '<div style="margin-top:9px" id="sdReco">' + recoHTML(sub, rdNow) + '</div>' +
     benefitHTML(sub) +
@@ -2203,11 +2251,11 @@ const IMG_SAMPLES = [
     fields:{ name:'샘플 AI 영상툴 Pro', price:12900, paidOn:'2026-11-12', next:'', cat:'AI 도구', channel:'web' },
     note:'문서에 다음 결제일이 없어 미확인으로 둡니다. 필요하면 직접 입력할 수 있습니다.' },
   { key:'b', kind:'rental', title:'인터넷·정수기 렌탈 청구서', sub:'가상 청구서·계약서 이미지',
-    fields:{ name:'샘플 렌탈케어', price:23900, paidOn:'2026-11-01', billDay:'25', contractEnd:'2027-06-30', cat:'생활·통신', channel:'web' },
-    note:'월 청구일과 약정·의무사용기간 종료일을 따로 확인합니다.' }
+    fields:{ name:'샘플 렌탈케어', price:23900, billDay:'25', contractEnd:'2027-06-30', cat:'생활·통신', channel:'web' },
+    note:'청구서에는 월 청구 예정일과 약정 종료일만 있어 실제 납부일은 미확인으로 둡니다.' }
 ];
 let IMG = null;
-function imgNew(){ return { step:1, key:null, values:{}, err:'' }; }
+function imgNew(){ return { step:1, key:null, values:{}, err:'', proj:'' }; }
 function imgSample(key){ return IMG_SAMPLES.filter(function(s){ return s.key === key; })[0] || null; }
 function imgSub(key){ return S.imports.filter(function(s){ return s.imgKey === 'img:' + key; })[0] || null; }
 function dateForDay(day){
@@ -2251,6 +2299,7 @@ function imgHTML(){
     (step === 1 ? imgStep1HTML() : step === 2 ? imgStep2HTML() : imgStep3HTML());
 }
 function imgStep1HTML(){
+  const imgCount = S.imports.filter(function(s){ return s.origin === 'imgsample'; }).length;
   return '<div class="imp-desc">어떤 이미지로 등록할지 골라 보세요. 두 샘플 모두 <b>가상으로 그린 이미지</b>이며, 실제 결제·계약과 무관합니다. 등록은 <b>종합현황 · 이용 포털 · 계약·비용 최적화 · 혜택 활용</b>을 쓰기 위한 첫 단계입니다.</div>' +
     IMG_SAMPLES.map(function(sm){
       const reg = imgSub(sm.key);
@@ -2266,7 +2315,18 @@ function imgStep1HTML(){
         '</div>' +
       '</div>';
     }).join('') +
+    (imgCount ? '<button class="undo" data-act="resetimg">이미지 샘플만 초기화 (' + imgCount + '건)</button>' : '') +
     '<div class="futurebox"><b>출시 계획</b> · 제품 출시 때는 <b>실제 이미지 인식 + 사용자 확인 후 등록</b>으로 제공하고, 이후에는 <b>Google Play·카드사 등 공식 조회·제휴가 가능한 채널부터 동의 기반 자동 불러오기</b>로 확장합니다. 지금은 로그인·실계정 연동이 없습니다.</div>';
+}
+function projAddHTML(subId, selProj){
+  const linked = subId ? linksOf(subId).map(function(p){ return p.id; }) : (selProj ? [selProj] : []);
+  let h = '<div class="sd-label" style="margin-top:9px">프로젝트에 추가 <span>작업판과 바로 연결합니다 (선택)</span></div>' +
+    '<div class="chips" style="margin-top:0">' +
+      '<button class="chip ' + (linked.length ? '' : 'on') + '" data-act="imgproj" data-proj="none"' + (subId ? ' data-sub="' + subId + '"' : '') + '>추가 안 함</button>';
+  S.projects.filter(function(p){ return p.status === '진행 중'; }).forEach(function(p){
+    h += '<button class="chip ' + (linked.indexOf(p.id) > -1 ? 'on' : '') + '" data-act="imgproj" data-proj="' + p.id + '"' + (subId ? ' data-sub="' + subId + '"' : '') + '>' + esc(p.name) + '</button>';
+  });
+  return h + '</div>';
 }
 function imgStep2HTML(){
   const sm = imgSample(IMG.key);
@@ -2286,13 +2346,18 @@ function imgStep2HTML(){
           '<div class="imgpaid-i hl"><span class="k">다음 결제일</span><input id="imgNext" type="text" inputmode="numeric" autocomplete="off" value="' + esc(v.next) + '" placeholder="문서에 없으면 비워 두세요"><span class="s">비우면 <b>미확인</b>으로 저장합니다</span></div>' +
         '</div>'
       : '<div class="imp-fields" style="margin-top:0">' +
-          '<label class="imp-f"><span>월 청구일 (1~31)</span><input id="imgBillDay" type="text" inputmode="numeric" autocomplete="off" value="' + esc(v.billDay) + '" placeholder="예: 25"></label>' +
+          '<label class="imp-f"><span>월 청구 예정일 (1~31)</span><input id="imgBillDay" type="text" inputmode="numeric" autocomplete="off" value="' + esc(v.billDay) + '" placeholder="예: 25"></label>' +
           '<label class="imp-f"><span>약정·의무사용기간 종료일</span><input id="imgContract" type="text" inputmode="numeric" autocomplete="off" value="' + esc(v.contractEnd) + '" placeholder="YYYY-MM-DD"></label>' +
-          '<div class="imp-f wide"><span style="font-size:8px;color:#94A3B8;font-weight:700">이미 결제된 날짜 · ' + md(v.paidOn) + ' (청구서 발행 기준)</span></div>' +
-        '</div>') +
+        '</div>' +
+        '<div class="imgpaid">' +
+          '<div class="imgpaid-i"><span class="k">월 청구 예정일</span><span class="v">매월 ' + (esc(String(v.billDay || '').replace(/[^0-9]/g, '')) || '미확인') + '일</span><span class="s">청구서에 적힌 청구일</span></div>' +
+          '<div class="imgpaid-i"><span class="k">약정 종료일</span><span class="v">' + md(v.contractEnd) + '</span><span class="s">의무사용기간 만료</span></div>' +
+        '</div>' +
+        '<div class="imgpaid-i" style="margin-top:5px"><span class="k">실제 납부(이미 결제된 날짜)</span><span class="v" style="color:#64748B">미확인</span><span class="s">청구서에 납부일이 없어 임의로 채우지 않습니다</span></div>') +
     '<div class="imp-note">' + sm.note + ' 29~31일 청구일은 말일 변동 가능으로 표시합니다.</div>' +
     (reg ? '<div class="imp-err" style="background:#FFF7ED;color:#B45309;border-color:#FDE9C4">이미 등록된 샘플입니다. 다시 등록해도 합계는 늘지 않습니다.</div>' : '') +
     (IMG.err ? '<div class="imp-err">' + esc(IMG.err) + '</div>' : '') +
+    projAddHTML(null, IMG.proj) +
     '<button class="imp-next" data-act="imgregister">' + (reg ? '중복 없이 결과 보기' : '이 항목으로 등록하기') + '</button>' +
     '<button class="imp-back" data-act="imgback">‹ 다른 샘플 선택</button>';
 }
@@ -2312,6 +2377,7 @@ function imgCollect(){
 function imgStep3HTML(){
   const added = IMG.added || [];
   const sm = imgSample(IMG.key);
+  const sid = added[0] || (imgSub(sm.key) ? imgSub(sm.key).id : null);
   let h = '<div class="imp-sec"><span class="n">③</span>등록 결과</div>';
   if (!added.length) h += '<div class="imp-err" style="background:#FFF7ED;color:#B45309;border-color:#FDE9C4">이미 등록된 샘플이라 새로 추가하지 않았습니다 — 중복 집계되지 않습니다.</div>';
   added.forEach(function(id){
@@ -2319,12 +2385,14 @@ function imgStep3HTML(){
     if (!s) return;
     const st = statusOf(s);
     h += '<div class="imp-res-row" style="background:#fff"><div class="imp-res-t">' + esc(s.name) + ' · ' + fmt(s.price) +
-      '<div class="d">' + (s.date ? md(s.date) + ' 갱신' : '다음 결제일 미확인') + ' · 추천 ' + st.rec.label + ' · 샘플 시연</div></div><span class="pill ok">등록됨</span></div>';
+      '<div class="d">' + (s.date ? md(s.date) + (s.billDay ? ' 청구 예정' : ' 갱신') : '다음 결제일 미확인') + ' · 추천 ' + st.rec.label + ' · 샘플 시연</div></div><span class="pill ok">등록됨</span></div>';
   });
   h += '<div class="imp-sum"><span>내 구독 <b>' + allSubs().length + '개</b></span><span>월 <b>' + fmt(totalMonthly()) + '</b></span></div>' +
-    '<div class="imp-note">홈과 내 구독에 바로 반영됩니다. 카드에서 <b>계약 관리</b> 또는 <b>서비스 열기</b> → <b>구독 점검</b>으로 이어집니다. 새로고침해도 유지되고, <b>샘플 초기화</b>는 이미지 샘플만 지우며 직접 입력·결정 기록은 그대로 둡니다.</div>' +
+    projAddHTML(sid, null) +
+    '<div class="imp-note">홈과 내 구독에 바로 반영됩니다. 카드에서 <b>공식 서비스 열기</b>(디지털 구독) 또는 <b>공식 계약 관리</b>(통신·렌탈)로 공식 페이지를 열고, <b>구독 점검</b>으로 판단을 이어갑니다. 새로고침해도 유지되고, <b>이미지 샘플만 초기화</b>는 이미지로 등록한 항목만 지우며 불러온 샘플·결정 기록·직접 입력은 그대로 둡니다.</div>' +
     '<button class="imp-next" data-act="imgdone">홈에서 확인하기</button>' +
     '<button class="imp-back" data-act="imgsubs">내 구독에서 보기</button>' +
+    '<button class="undo" data-act="resetimg">이미지 샘플만 초기화</button>' +
     '<button class="imp-back" data-act="close">닫기</button>';
   return h;
 }
@@ -2349,7 +2417,7 @@ function openSheetDOM(html){
   panel.scrollTop = 0;
   applySheetZoom();
 }
-function closeSheetDOM(){ $('#overlay').innerHTML = ''; S.detailId = null; S.detailChoice = null; }
+function closeSheetDOM(){ $('#overlay').innerHTML = ''; S.detailId = null; S.detailChoice = null; S.detailRd = null; }
 function renderSheetKeepScroll(){
   const p = $('#overlay .sheet-panel');
   const t = p ? p.scrollTop : 0;
@@ -2368,6 +2436,7 @@ function openDetailDOM(id){
   const sub = subById(id);
   if (!sub) return;
   const dec = decisionFor(sub.id);
+  if (S.detailId !== id || !S.detailRd) S.detailRd = (dec && dec.recheck) ? dec.recheck : (defaultRecheck(sub) || '');
   if (S.detailId !== id) S.detailChoice = dec ? dec.action : null;
   S.detailId = id;
   if (!S.detailChoice && dec) S.detailChoice = dec.action;
@@ -2604,6 +2673,7 @@ document.addEventListener('click', function(e){
     const sub = subById(S.detailId);
     if (!sub || !sub.date) return;
     const iso = days === 0 ? sub.date : isoAdd(sub.date, days);
+    S.detailRd = iso;
     setDateFields('dRecheck', iso);
     refreshDetail(iso);
     return;
@@ -2618,14 +2688,28 @@ document.addEventListener('click', function(e){
     if (!sub) return;
     if (!S.detailChoice){ toast('내 결정을 먼저 선택해 주세요 · 추천으로 자동 저장하지 않습니다'); return; }
     const inp = $('#dRecheck');
-    const rd = (inp && parseDateInput(inp.value)) || defaultRecheck(sub);
+    const rd = (inp && parseDateInput(inp.value)) || S.detailRd || defaultRecheck(sub);
     if (!rd){ toast('재개일을 입력해 주세요'); return; }
+    S.detailRd = rd;
     pushDecision(sub.id, S.detailChoice, rd, '구독 점검');
     render();
     renderSheetKeepScroll();
     const body = $('#overlay .sheet-panel');
     if (body) body.scrollTop = body.scrollHeight;
     toast(sub.name + ' · ' + ACTIONS[S.detailChoice].label + ' 결정을 저장했습니다');
+    return;
+  }
+  if (act === 'linkproj'){
+    const id = el.dataset.id, pid = el.dataset.proj;
+    if (!subById(id)) return;
+    const p = S.projects.find(x => x.id === pid);
+    const wasLinked = p ? p.subs.indexOf(id) > -1 : false;
+    S.projects.forEach(function(x){ x.subs = x.subs.filter(function(v){ return v !== id; }); });
+    if (p && !wasLinked) p.subs.push(id);
+    saveState();
+    renderSheetKeepScroll();
+    render();
+    toast(p && !wasLinked ? '「' + p.name + '」에 추가했습니다 · 작업판에서 확인' : '프로젝트 연결을 해제했습니다');
     return;
   }
   if (act === 'markone'){
@@ -2654,6 +2738,7 @@ document.addEventListener('click', function(e){
   if (act === 'undecide'){
     S.decisions = S.decisions.filter(d => d.subId !== S.detailId);
     S.detailChoice = null;
+    S.detailRd = null;
     navCloseOverlay(); render();
     toast('저장한 결정을 되돌렸습니다');
     return;
@@ -2831,7 +2916,8 @@ document.addEventListener('click', function(e){
       IMG.values.cat = reg.cat;
       if (sm.kind === 'ai'){ IMG.values.next = reg.date || ''; }
       else { IMG.values.billDay = String(reg.billDay || ''); IMG.values.contractEnd = (reg.contract && reg.contract.end) || ''; }
-      IMG.values.paidOn = reg.paidOn || sm.fields.paidOn;
+      IMG.values.paidOn = reg.paidOn || '';
+      IMG.proj = (linksOf(reg.id)[0] || {}).id || '';
     }
     IMG.err = ''; IMG.added = [];
     IMG.step = 2;
@@ -2839,6 +2925,41 @@ document.addEventListener('click', function(e){
     return;
   }
   if (act === 'imgback'){ IMG.step = 1; IMG.err = ''; renderImgDOM(); return; }
+  if (act === 'imgproj'){
+    const pid = el.dataset.proj;
+    const sid = el.dataset.sub || (IMG && IMG.added && IMG.added[0]) || '';
+    if (!sid){
+      if (IMG) IMG.proj = pid === 'none' ? '' : pid;
+      renderImgDOM(true);
+      return;
+    }
+    const p = S.projects.find(x => x.id === pid);
+    const wasLinked = p ? p.subs.indexOf(sid) > -1 : false;
+    S.projects.forEach(function(x){ x.subs = x.subs.filter(function(id){ return id !== sid; }); });
+    if (p && !wasLinked) p.subs.push(sid);
+    if (IMG) IMG.proj = (p && !wasLinked) ? pid : '';
+    saveState();
+    renderImgDOM(true);
+    render();
+    toast(p && !wasLinked ? '「' + p.name + '」에 추가했습니다 · 작업판에서 확인' : '프로젝트 연결을 해제했습니다');
+    return;
+  }
+  if (act === 'resetimg'){
+    const ids = S.imports.filter(function(s){ return s.origin === 'imgsample'; }).map(function(s){ return s.id; });
+    if (!ids.length){ toast('초기화할 이미지 샘플이 없습니다'); return; }
+    const keepImport = S.imports.length - ids.length;
+    S.imports = S.imports.filter(function(s){ return ids.indexOf(s.id) === -1; });
+    S.decisions = S.decisions.filter(function(d){ return ids.indexOf(d.subId) === -1; });
+    S.favs = S.favs.filter(function(id){ return ids.indexOf(id) === -1; });
+    S.projects.forEach(function(p){ p.subs = p.subs.filter(function(id){ return ids.indexOf(id) === -1; }); });
+    if (S.detailId && ids.indexOf(S.detailId) > -1) S.detailId = null;
+    if (S.simSub && ids.indexOf(S.simSub) > -1) S.simSub = 'higgsfield';
+    IMG = null;
+    navGoTab('subs');
+    render();
+    toast('이미지 샘플 ' + ids.length + '건만 삭제 · 불러온 샘플 ' + keepImport + '건·결정·즐겨찾기는 그대로');
+    return;
+  }
   if (act === 'imgregister'){
     imgCollect();
     const sm = imgSample(IMG.key);
@@ -2873,9 +2994,9 @@ document.addEventListener('click', function(e){
     const sub = {
       id:'img-' + sm.key + '-' + Date.now().toString(36),
       name:name, plan:'이미지 샘플', price:price, date:(sm.kind === 'ai' ? next : dateForDay(billDay)),
-      paidOn:v.paidOn, cat:v.cat, channel:v.channel || 'web', cycle:'monthly',
+      paidOn:(sm.kind === 'ai' ? v.paidOn : null), paidUnknown:(sm.kind !== 'ai'), cat:v.cat, channel:v.channel || 'web', cycle:'monthly',
       color:colors[sm.key], mark:sm.key.toUpperCase(),
-      open:'#', manage:'', manageHint:'', manageKind:'contract',
+      open:'https://example.com/', manage:'https://example.com/', manageHint:'샘플 시연용 가상 공식 페이지', manageKind:(sm.kind === 'ai' ? 'service' : 'contract'),
       origin:'imgsample', imgKey:'img:' + sm.key, source:'샘플 이미지(가상)',
       billDay:(sm.kind === 'ai' ? null : billDay),
       dayCaveat:!!(sm.kind !== 'ai' && billDay >= 29),
@@ -2883,6 +3004,10 @@ document.addEventListener('click', function(e){
       benefit:{ usagePct:null, creditLeft:null, creditExpiry:null, rollover:'확인 필요' }
     };
     S.imports.push(sub);
+    if (IMG.proj){
+      const p = S.projects.find(x => x.id === IMG.proj);
+      if (p && p.subs.indexOf(sub.id) === -1) p.subs.push(sub.id);
+    }
     IMG.added = [sub.id];
     IMG.step = 3;
     IMG.err = '';
@@ -3008,6 +3133,7 @@ document.addEventListener('change', function(e){
   }
   if (e.target.id === 'dRecheckPick'){
     const v = e.target.value; if (!v) return;
+    S.detailRd = v;
     setDateFields('dRecheck', v); refreshDetail(v); return;
   }
 });
