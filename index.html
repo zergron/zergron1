@@ -597,6 +597,9 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .srow-nm{min-width:0; flex:1}
 .srow-name{display:flex; align-items:center; gap:4px; font-size:12px; font-weight:800; letter-spacing:-.01em}
 .srow-name span.t{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+/* 120% 이상: 채널 배지가 길어도 이름이 잘리지 않게 줄바꿈 */
+.app-body.bigzoom .srow-name{flex-wrap:wrap; row-gap:2px}
+.app-body.bigzoom .srow-name span.t{white-space:normal; overflow:visible; text-overflow:clip; line-height:1.3}
 .srow-meta{display:block; font-size:9px; color:var(--muted2); font-weight:700; margin-top:2px}
 .srow-price{text-align:right; flex:0 0 auto; font-size:12px; font-weight:800; letter-spacing:-.02em}
 .srow-price small{display:block; font-size:8px; color:#94A3B8; font-weight:700; margin-top:2px}
