@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>나대신 구독케어 · 출시형 공개 체험판</title>
+<title>나대신 구독케어 · 공개 체험판 v25 · 개인 맞춤 AI 에이전트</title>
 <meta name="description" content="구독은 한눈에, 필요한 도구는 바로 열고, 갱신은 다음 작업에 맞춰. 내 구독을 직접 입력하거나 결제 알림에서 불러와 유지·하향·중단·판단 보류를 확인하는 공개 체험판(모두의 창업 2R 시제품)">
 <meta name="theme-color" content="#0F172A">
 <link rel="manifest" href="manifest.json">
@@ -133,13 +133,16 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .ab-feat svg{width:9.5px; height:9.5px; stroke:currentColor; fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; opacity:.95}
 .ab-feat:hover{background:rgba(37,99,235,.48); border-color:rgba(191,219,254,.85)}
 .ab-feat:active{background:rgba(37,99,235,.6)}
-.ab-install{margin-left:auto; display:flex; align-items:center; gap:3px; background:#fff; color:var(--navy); border-radius:8px; padding:6px 7px; font-size:10.2px; font-weight:800; letter-spacing:-.02em; white-space:nowrap; flex:0 0 auto}
-.ab-install svg{width:11.5px; height:11.5px; stroke:var(--navy); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+/* v25: 앱 설치 → 체험하기(제안 시안·체험 시트 열기) */
+.ab-trial{margin-left:auto; display:flex; align-items:center; gap:3px; background:#fff; color:var(--navy); border-radius:8px; padding:6px 7px; font-size:10.2px; font-weight:800; letter-spacing:-.02em; white-space:nowrap; flex:0 0 auto}
+.ab-trial svg{width:10.5px; height:10.5px; fill:var(--navy); stroke:none}
+.ab-trial:hover{background:#EFF4FF}
+.ab-trial:active{background:#E3ECFB}
 
 /* 화면 배율 (70/100/120/150%) */
 .appbar{position:relative; z-index:24}
 .appbar .zbtn{margin-left:auto}
-.ab-install{margin-left:4px}
+.ab-trial{margin-left:4px}
 .zbtn{flex:0 0 auto; display:inline-flex; align-items:center; gap:2px; height:26px; padding:0 6px 0 5px; border-radius:8px;
   background:rgba(255,255,255,.10); border:1px solid rgba(148,163,184,.38); color:#DCE5F3; font-size:10.2px; font-weight:800; letter-spacing:-.02em}
 .zbtn svg{width:11.5px; height:11.5px; stroke:currentColor; fill:none; stroke-width:2.3; stroke-linecap:round}
@@ -800,7 +803,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
   .ab-nm .ab-name{font-size:13.5px}
   .ab-sub{font-size:7.4px}
   .ab-feat{font-size:8.4px; padding:0 3px 0 4px}
-  .ab-install{padding:6px 5px; font-size:9.4px}
+  .ab-trial{padding:6px 5px; font-size:9.4px}
 }
 
 /* 서비스 특징 팝업 */
@@ -892,6 +895,129 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 /* 모든 화면 하단 고지 */
 .legal{font-size:8.4px; color:#9AA7B8; font-weight:700; line-height:1.55; text-align:center; margin:10px 2px 2px; letter-spacing:-.01em}
 .legal b{color:#7C8CA3; font-weight:800}
+
+/* ===================== v25: 상단 체험하기 · 개인 맞춤 AI 에이전트 시연 (Claude·Manus) ===================== */
+/* 홈 상단 시안 카드 */
+.hsi{border:1px solid #DCE7FF; border-radius:16px; background:linear-gradient(180deg,#F4F8FF,#fff); padding:9px; margin:0 0 9px; box-shadow:0 12px 26px -24px rgba(37,99,235,.75)}
+.hsi-top{display:flex; align-items:center; gap:4px; flex-wrap:wrap; margin-bottom:6px}
+.hsi-k{font-size:7.9px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border:1px solid #DCE7FF; border-radius:5px; padding:2px 5px; letter-spacing:-.02em; line-height:1.35}
+.hsi-img{position:relative; display:block; width:100%; border-radius:11px; overflow:hidden; background:#EAF1FB; border:1px solid #DCE7FF; padding:0; line-height:0}
+.hsi-img img{display:block; width:100%; height:auto}
+.hsi-zoom{position:absolute; right:6px; bottom:6px; font-size:7.6px; font-weight:800; color:#1D4ED8; background:rgba(255,255,255,.94); border:1px solid #DCE7FF; border-radius:6px; padding:2px 5px; line-height:1.3}
+.hsi-flow{display:flex; align-items:center; gap:3px; flex-wrap:wrap; margin-top:7px}
+.hsi-flow .fl{font-size:7.8px; font-weight:800; color:#334155; background:#F1F5F9; border:1px solid #E2E8F0; border-radius:5px; padding:2px 5px; letter-spacing:-.02em}
+.hsi-flow .fl.ai{color:#fff; background:linear-gradient(120deg,#1D4ED8,#2563EB); border-color:#2563EB}
+.hsi-flow .ar{font-size:8px; color:#94A3B8; font-weight:800; line-height:1}
+.hsi-d{font-size:8.6px; font-weight:700; color:#475569; line-height:1.55; margin-top:6px; letter-spacing:-.01em}
+.hsi-d b{color:#0F172A; font-weight:800}
+.hsi .agt-cta{margin-top:8px}
+/* v25: 상단 체험하기 시트 */
+.trial-lead{font-size:9.4px; font-weight:700; color:#475569; line-height:1.6; margin-top:7px}
+.trial-lead b{color:#0F172A; font-weight:800}
+.sheet-panel .hsi-img{margin-top:8px}
+.sheet-panel .trial-hero img{max-height:62vh; object-fit:contain; background:#EAF1FB}
+
+/* 공통 */
+.agt{border:1.5px solid #CFE0FF; border-radius:13px; background:linear-gradient(180deg,#F7FAFF,#fff); padding:9px 9px 10px; margin:0 0 9px}
+.agt-h{display:flex; align-items:center; gap:4px; flex-wrap:wrap}
+.agt-ai{display:inline-flex; align-items:center; gap:3px; font-size:7.8px; font-weight:800; letter-spacing:-.01em; color:#fff; background:linear-gradient(120deg,#1D4ED8,#2563EB); border-radius:6px; padding:3px 5px; white-space:nowrap}
+.agt-demo{display:inline-block; font-size:7.2px; font-weight:800; letter-spacing:-.03em; color:#B45309; background:#FFF7ED; border:1px solid #FDE9C4; border-radius:5px; padding:2px 4px; line-height:1.35}
+.agt-hist{display:flex; align-items:flex-start; gap:4px; margin-top:7px; font-size:8.2px; font-weight:700; color:#64748B; line-height:1.5}
+.agt-hist b{color:#1E293B; font-weight:800}
+.agt-hist .k{flex:0 0 auto; font-size:7.2px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border:1px solid #DCE7FF; border-radius:4px; padding:1px 4px; margin-top:1px}
+.agt-hlog{margin-top:7px; border:1px solid #E3ECFB; border-radius:9px; background:#fff; padding:7px 8px}
+.agt-hlog-h{display:flex; align-items:center; gap:4px}
+.agt-hlog-h .k{flex:0 0 auto; font-size:7.2px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border:1px solid #DCE7FF; border-radius:4px; padding:1px 4px}
+.agt-hlog-h .n{font-size:7.4px; font-weight:800; color:#94A3B8}
+.agt-hlog-sum{margin-top:5px; font-size:8.4px; font-weight:800; color:#0F172A; letter-spacing:-.02em; line-height:1.45}
+.agt-hlog ul{list-style:none; margin:4px 0 0; padding:0; display:grid; gap:3px}
+.agt-hlog li{display:flex; align-items:baseline; gap:4px; font-size:8px; font-weight:700; color:#475569; line-height:1.45}
+.agt-hlog li .w{flex:0 0 auto; min-width:26px; font-size:7.2px; font-weight:800; color:#94A3B8}
+.agt-hlog li b{font-weight:800; color:#1D4ED8}
+.agt-hlog-n{margin-top:5px; font-size:7.4px; font-weight:700; color:#94A3B8; line-height:1.45}
+.agt-chain{display:flex; align-items:center; gap:3px; flex-wrap:wrap; margin-top:7px}
+.agt-chain .ch{font-size:7.6px; font-weight:800; color:#334155; background:#F1F5F9; border:1px solid #E2E8F0; border-radius:5px; padding:2px 5px; letter-spacing:-.02em}
+.agt-chain .ch.ai{color:#fff; background:linear-gradient(120deg,#1D4ED8,#2563EB); border-color:#2563EB}
+.agt-chain .ar{font-size:8px; color:#94A3B8; font-weight:800; line-height:1}
+.agt-pick{display:grid; gap:5px; margin-top:7px}
+.agt-pick .p{display:flex; align-items:center; gap:5px; background:#fff; border:1px solid #E3ECFB; border-radius:9px; padding:5px 6px; font-size:8.6px; font-weight:800; color:#1E293B; letter-spacing:-.02em; min-width:0}
+.agt-pick .p .n{flex:0 0 auto; width:16px; height:16px; border-radius:5px; background:#EFF4FF; color:#1D4ED8; font-size:7.6px; display:grid; place-items:center}
+.agt-pick .p .tx{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.agt-pick .p .tool{margin-left:auto; flex:0 0 auto; font-size:7.2px; font-weight:800; color:#475569; background:#F1F5F9; border-radius:4px; padding:2px 4px; white-space:nowrap}
+.agt-why2{margin-top:7px; border:1px solid #CFE0FF; border-left:3px solid #2563EB; border-radius:9px; background:#F5F9FF; padding:7px 8px}
+.agt-why2 .lb{display:block; font-size:7.2px; font-weight:800; color:#1D4ED8; letter-spacing:.02em}
+.agt-why2 b{display:block; font-size:8.9px; font-weight:800; color:#0F172A; line-height:1.5; margin-top:2px; letter-spacing:-.02em}
+.agt-why2 .sn{display:block; font-size:7.6px; font-weight:700; color:#64748B; line-height:1.45; margin-top:3px}
+.agt-say{margin-top:6px; padding:7px 8px; border-radius:9px; background:#0F172A; color:#E8EFFF; font-size:8.8px; font-weight:700; line-height:1.55; letter-spacing:-.03em}
+.agt-cta{width:100%; height:32px; margin-top:7px; border-radius:9px; background:#2563EB; color:#fff; font-size:10px; font-weight:800; letter-spacing:-.02em; display:flex; align-items:center; justify-content:center; gap:4px}
+.agt-cta:hover{background:#1D4ED8}
+.agt-none{margin-top:7px; padding:7px 8px; border-radius:9px; background:#F1F5F9; border:1px dashed #CBD5E1; color:#475569; font-size:8.6px; font-weight:700; line-height:1.55}
+.agt-none b{display:block; color:#0F172A; font-weight:800; margin-bottom:2px}
+.agt-done{display:flex; align-items:center; gap:5px; margin-top:7px; padding:6px 7px; border-radius:8px; background:#ECFDF5; border:1px solid #CBEFDF; font-size:8px; font-weight:800; color:#047857; line-height:1.45}
+.agt-done .t{min-width:0; flex:1}
+.agt-done .t b{color:#065F46}
+.agt-done button{flex:0 0 auto; font-size:7.4px; font-weight:800; color:#1D4ED8; background:#fff; border:1px solid #BFD3FF; border-radius:5px; padding:3px 5px; white-space:nowrap}
+.agt-again{display:block; width:100%; margin-top:6px; font-size:7.8px; font-weight:800; color:#64748B; text-align:center; padding:5px 0}
+
+/* 시트(제안 · 이동 · 결과) */
+.agt-lead{font-size:9.2px; font-weight:700; color:#475569; line-height:1.6; margin-top:8px}
+.agt-lead b{color:#0F172A; font-weight:800}
+.agt-card{border:1px solid var(--line); border-radius:12px; background:#fff; padding:9px 10px; margin-top:8px; box-shadow:var(--shadow)}
+.agt-card-h{display:flex; align-items:center; gap:5px}
+.agt-card-h .n{flex:0 0 auto; width:18px; height:18px; border-radius:6px; background:#EFF4FF; color:#1D4ED8; font-size:8.6px; font-weight:800; display:grid; place-items:center}
+.agt-card-h b{font-size:10.4px; font-weight:800; letter-spacing:-.02em; line-height:1.35}
+.agt-card-h .tool{margin-left:auto; flex:0 0 auto; font-size:7.8px; font-weight:800; color:#475569; background:#F1F5F9; border-radius:4px; padding:2px 4px; white-space:nowrap}
+.agt-file{display:flex; align-items:center; gap:4px; margin-top:6px; padding:5px 6px; border-radius:7px; background:#F8FAFC; border:1px dashed #C7D5EA; font-size:8px; font-weight:800; color:#475569; min-width:0}
+.agt-file .fi{flex:0 0 auto; font-size:7px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border:1px solid #DCE7FF; border-radius:3px; padding:1px 3px}
+.agt-file .tx{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.agt-k{display:block; font-size:7.4px; font-weight:800; color:#94A3B8; letter-spacing:.02em; margin-top:7px}
+.agt-v{display:block; font-size:9px; font-weight:700; color:#334155; line-height:1.6}
+.agt-v b{color:#0F172A; font-weight:800}
+.agt-q{display:block; margin-top:4px; padding:6px 7px; border-radius:8px; background:#F8FAFC; border:1px solid var(--line2); font-size:9px; font-weight:700; color:#1E293B; line-height:1.55}
+.agt-two{display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-top:11px}
+.agt-run{height:38px; border-radius:11px; background:#2563EB; color:#fff; font-size:10.4px; font-weight:800; letter-spacing:-.02em}
+.agt-run:hover{background:#1D4ED8}
+.agt-skip{height:38px; border-radius:11px; background:#F1F5F9; color:#475569; font-size:9.8px; font-weight:800; border:1px solid var(--line); letter-spacing:-.02em}
+.agt-move{margin-top:10px; display:grid; gap:7px; padding:9px; border:1px solid #DCE7FF; border-radius:12px; background:linear-gradient(180deg,#F7FAFF,#fff); overflow:hidden}
+.agt-mrow{display:grid; grid-template-columns:1fr 14px 1fr; align-items:center; gap:3px}
+.agt-mrow.d2 .agt-mcard,.agt-mrow.d2 .agt-mtool{animation-delay:.18s}
+.agt-mcard{display:flex; align-items:center; gap:4px; min-width:0; padding:6px 7px; border-radius:8px; background:#fff; border:1px solid #DCE7FF; font-size:8.2px; font-weight:800; color:#1E293B; animation:agtfly 1.5s ease-in forwards}
+.agt-mcard .fi{flex:0 0 auto; font-size:7px; color:#1D4ED8; background:#EFF4FF; border-radius:3px; padding:1px 3px}
+.agt-mar{font-size:10px; color:#94A3B8; font-weight:800; text-align:center; line-height:1}
+.agt-mtool{display:grid; gap:1px; padding:6px 7px; border-radius:8px; background:#F1F5F9; border:1px solid #E2E8F0; animation:agton 1.5s ease-in forwards}
+.agt-mtool b{font-size:8.6px; font-weight:800; color:#0F172A}
+.agt-mtool span{font-size:7.4px; font-weight:800; color:#64748B}
+.agt-mstat{font-size:8.4px; font-weight:800; color:#1D4ED8; text-align:center; margin-top:2px}
+@keyframes agtfly{0%{transform:translateX(0); opacity:1}72%{transform:translateX(24px); opacity:.5}100%{transform:translateX(24px); opacity:.14}}
+@keyframes agton{0%{background:#F1F5F9; border-color:#E2E8F0}72%,100%{background:#EFF4FF; border-color:#BFD3FF}}
+@media (prefers-reduced-motion: reduce){ .agt-mcard,.agt-mtool{animation-duration:.01s} }
+.agt-res{border:1px solid var(--line); border-radius:12px; background:#fff; padding:9px 10px; margin-top:8px; box-shadow:var(--shadow)}
+.agt-res-h{display:flex; align-items:center; gap:5px}
+.agt-res-h .n{flex:0 0 auto; width:18px; height:18px; border-radius:6px; background:#EFF4FF; color:#1D4ED8; font-size:8.6px; font-weight:800; display:grid; place-items:center}
+.agt-res-h b{font-size:10px; font-weight:800; letter-spacing:-.02em; line-height:1.35}
+.agt-res-h .tool{margin-left:auto; flex:0 0 auto; font-size:7.6px; font-weight:800; color:#475569; background:#F1F5F9; border-radius:4px; padding:2px 4px; white-space:nowrap}
+.agt-res .agt-r{display:flex; gap:5px; margin-top:6px; font-size:8.8px; font-weight:700; color:#475569; line-height:1.6}
+.agt-res .agt-rk{flex:0 0 auto; height:fit-content; font-size:7.2px; font-weight:800; color:#1D4ED8; background:#EFF4FF; border-radius:4px; padding:1px 4px; margin-top:1px; white-space:nowrap}
+.agt-res .agt-r b{color:#0F172A; font-weight:800}
+.agt-fb{margin-top:9px; border:1px solid #CFE0FF; border-radius:12px; background:linear-gradient(180deg,#F2F7FF,#fff); padding:9px 10px}
+.agt-fb .h{display:flex; align-items:center; gap:5px; font-size:9.4px; font-weight:800; color:#1D4ED8; letter-spacing:-.02em}
+.agt-fb .h .ic{flex:0 0 auto; width:18px; height:18px; border-radius:6px; background:#2563EB; color:#fff; display:grid; place-items:center; font-size:8px; font-weight:800}
+.agt-fb .q{margin-top:6px; font-size:10px; font-weight:800; color:#0F172A; background:#fff; border:1px solid #DCE7FF; border-radius:9px; padding:7px 8px; line-height:1.5; letter-spacing:-.02em}
+.agt-fb .s{display:block; margin-top:5px; font-size:8px; font-weight:700; color:#64748B; line-height:1.5}
+.agt-evi{margin-top:9px; border:1px solid #D9E5FF; border-radius:12px; background:#F7FAFF; padding:9px 10px}
+.agt-evi-h{display:flex; align-items:center; gap:4px; flex-wrap:wrap; font-size:9.2px; font-weight:800; color:#1D4ED8; letter-spacing:-.02em}
+.agt-evi-line{display:block; margin-top:6px; font-size:9px; font-weight:700; color:#334155; line-height:1.65; letter-spacing:-.01em}
+.agt-caution{margin-top:6px; font-size:8px; font-weight:700; color:#B45309; background:#FFF7ED; border:1px solid #FDE9C4; border-radius:7px; padding:5px 6px; line-height:1.55}
+.agt-evibtn{display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-top:7px}
+.agt-evibtn button{height:33px; border-radius:9px; background:#0F172A; color:#fff; font-size:9px; font-weight:800; letter-spacing:-.02em}
+.agt-evibtn button:last-child{background:#fff; color:#1D4ED8; border:1px solid #BFD3FF}
+.agt-board{width:100%; height:36px; margin-top:8px; border-radius:10px; background:#2563EB; color:#fff; font-size:10.2px; font-weight:800; letter-spacing:-.02em}
+.agt-zoom{overflow:auto; -webkit-overflow-scrolling:touch; border:1px solid #DCE7FF; border-radius:10px; background:#F4F8FF; margin-top:8px}
+.agt-zoom img{display:block; width:560px; max-width:none; height:auto}
+
+/* 05 특징 표기 */
+.fm .note{display:block; width:fit-content; max-width:100%; font-size:7.2px; font-weight:800; color:#B45309; background:#FFF7ED; border:1px solid #FDE9C4; border-radius:4px; padding:1px 4px; margin-top:2px; line-height:1.4; letter-spacing:-.02em}
+.axis .ax.wide{grid-column:1/-1}
 </style>
 </head>
 <body>
@@ -916,7 +1042,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
     </div>
 
     <h1 class="i-head">구독은 한눈에,<br>필요한 도구는 <em>바로 열고</em>,<br>갱신은 다음 작업에 맞춰.</h1>
-    <p class="i-lead">내 구독을 <b>직접 입력하거나 이미지·결제 알림에서 불러와</b> 한곳에 모으고, <b>구독 종합현황 · 구독 이용 포털 · 계약·비용 최적화 · 구독 혜택 극대화</b> 네 가지 기능으로 다음 작업일과 사용량을 견주어 <b>유지·하향·중단·판단 보류</b>를 정리합니다. 고객이 공식 서비스에서 직접 처리한 뒤 <b>다음 청구까지</b> 기록하는, <b>구독 하나에 특화된 개인 맞춤 구독케어 서비스</b>입니다.</p>
+    <p class="i-lead">내 구독을 <b>직접 입력하거나 이미지·결제 알림에서 불러와</b> 한곳에 모으고, <b>구독 종합현황 · 구독 이용 포털 · 계약·비용 최적화 · 구독 혜택 극대화 · 개인 맞춤 AI 에이전트</b> 다섯 가지 기능으로 다음 작업일과 사용량을 견주어 <b>유지·하향·중단·판단 보류</b>를 정리합니다. 고객이 공식 서비스에서 직접 처리한 뒤 <b>다음 청구까지</b> 기록하는, <b>구독 하나에 특화된 개인 맞춤 구독케어 서비스</b>입니다.</p>
 
     <div class="axis">
       <div class="ax">
@@ -939,6 +1065,11 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         <b>구독 혜택 극대화</b>
         <span class="d">남은 크레딧·보유 혜택 먼저 활용, 공식 할인 제안</span>
       </div>
+      <div class="ax wide">
+        <span class="k">05 · <em style="font-style:normal;color:#B45309">개발 예정 · 가상 시연</em></span>
+        <b>개인 맞춤 AI 에이전트</b>
+        <span class="d">내 작업 방식과 이력을 바탕으로 다음 일을 먼저 제안하고, 승인 시 여러 AI에 역할을 나눠 맡겨 수정안까지 정리</span>
+      </div>
     </div>
 
     <div class="card-block">
@@ -946,7 +1077,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         <svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 3 6.5-8"/><path d="M15 7h5v5"/></svg>
         공개 체험판에서 지금 할 수 있는 것
       </div>
-      <p class="cb-desc"><b>홈</b>은 가상 구독 14개(월 환산 210,000원) 요약으로 시작하고, <b>내 구독</b> 탭 상단의 <b>직접 입력·샘플 이미지·가상 알림 불러오기</b>는 내 구독 1건부터 시작합니다. 등록은 다섯 번째 강점이 아니라 <b>위 네 가지 기능을 쓰기 위한 첫 단계</b>입니다. 입력한 내용은 이 브라우저에만 저장됩니다.</p>
+      <p class="cb-desc"><b>홈</b>은 가상 구독 14개(월 환산 210,000원) 요약으로 시작하고, <b>내 구독</b> 탭 상단의 <b>직접 입력·샘플 이미지·가상 알림 불러오기</b>는 내 구독 1건부터 시작합니다. 등록은 별도의 강점이 아니라 <b>위 다섯 가지 기능을 쓰기 위한 첫 단계</b>입니다. 입력한 내용은 이 브라우저에만 저장됩니다.</p>
       <div class="flow">
         <div class="flow-row">
           <span class="flow-tag free">무료 0원</span>
@@ -957,7 +1088,8 @@ h1.i-head em{font-style:normal; color:var(--blue)}
           <span class="flow-items"><span class="flow-i on">심층 리포트 1회</span></span>
         </div>
       </div>
-      <p class="flow-note">심층 리포트 1회 <b>9,900원은 2R에서 검증할 가격</b>이며, 이 공개 체험판에서는 <b>실제 결제가 진행되지 않습니다</b>. 리포트 작성 목표는 <b>16분 이하</b>(제출 사업계획서 v26 기준)입니다.</p>
+      <p class="flow-note">심층 리포트 1회 <b>9,900원은 2R에서 검증할 가격</b>이며, 이 공개 체험판에서는 <b>실제 결제가 진행되지 않습니다</b>. 리포트 작성 목표는 <b>건당 평균 10분 목표(검수·수정 포함)</b>입니다.</p>
+      <p class="flow-note" style="margin-top:6px"><b>검수본 안내</b> · 상단 <b>체험하기</b> 시트의 시안과 작업판 <b>개인 맞춤 AI 에이전트</b> 제안(Claude 반론 검토 + Manus 발표자료 구성)은 최종 제품의 사용 흐름을 보여주는 가상 시연입니다 (가상 시연 · 실제 계정 연동 및 전송 없음).</p>
     </div>
 
     <div class="card-block">
@@ -1048,7 +1180,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
             <span class="ab-name">나대신 구독케어</span>
             <span class="ab-sub">구독 하나에 특화된 전문 서비스</span>
           </span>
-          <button type="button" class="ab-feat" data-act="featopen" aria-haspopup="dialog" aria-controls="overlay" title="서비스 특징 4가지 보기">
+          <button type="button" class="ab-feat" data-act="featopen" aria-haspopup="dialog" aria-controls="overlay" title="서비스 특징 5가지 보기">
             서비스특징
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg>
           </button>
@@ -1062,9 +1194,9 @@ h1.i-head em{font-style:normal; color:var(--blue)}
             <button type="button" data-act="zoomset" data-zoom="120" class="on">120%</button>
             <button type="button" data-act="zoomset" data-zoom="150">150%</button>
           </div>
-          <button class="ab-install" data-act="install">
-            <svg viewBox="0 0 24 24"><path d="M12 4v10"/><path d="M8 11l4 3.5 4-3.5"/><path d="M5 19h14"/></svg>
-            앱 설치
+          <button class="ab-trial" data-act="trialopen" aria-haspopup="dialog" aria-controls="overlay" title="나대신 제안 시안과 체험 열기">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg>
+            <span class="ab-trial-t">체험하기</span>
           </button>
         </header>
 
@@ -1080,7 +1212,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 
 <script>
 /* ============================================================
-   나대신 구독케어 · 출시형 공개 체험판 (v23, single file)
+   나대신 구독케어 · 공개 체험판 v24 + 작업판 AI 에이전트 시연 검수본 (single file)
    - 데모 기준일 2026-11-20 · 가상 구독 14개 · 월 환산 210,000원
    - 샘플 / 불러온 샘플 / 직접 입력을 분리 저장 (샘플 초기화가 내 입력을 지우지 않음)
    - 판단: 유지 · 하향 · 중단 · 판단 보류 (정보가 부족하면 보류)
@@ -1178,6 +1310,8 @@ const S = {
   simSub:'higgsfield',
   simAct:null,
   simDate:'',
+  agtStage:'proposal',
+  agtDone:false,
   detailId:null,
   detailChoice:null,
   detailRd:null,
@@ -1204,7 +1338,8 @@ function saveState(){
       v:1, tab:S.tab, homeFilter:S.homeFilter, subCat:S.subCat, projFilter:S.projFilter,
       imports:S.imports, userSubs:S.userSubs, decisions:S.decisions,
       projects:S.projects, favs:S.favs,
-      simSub:S.simSub, simAct:S.simAct, simDate:S.simDate
+      simSub:S.simSub, simAct:S.simAct, simDate:S.simDate,
+      agtDone:S.agtDone
     }));
   } catch (e) {}
 }
@@ -1223,6 +1358,7 @@ function loadState(){
   if (o.simSub && allSubs().some(s => s.id === o.simSub)) S.simSub = o.simSub;
   if (typeof o.simDate === 'string' && (!o.simDate || /^\d{4}-\d{2}-\d{2}$/.test(o.simDate))) S.simDate = o.simDate;
   if (o.simAct && ACTIONS[o.simAct]) S.simAct = o.simAct;
+  if (typeof o.agtDone === 'boolean') S.agtDone = o.agtDone;
   if (o.tab && ['home','report','board','subs','history'].indexOf(o.tab) > -1) S.tab = o.tab;
   if (['all','fav','soon','past','need'].indexOf(o.homeFilter) > -1) S.homeFilter = o.homeFilter;
   if (o.subCat) S.subCat = o.subCat;
@@ -1686,23 +1822,25 @@ function benefitCardHTML(){
     '<span class="bc-go">›</span>' +
   '</button>';
 }
-/* 서비스 특징 4가지 (사업계획서 통일 문구) */
+/* 서비스 특징 5가지 (사업계획서 통일 문구) */
 const FEATURES = [
   { n:'01', t:'구독 종합현황', d:'월 비용·갱신일·사용량을 한눈에', go:'home', c:'홈에서 보기' },
   { n:'02', t:'구독 이용 포털', d:'원클릭으로 열고 프로젝트별로 한곳에서 작업', go:'board', c:'작업판에서 보기' },
   { n:'03', t:'계약·비용 최적화', d:'일정에 맞춰 유지·요금제 변경·해지 제안 (실제 변경은 고객이 공식 서비스에서 직접)', go:'report', c:'심층 리포트에서 보기' },
-  { n:'04', t:'구독 혜택 극대화', d:'남은 크레딧·보유 혜택 먼저 활용, 공식 할인 제안', em:'개발 예정', go:'benefit', c:'「먼저 쓸 혜택」 카드로 미리 보기', soon:true }
+  { n:'04', t:'구독 혜택 극대화', d:'남은 크레딧·보유 혜택 먼저 활용, 공식 할인 제안', em:'개발 예정', go:'benefit', c:'「먼저 쓸 혜택」 카드로 미리 보기', soon:true },
+  { n:'05', t:'개인 맞춤 AI 에이전트', d:'내 작업 방식과 이력을 바탕으로 다음에 필요한 일을 먼저 제안하고, 승인 시 여러 AI에 역할을 나눠 맡겨 수정안까지 정리', em:'개발 예정 · 가상 시연', note:'AI 에이전트 가상 시연 · 실제 계정 연동 및 전송 없음', go:'agt', c:'작업판에서 제안 체험하기' }
 ];
 function featSheetHTML(){
   return '<div class="sd-head fm-head">' +
       '<div><div class="fm-title">서비스 특징</div><div class="fm-lead">구독 하나에 특화된 전문 서비스</div></div>' +
       '<button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
-    '<div class="fm-intro">나대신 구독케어는 <b>구독 하나에 특화된 네 가지 기능</b>으로 내 구독을 한곳에서 씁니다. 카드를 누르면 해당 화면으로 바로 이동하고, 우상단 <b>✕</b>나 휴대폰 뒤로가기로 초기화면에 돌아옵니다.</div>' +
+    '<div class="fm-intro">나대신 구독케어는 <b>구독 하나에 특화된 다섯 가지 기능</b>으로 내 구독을 한곳에서 씁니다. 카드를 누르면 해당 화면으로 바로 이동하고, 우상단 <b>✕</b>나 휴대폰 뒤로가기로 초기화면에 돌아옵니다.</div>' +
     '<div class="fm-list">' + FEATURES.map(function(f){
       return '<button type="button" class="fm" data-act="featgo" data-go="' + f.go + '" aria-label="' + esc(f.t) + ' 화면 열기">' +
         '<span class="n">' + f.n + '</span>' +
         '<span class="tx"><span class="t">' + f.t + (f.em ? '<em>' + f.em + '</em>' : '') + '</span>' +
           '<span class="d">' + f.d + '</span>' +
+          (f.note ? '<span class="note">' + f.note + '</span>' : '') +
           '<span class="c' + (f.soon ? ' soon' : '') + '">' + f.c + '</span></span>' +
         '<span class="go">›</span></button>';
     }).join('') + '</div>' +
@@ -1716,6 +1854,14 @@ function featGo(go){
     navGoTab('home');
     if (bs) openDetail(bs.id);
     else toast('아직 체험할 혜택이 없습니다 · 구독 상세의 혜택 칸에서 확인하세요');
+    return;
+  }
+  if (go === 'agt'){
+    navGoTab('board');
+    setTimeout(function(){
+      const v = S.agtDone ? 'done' : 'proposal';
+      navOpenOverlay('agt', v, function(){ openAgtDOM(v); });
+    }, 220);
     return;
   }
   navGoTab(go === 'report' ? 'report' : (go === 'board' ? 'board' : 'home'));
@@ -1777,7 +1923,7 @@ function viewHome(){
   '<div class="list">' + (list.length ? list.map(subCard).join('') : '<div class="empty">조건에 맞는 구독이 없습니다.<br>필터를 바꿔 보세요.</div>') + '</div>' +
   '</div>' +
   privacyStrip() +
-  '<div class="footnote" style="text-align:center;margin-top:9px"><b>구독 종합현황 · 구독 이용 포털 · 계약·비용 최적화 · 구독 혜택 극대화</b> — 등록은 이 네 가지를 쓰기 위한 첫 단계입니다.<br>판단 기준: 다음 작업 연결 · 사용량/크레딧 · 갱신일(참고 규칙 7일) · 약정 만료. 사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>' +
+  '<div class="footnote" style="text-align:center;margin-top:9px"><b>구독 종합현황 · 구독 이용 포털 · 계약·비용 최적화 · 구독 혜택 극대화 · 개인 맞춤 AI 에이전트</b> — 등록은 이 다섯 가지를 쓰기 위한 첫 단계입니다.<br>판단 기준: 다음 작업 연결 · 사용량/크레딧 · 갱신일(참고 규칙 7일) · 약정 만료. 사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>' +
   legalHTML();
 }
 
@@ -1797,7 +1943,7 @@ function viewReport(){
   '<div class="rep-sub">계정 연동·결제 실행 없이, 다음 작업 일정과 사용량·크레딧·용도 중복을 함께 보고 <b>유지·하향·중단·판단 보류</b>와 재점검일을 한 장에 정리합니다. 9,900원은 <b>2R 검증 예정 가격</b>이며 이 체험판에서 실제 결제는 없습니다.</div>' +
 
   '<div class="rep-card">' +
-    '<div class="rep-tags"><span class="rep-tag paid">유료 과업</span><span class="rep-tag">1회 9,900원 · 2R 검증 예정 가격</span><span class="rep-tag">작성 목표 16분 이하</span></div>' +
+    '<div class="rep-tags"><span class="rep-tag paid">유료 과업</span><span class="rep-tag">1회 9,900원 · 2R 검증 예정 가격</span><span class="rep-tag">건당 평균 10분 목표(검수·수정 포함)</span></div>' +
     '<div class="rep-card-t">AI 도구 구독 점검 리포트 <span>샘플</span></div>' +
     '<div class="rep-card-m">2026-11-20 기준 · 구독 ' + allSubs().length + '개 · AI 도구 ' + aiSubs().length + '개 / 월 ' + fmt(aiSum()) + '</div>' +
 
@@ -1815,7 +1961,7 @@ function viewReport(){
 
     '<div class="rep-sec"><div class="rep-h"><span class="no">3</span>보유 활용 → 공식 혜택·요금제 전환 제안</div>' +
       '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step">먼저</span><b>Manus 잔여 크레딧 16,000</b>을 다음 작업에 씁니다. 다 쓴 뒤 정기 결제·종량 중 맞는 쪽을 정합니다.</span></div>' +
-      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step">먼저</span><b>ChatGPT · Claude · Genspark</b> — 겹치는 용도는 한 곳으로 몰고, 각 서비스에만 있는 기능을 먼저 써 봅니다.</span></div>' +
+      '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step">먼저</span><b>ChatGPT · Claude · Manus</b> — 겹치는 용도는 한 곳으로 몰고, 각 서비스에만 있는 기능을 먼저 써 봅니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>SK브로드밴드</b> 약정 만료 ' + md('2026-12-10') + ' — 재약정·모바일 결합·공식 사은품 조건을 만료 전에 비교합니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>YouTube · Spotify · Netflix</b> — 통신사 멤버십, 패밀리·학생·광고형 등 공식 요금제 대안을 비교합니다.</span></div>' +
       '<div class="rep-li"><span class="ar">›</span><span><span class="rep-step two">그다음</span><b>AI 도구 ' + aiSubs().length + '개 · 쿠팡 와우</b> — 작업·이용 빈도에 맞춘 월간/연간·종량·무료 티어 전환을 검토합니다.</span></div>' +
@@ -1896,6 +2042,219 @@ function simResultHTML(sub, rd){
 }
 function defaultSimRd(){ const s = subById(S.simSub) || allSubs()[0]; return S.simDate || defaultRecheck(s) || ''; }
 
+/* ---------- 체험하기 시트 (v25: 상단 체험하기 → 시안 + 나대신 제안 체험하기) ---------- */
+function trialSheetHTML(){
+  return '' +
+  '<div class="sd-head"><div><div class="sd-name">나대신 제안 · AI 에이전트</div>' +
+    '<div class="sd-meta">내 사업계획서 작업판 · GPT 초안 완료</div></div>' +
+    '<button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
+  '<div class="agt-h" style="margin-top:8px">' + agtBadge() + '</div>' +
+  '<div class="trial-lead">구독 하나에 특화된 <b>개인 맞춤 AI 에이전트</b>가 어디까지 맡아 주는지 시안으로 먼저 봅니다. <b>나대신 제안 체험하기</b>를 누르면 제안 → 승인 → 결과까지 이어집니다.</div>' +
+  '<button type="button" class="hsi-img trial-hero" data-act="agtzoom" aria-label="시안 크게 보기">' +
+    '<img src="board-ai-hero.jpg" alt="GPT 초안을 나대신 AI 에이전트가 Claude 반론 검토와 Manus 발표자료 구성으로 나눠 맡기고, 분석·피드백을 돌려주는 작업판 시안" width="1536" height="1024">' +
+    '<span class="hsi-zoom">크게 보기</span>' +
+  '</button>' +
+  '<div class="hsi-flow"><span class="fl">GPT 초안</span><span class="ar">→</span><span class="fl ai">나대신 AI</span><span class="ar">→</span><span class="fl">Claude 반론 검토</span><span class="fl">Manus 발표자료 구성</span><span class="ar">→</span><span class="fl">작업판 피드백</span></div>' +
+  '<p class="hsi-d"><b>플랫폼 이용 이력</b>을 보고 다음에 필요한 일을 먼저 제안합니다. 승인하면 Claude에 반론 검토를, Manus에 발표자료 구성을 맡기고 <b>결과 카드 두 장</b>을 작업판에 모아 드립니다.</p>' +
+  '<button type="button" class="agt-cta" data-act="agtstart">나대신 제안 체험하기</button>' +
+  '<p class="sd-foot">가상 시연이며 실제 계정 연동·전송은 없습니다. 시안 속 이름·수치는 예시입니다.</p>' +
+  legalHTML();
+}
+function openTrialDOM(){ openSheetDOM(trialSheetHTML()); }
+
+/* ---------- 작업판 개인 맞춤 AI 에이전트 시연 (v25 · Claude·Manus) ---------- */
+const AGT_DEMO = '가상 시연 · 실제 계정 연동 및 전송 없음';
+const AGT_REASON = '평소 Claude로 반론을 검토했고, 이번에는 발표자료도 필요해 Manus를 함께 제안합니다(예시)';
+const AGT_FEEDBACK = '가격 근거를 보강하고, 그 내용을 발표 2장에 넣으세요.';
+const AGT_PICKS = [
+  { n:'1', part:'9,900원 가격 가정', title:'가격 가정 반론 검토', tool:'Claude', role:'반론 검토',
+    file:'문서 카드 · 사업계획서 초안 3쪽 · 가격 부분',
+    send:'2R 사업계획서의 가격 가정 — 심층 리포트 1회 <b>9,900원</b>(2R 검증 예정 가격), <b>건당 평균 10분 목표(검수·수정 포함)</b>',
+    ask:'“이 가격 가정이 심사에서 반론받을 지점은 무엇이고, 근거와 대안 가격은 무엇인가?”' },
+  { n:'2', part:'발표자료 없음', title:'발표자료 구성', tool:'Manus', role:'발표자료 구성',
+    file:'문서 카드 · 사업계획서 초안 3쪽 · 발표 부분',
+    send:'사업계획서 핵심 3장 요약 + 심사 평가 기준(문제·해결·시장·실행), <b>10분 발표</b> 조건',
+    ask:'“심사 10분 발표용 3장 구성을 제안하고, 가격 근거는 2장에 배치해 달라.”' }
+];
+const AGT_RESULTS = [
+  { n:'1', tool:'Claude', title:'반론 검토 결과', rows:[
+      { k:'반론', t:'9,900원의 측정 근거 표기가 필요합니다 — <b>‘건당 평균 10분’의 측정 방법</b>과 <b>검수·수정 원가</b>가 문서에 없습니다. 심사에서 먼저 질문받을 지점입니다.' },
+      { k:'인정', t:'<b>2R 검증 예정 가격</b>으로 두는 전제와 10분 목표 자체는 타당합니다.' },
+      { k:'수정안', t:'가격표 아래에 측정 방법·원가 각주를 넣고, <b>대안 가격 4,900원</b>과 비교 1줄을 붙이세요.' }
+  ]},
+  { n:'2', tool:'Manus', title:'발표자료 구성안', rows:[
+      { k:'1장', t:'<b>문제·타깃</b> — 구독 14개·월 환산 210,000원(가상), 갱신 전 판단이 어렵다' },
+      { k:'2장', t:'<b>해결·가격 근거</b> — 9,900원 + 원가·측정 방법, Claude가 지적한 4,900원 비교' },
+      { k:'3장', t:'<b>2R 실행 계획</b> — 유료 제안 50명·첫 구매 5명·관찰형 사용성 시험 20명, 10분 발표 기준' }
+  ]}
+];
+const AGT_HLOG = [
+  { w:'11/24', tool:'작업판', act:'가격 가정 변경 · 사업계획서 v2' },
+  { w:'11/12', tool:'Manus', act:'발표자료 구성 열기' },
+  { w:'11/11', tool:'Claude', act:'반론 검토 열기 · 이번 달 3회' },
+  { w:'10/28', tool:'GPT', act:'사업계획서 초안 완료' }
+];
+const AGT_OPENS = { chatgpt:4, claude:3, manus:2, vrew:2, higgsfield:1, genspark:1, suno:1 };
+function agtOpens(id){ return AGT_OPENS[id] || 0; }
+function agtHistoryHTML(){
+  return '<div class="agt-hlog" id="agtHistory">' +
+    '<div class="agt-hlog-h"><span class="k">플랫폼 이용 이력</span><span class="n">최근 4주 기록</span></div>' +
+    '<div class="agt-hlog-sum">GPT 초안 완료 · 가격 가정 변경</div>' +
+    '<ul>' + AGT_HLOG.map(function(h){
+      return '<li><span class="w">' + h.w + '</span><span><b>' + h.tool + '</b> ' + h.act + '</span></li>';
+    }).join('') + '</ul>' +
+    '<div class="agt-hlog-n">플랫폼에서 도구를 열고 남긴 기록입니다. 실제 도구 사용량(토큰·크레딧)은 집계하지 않습니다.</div>' +
+  '</div>';
+}
+function agtChainHTML(){
+  return '<div class="agt-chain"><span class="ch">플랫폼 이용 이력</span><span class="ar">→</span>' +
+    '<span class="ch ai">AI 에이전트 제안</span><span class="ar">→</span>' +
+    '<span class="ch">Claude·Manus</span><span class="ar">→</span>' +
+    '<span class="ch">작업판 결과</span><span class="ar">→</span>' +
+    '<span class="ch">갱신 전 점검</span></div>';
+}
+function agtBadge(){ return '<span class="agt-demo">' + AGT_DEMO + '</span>'; }
+function agtPickRowsHTML(){
+  return '<div class="agt-pick">' + AGT_PICKS.map(function(p){
+    return '<div class="p"><span class="n">' + p.n + '</span><span class="tx">' + p.part + '</span><span class="tool">' + p.tool + ' · ' + p.role + '</span></div>';
+  }).join('') + '</div>';
+}
+function agtResultCardsHTML(){
+  return AGT_RESULTS.map(function(r){
+    return '<div class="agt-res">' +
+      '<div class="agt-res-h"><span class="n">' + r.n + '</span><b>' + r.title + '</b><span class="tool">' + r.tool + '</span></div>' +
+      r.rows.map(function(row){
+        return '<div class="agt-r"><span class="agt-rk">' + row.k + '</span><span>' + row.t + '</span></div>';
+      }).join('') +
+    '</div>';
+  }).join('');
+}
+function agtFeedbackHTML(){
+  return '<div class="agt-fb" id="agtFeedback">' +
+    '<div class="h"><span class="ic">N</span>나대신 분석 및 피드백</div>' +
+    '<div class="q">“' + AGT_FEEDBACK + '”</div>' +
+    '<span class="s">Claude가 지적한 측정 방법·원가를 2장에 붙이고, 4,900원 대안 비교는 각주로 두었습니다(예시).</span>' +
+  '</div>';
+}
+function agtEvidenceHTML(withButtons){
+  return '<div class="agt-evi" id="agtEvidence">' +
+    '<div class="agt-evi-h">작업판 「나대신 2R 제품 개발」 → 구독 점검 근거 ' + agtBadge() + '</div>' +
+    '<span class="agt-evi-line" id="agtEvidenceLine">이번 작업: Claude 반론 검토 + Manus 발표자료 구성(예시) / 다음 검토: 갱신일 이후(예시) / 최근 전체 사용량: 미확인</span>' +
+    '<div class="agt-caution">가상 작업 1건은 실제 사용량으로 집계하지 않습니다. 열람 횟수도 <b>플랫폼 이용 이력</b>이며, 이 근거만으로 유지·하향·중단을 단정하지 않습니다.</div>' +
+    (withButtons ? '<div class="agt-evibtn"><button type="button" data-act="agtcheck" data-id="claude">Claude 구독 점검</button><button type="button" data-act="agtcheck" data-id="manus">Manus 구독 점검</button></div>' : '') +
+  '</div>';
+}
+/* 작업판 p3 카드 안 제안 블록 */
+function agtBlockHTML(){
+  return '<div class="agt" id="agtBlock">' +
+    '<div class="agt-h"><span class="agt-ai">나대신 AI · 다음 작업 제안</span>' + agtBadge() + '</div>' +
+    agtHistoryHTML() +
+    agtPickRowsHTML() +
+    '<div class="agt-why2"><span class="lb">추천 이유</span><b>' + AGT_REASON + '</b>' +
+      '<span class="sn">최근 4주 작업 이력(예시) · Claude 반론 검토 3회 · Manus 잔여 크레딧 16,000 · 발표자료 작업 0회</span></div>' +
+    '<div class="agt-say">“평소처럼 반론부터 볼게요. 이번엔 발표자료도 준비할게요. Claude에 반론 검토를, Manus에 발표자료 구성을 맡길까요?”</div>' +
+    (S.agtDone
+      ? '<div class="agt-done"><span class="t">✓ <b>작업판 결과 2장 도착</b> · Claude 반론 검토 + Manus 발표자료 구성</span><button type="button" data-act="agtresult">결과 다시 보기</button></div>' +
+        agtResultCardsHTML() + agtFeedbackHTML() + agtEvidenceHTML(true) +
+        '<button type="button" class="agt-again" data-act="agtreset">예시 처음부터 다시 체험</button>'
+      : '<button type="button" class="agt-cta" data-act="agtstart">나대신 제안 체험하기</button>') +
+  '</div>';
+}
+/* 1단계 · 제안 */
+function agtProposalHTML(){
+  return '' +
+  '<div class="sd-head"><div><div class="sd-name">나대신 제안 · AI 에이전트</div>' +
+    '<div class="sd-meta">작업판 「나대신 2R 제품 개발」 · GPT 초안 완료</div></div>' +
+    '<button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
+  '<div class="agt-h" style="margin-top:8px">' + agtBadge() + '</div>' +
+  agtChainHTML() +
+  '<p class="agt-lead">GPT 초안에서 <b>검토할 부분 두 곳</b>을 골랐습니다. <b>Claude에는 반론 검토</b>를, <b>Manus에는 발표자료 구성</b>을 맡기려 합니다. 실제 전송은 없습니다.</p>' +
+  '<div class="agt-hist"><span class="k">근거</span><span>최근 4주 <b>플랫폼 이용 이력</b> — GPT 초안 완료 · 가격 가정 변경 · Claude 반론 검토 열기 3회 · Manus 발표자료 열기 1회</span></div>' +
+  AGT_PICKS.map(function(p){
+    return '<div class="agt-card">' +
+      '<div class="agt-card-h"><span class="n">' + p.n + '</span><b>' + p.title + '</b><span class="tool">' + p.tool + '</span></div>' +
+      '<div class="agt-file"><span class="fi">문서</span><span class="tx">' + p.file + '</span></div>' +
+      '<span class="agt-k">보낼 내용</span><span class="agt-v">' + p.send + '</span>' +
+      '<span class="agt-k">확인 질문</span><span class="agt-q">' + p.ask + '</span>' +
+    '</div>';
+  }).join('') +
+  '<div class="agt-why2" style="margin-top:9px"><span class="lb">추천 이유</span><b>' + AGT_REASON + '</b>' +
+    '<span class="sn">최근 4주 작업 이력(예시) · Claude 반론 검토 3회 · Manus 잔여 크레딧 16,000 · 발표자료 작업 0회</span></div>' +
+  '<div class="agt-two" id="agtActions">' +
+    '<button type="button" class="agt-run" data-act="agtrun">예시 실행</button>' +
+    '<button type="button" class="agt-skip" data-act="agtskip">이번엔 건너뛰기</button>' +
+  '</div>' +
+  '<p class="sd-foot">‘예시 실행’을 눌러야 문서 카드가 Claude·Manus로 이동합니다. 실제 전송·계정 연동은 없습니다.</p>' +
+  legalHTML();
+}
+/* 2단계 · 이동 */
+function agtMovingHTML(){
+  return '' +
+  '<div class="sd-head"><div><div class="sd-name">승인됨 · 문서 카드 이동</div>' +
+    '<div class="sd-meta">예시 실행 · 실제 전송 없음</div></div><button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
+  '<div class="agt-h" style="margin-top:8px">' + agtBadge() + '</div>' +
+  '<p class="agt-lead">승인한 <b>문서 카드 두 장</b>을 <b>Claude</b>와 <b>Manus</b>로 보내는 중입니다.</p>' +
+  '<div class="agt-move" id="agtMove">' +
+    '<div class="agt-mrow"><div class="agt-mcard"><span class="fi">문서</span>가격 가정</div><span class="agt-mar">→</span>' +
+      '<div class="agt-mtool"><b>Claude</b><span>반론 검토</span></div></div>' +
+    '<div class="agt-mrow d2"><div class="agt-mcard"><span class="fi">문서</span>발표자료</div><span class="agt-mar">→</span>' +
+      '<div class="agt-mtool"><b>Manus</b><span>발표자료 구성</span></div></div>' +
+    '<div class="agt-mstat">Claude 반론 검토 중… · Manus 발표자료 구성 중…</div>' +
+  '</div>' +
+  '<p class="sd-foot">두 도구의 응답은 예시로 만들어 화면에만 보여 줍니다.</p>' +
+  legalHTML();
+}
+/* 3단계 · 결과 (작업판에 모임) */
+function agtDoneHTML(){
+  return '' +
+  '<div class="sd-head"><div><div class="sd-name">작업판에 모인 결과</div>' +
+    '<div class="sd-meta">Claude 반론 검토 + Manus 발표자료 구성 · 예시 응답</div></div>' +
+    '<button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
+  '<div class="agt-h" style="margin-top:8px">' + agtBadge() + '</div>' +
+  agtResultCardsHTML() + agtFeedbackHTML() + agtEvidenceHTML(true) +
+  '<button type="button" class="agt-board" data-act="agtboard">작업판에 모인 결과 보기</button>' +
+  '<p class="sd-foot">두 결과는 예시 응답이며, 사업계획서·발표자료 파일은 실제로 만들지 않습니다.</p>' +
+  legalHTML();
+}
+/* 시안 크게 보기 */
+function agtZoomHTML(){
+  return '' +
+  '<div class="sd-head"><div><div class="sd-name">나대신 제안 시안</div>' +
+    '<div class="sd-meta">내 사업계획서 작업판 · 가상 시연</div></div><button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
+  '<div class="agt-h" style="margin-top:8px">' + agtBadge() + '</div>' +
+  '<div class="agt-zoom"><img src="board-ai-hero.jpg" alt="GPT 초안을 나대신 AI 에이전트가 Claude 반론 검토와 Manus 발표자료 구성으로 나눠 맡기고 분석·피드백을 돌려주는 작업판 시안"></div>' +
+  '<p class="sd-foot">좌우로 밀어 크게 볼 수 있습니다. 시안 속 이름·수치는 예시입니다.</p>' +
+  legalHTML();
+}
+function agtSheetHTML(){
+  if (S.agtStage === 'zoom') return agtZoomHTML();
+  if (S.agtStage === 'moving') return agtMovingHTML();
+  if (S.agtStage === 'done') return agtDoneHTML();
+  return agtProposalHTML();
+}
+function openAgtDOM(view){
+  const v = (view === 'moving' || view === 'done' || view === 'zoom') ? view : 'proposal';
+  S.agtStage = v;
+  openSheetDOM(agtSheetHTML());
+}
+function agtFinish(){
+  const open = !!document.querySelector('#overlay .sheet-panel');
+  S.agtDone = true; saveState();
+  if (open && S.agtStage === 'moving'){
+    S.agtStage = 'done';
+    agtSwapOverlay('agt', 'done', function(){ openAgtDOM('done'); });
+    render();
+    toast('결과 카드 2장을 작업판에 모았습니다');
+  } else {
+    render();
+  }
+}
+function agtScrollBoard(){
+  const el = $('#agtBlock'), body = $('#appBody');
+  if (!el || !body) return;
+  const z = parseFloat(getComputedStyle(body).zoom) || 1;   /* zoom 배율만큼 rect 값이 커지므로 나눠 보정 */
+  body.scrollTop += (el.getBoundingClientRect().top - body.getBoundingClientRect().top - 8) / z;
+}
 /* ---------- 작업판 ---------- */
 function viewBoard(){
   return '' +
@@ -1920,6 +2279,7 @@ function viewBoard(){
         '<span class="pill ' + stCls + '">' + p.status + '</span></div>' +
       '<div class="proj-d">' + esc(p.desc) + ' · 마감 ' + md(p.due) + '</div>' +
       '<div class="proj-subs">' + (tools || '<span class="tag">연결 구독 없음</span>') + '</div>' +
+      (p.id === 'p3' ? agtBlockHTML() : '') +
       '<div class="seg">' + ['진행 중','보류','완료'].map(function(st){
         return '<button data-act="pstatus" data-id="' + p.id + '" data-status="' + st + '" class="' + (p.status === st ? 'on' : '') + '">' + st + '</button>';
       }).join('') + '</div>' +
@@ -2165,15 +2525,18 @@ function detailSheet(sub){
         '<div class="sd-meta">' + esc(sub.cat || '카테고리 미확인') + ' · ' + channelBadge(sub) + (sub.cycle === 'yearly' ? ' <span class="pill ch">연 결제</span>' : '') + (sub.origin === 'imgsample' ? ' <span class="pill blue">샘플 시연</span>' : '') + ' · ' + (sub.date ? md(sub.date) + (sub.billDay ? ' 청구 예정 · ' : ' 결제 · ') + ddLabel(sub) : (sub.billDay ? '월 청구 ' + sub.billDay + '일 · 다음 결제일 미확인' : '결제일 미확인')) + '</div></div>' +
       '<button class="x" data-act="close">✕</button></div>' +
     (sub.dayCaveat ? '<div class="warnbox"><b>말일 기준 변동 가능 · 확인 필요</b> · 29~31일 결제는 다음 달 말일에 맞춰 결제일이 바뀔 수 있어 임의로 확정하지 않습니다.</div>' : '') +
+    ((sub.id === 'claude' || sub.id === 'manus') && S.agtDone ? agtEvidenceHTML(false) : '') +
     amountsHTML(sub, rdNow) +
     '<div id="sdState">' + state4HTML(sub, rdNow) + '</div>' +
     '<div class="sd-reason">' +
       '<div><span>작업</span><em>' + (links.length ? '「' + links[0].name + '」 ' + links[0].status + ' · 마감 ' + md(links[0].due) : '연결된 작업 없음') + '</em></div>' +
       '<div><span>사용</span><em>' + mt.detail + '</em></div>' +
+      '<div><span>이용</span><em>이번 달 작업판에서 ' + agtOpens(sub.id) + '회 열람(예시) · ' + (links.length ? '다음 작업 ' + md(links[0].due) + ' 마감' : '다음 작업 미정') + '</em></div>' +
       '<div><span>갱신</span><em>' + (sub.date ? md(sub.date) + ' · ' + (dday(sub) >= 0 ? '갱신까지 ' + dday(sub) + '일' : '이미 지난 결제 · 다음 청구 ' + md(nextChargeDate(sub))) : '결제일 미확인') + '</em></div>' +
       (sub.billDay ? '<div><span>계약</span><em>월 청구 예정일 매월 ' + sub.billDay + '일 · 약정 종료 ' + md(sub.contract && sub.contract.end) + '</em></div>' : '') +
       (sub.paidUnknown ? '<div><span>납부</span><em>미확인 · 청구서에 납부일 없음</em></div>' : '') +
     '</div>' +
+    '<div class="mini-note" style="margin-top:3px">포털 클릭·열기는 실제 사용량이 아닌 <b>플랫폼 이용 이력</b> 기준입니다. 도구 안의 실제 사용량(토큰·크레딧)은 따로 확인합니다.</div>' +
     '<div class="sd-label" style="margin-top:9px">프로젝트에 추가 <span>작업판에 연결하면 추천에 반영됩니다</span></div>' +
     '<div class="chips" style="margin-top:0">' +
       '<button class="chip ' + (links.length ? '' : 'on') + '" data-act="linkproj" data-id="' + sub.id + '" data-proj="none">추가 안 함</button>' +
@@ -2725,6 +3088,17 @@ function navOpenOverlay(ov, oid, paint){
   navPush({ tab:S.tab, ov:ov, oid:oid || null });
   paint();
 }
+function agtSwapOverlay(ov, oid, paint){
+  const top = navTop();
+  if (top && top.ov){
+    const st = { nav:1, id:++NAV.seq, tab:S.tab, ov:ov, oid:oid || null };
+    NAV.stack[NAV.stack.length - 1] = st;
+    try { history.replaceState(st, ''); } catch (e) {}
+    paint();
+  } else {
+    navOpenOverlay(ov, oid, paint);
+  }
+}
 function navGoTab(t){
   if (NAV_TABS.indexOf(t) < 0) return;
   if (S.tab === t && !navTop().ov){ closeSheetDOM(); zoomPopSet(false); return; }
@@ -2748,6 +3122,8 @@ function applyNav(st){
   const oid = st && st.oid;
   if (!ov){ closeSheetDOM(); zoomPopSet(false); }
   else if (ov === 'detail'){ zoomPopSet(false); if (S.detailId !== oid) openDetailDOM(oid); }
+  else if (ov === 'trial'){ zoomPopSet(false); if (!$('#overlay .trial-hero')) openTrialDOM(); }
+  else if (ov === 'agt'){ zoomPopSet(false); openAgtDOM(oid); }
   else if (ov === 'install'){ zoomPopSet(false); if (!$('#overlay .inst-h')) openInstallDOM(); }
   else if (ov === 'add'){ zoomPopSet(false); if (!$('#fName')) openAddDOM(); }
   else if (ov === 'import'){ zoomPopSet(false); if (!$('#overlay .imp-rail')) openImportDOM(); }
@@ -2907,6 +3283,38 @@ document.addEventListener('click', function(e){
   if (act === 'detail') { openDetail(el.dataset.id); return; }
   if (act === 'close') { navCloseOverlay(); return; }
   if (act === 'example') { openDetail('higgsfield'); return; }
+
+  /* 작업판 AI 에이전트 시연 */
+  if (act === 'trialopen'){ navOpenOverlay('trial', null, openTrialDOM); return; }
+  if (act === 'agtstart'){
+    const v = S.agtDone ? 'done' : 'proposal';
+    navOpenOverlay('agt', v, function(){ openAgtDOM(v); });
+    return;
+  }
+  if (act === 'agtresult'){ navOpenOverlay('agt', 'done', function(){ openAgtDOM('done'); }); return; }
+  if (act === 'agtzoom'){ navOpenOverlay('agt', 'zoom', function(){ openAgtDOM('zoom'); }); return; }
+  if (act === 'agtskip'){
+    navCloseOverlay();
+    toast('이번엔 건너뛰었습니다 · 새 완료 기록은 남기지 않습니다');
+    return;
+  }
+  if (act === 'agtrun'){
+    agtSwapOverlay('agt', 'moving', function(){ openAgtDOM('moving'); });
+    setTimeout(agtFinish, 1700);
+    return;
+  }
+  if (act === 'agtboard'){
+    navGoTab('board');
+    setTimeout(agtScrollBoard, 180);
+    return;
+  }
+  if (act === 'agtcheck'){ openDetail(el.dataset.id === 'manus' ? 'manus' : 'claude'); return; }
+  if (act === 'agtreset'){
+    S.agtDone = false; S.agtStage = 'proposal';
+    saveState(); render();
+    toast('예시를 처음 상태로 되돌렸습니다 · 저장한 기록은 그대로입니다');
+    return;
+  }
 
   if (act === 'fav'){
     const id = el.dataset.id;
@@ -3154,6 +3562,7 @@ document.addEventListener('click', function(e){
     S.favs = S.favs.filter(id => S.userSubs.some(u => u.id === id));
     if (!subById(S.simSub)) S.simSub = 'higgsfield';
     S.simAct = null; S.simDate = ''; simSaved = false; IMP = null;
+    S.agtDone = false; S.agtStage = 'proposal';
     navCloseOverlay();
     S.homeFilter = 'all'; S.subCat = '전체'; S.q = ''; S.projFilter = 'all';
     S.tab = 'home';

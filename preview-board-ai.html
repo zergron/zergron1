@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>나대신 구독케어 · 작업판 AI 작업비서 시연 (검수본 v2)</title>
+<title>나대신 구독케어 · 공개 체험판 v25 · 개인 맞춤 AI 에이전트</title>
 <meta name="description" content="구독은 한눈에, 필요한 도구는 바로 열고, 갱신은 다음 작업에 맞춰. 내 구독을 직접 입력하거나 결제 알림에서 불러와 유지·하향·중단·판단 보류를 확인하는 공개 체험판(모두의 창업 2R 시제품)">
 <meta name="theme-color" content="#0F172A">
 <link rel="manifest" href="manifest.json">
@@ -133,13 +133,16 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .ab-feat svg{width:9.5px; height:9.5px; stroke:currentColor; fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; opacity:.95}
 .ab-feat:hover{background:rgba(37,99,235,.48); border-color:rgba(191,219,254,.85)}
 .ab-feat:active{background:rgba(37,99,235,.6)}
-.ab-install{margin-left:auto; display:flex; align-items:center; gap:3px; background:#fff; color:var(--navy); border-radius:8px; padding:6px 7px; font-size:10.2px; font-weight:800; letter-spacing:-.02em; white-space:nowrap; flex:0 0 auto}
-.ab-install svg{width:11.5px; height:11.5px; stroke:var(--navy); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+/* v25: 앱 설치 → 체험하기(제안 시안·체험 시트 열기) */
+.ab-trial{margin-left:auto; display:flex; align-items:center; gap:3px; background:#fff; color:var(--navy); border-radius:8px; padding:6px 7px; font-size:10.2px; font-weight:800; letter-spacing:-.02em; white-space:nowrap; flex:0 0 auto}
+.ab-trial svg{width:10.5px; height:10.5px; fill:var(--navy); stroke:none}
+.ab-trial:hover{background:#EFF4FF}
+.ab-trial:active{background:#E3ECFB}
 
 /* 화면 배율 (70/100/120/150%) */
 .appbar{position:relative; z-index:24}
 .appbar .zbtn{margin-left:auto}
-.ab-install{margin-left:4px}
+.ab-trial{margin-left:4px}
 .zbtn{flex:0 0 auto; display:inline-flex; align-items:center; gap:2px; height:26px; padding:0 6px 0 5px; border-radius:8px;
   background:rgba(255,255,255,.10); border:1px solid rgba(148,163,184,.38); color:#DCE5F3; font-size:10.2px; font-weight:800; letter-spacing:-.02em}
 .zbtn svg{width:11.5px; height:11.5px; stroke:currentColor; fill:none; stroke-width:2.3; stroke-linecap:round}
@@ -800,7 +803,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
   .ab-nm .ab-name{font-size:13.5px}
   .ab-sub{font-size:7.4px}
   .ab-feat{font-size:8.4px; padding:0 3px 0 4px}
-  .ab-install{padding:6px 5px; font-size:9.4px}
+  .ab-trial{padding:6px 5px; font-size:9.4px}
 }
 
 /* 서비스 특징 팝업 */
@@ -893,7 +896,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .legal{font-size:8.4px; color:#9AA7B8; font-weight:700; line-height:1.55; text-align:center; margin:10px 2px 2px; letter-spacing:-.01em}
 .legal b{color:#7C8CA3; font-weight:800}
 
-/* ===================== 검수본 v2: 홈 상단 시안 · AI 작업비서 시연 (Claude·Manus) ===================== */
+/* ===================== v25: 상단 체험하기 · 개인 맞춤 AI 에이전트 시연 (Claude·Manus) ===================== */
 /* 홈 상단 시안 카드 */
 .hsi{border:1px solid #DCE7FF; border-radius:16px; background:linear-gradient(180deg,#F4F8FF,#fff); padding:9px; margin:0 0 9px; box-shadow:0 12px 26px -24px rgba(37,99,235,.75)}
 .hsi-top{display:flex; align-items:center; gap:4px; flex-wrap:wrap; margin-bottom:6px}
@@ -908,6 +911,11 @@ h1.i-head em{font-style:normal; color:var(--blue)}
 .hsi-d{font-size:8.6px; font-weight:700; color:#475569; line-height:1.55; margin-top:6px; letter-spacing:-.01em}
 .hsi-d b{color:#0F172A; font-weight:800}
 .hsi .agt-cta{margin-top:8px}
+/* v25: 상단 체험하기 시트 */
+.trial-lead{font-size:9.4px; font-weight:700; color:#475569; line-height:1.6; margin-top:7px}
+.trial-lead b{color:#0F172A; font-weight:800}
+.sheet-panel .hsi-img{margin-top:8px}
+.sheet-panel .trial-hero img{max-height:62vh; object-fit:contain; background:#EAF1FB}
 
 /* 공통 */
 .agt{border:1.5px solid #CFE0FF; border-radius:13px; background:linear-gradient(180deg,#F7FAFF,#fff); padding:9px 9px 10px; margin:0 0 9px}
@@ -1034,7 +1042,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
     </div>
 
     <h1 class="i-head">구독은 한눈에,<br>필요한 도구는 <em>바로 열고</em>,<br>갱신은 다음 작업에 맞춰.</h1>
-    <p class="i-lead">내 구독을 <b>직접 입력하거나 이미지·결제 알림에서 불러와</b> 한곳에 모으고, <b>구독 종합현황 · 구독 이용 포털 · 계약·비용 최적화 · 구독 혜택 극대화 · 개인 맞춤 AI 작업비서</b> 다섯 가지 기능으로 다음 작업일과 사용량을 견주어 <b>유지·하향·중단·판단 보류</b>를 정리합니다. 고객이 공식 서비스에서 직접 처리한 뒤 <b>다음 청구까지</b> 기록하는, <b>구독 하나에 특화된 개인 맞춤 구독케어 서비스</b>입니다.</p>
+    <p class="i-lead">내 구독을 <b>직접 입력하거나 이미지·결제 알림에서 불러와</b> 한곳에 모으고, <b>구독 종합현황 · 구독 이용 포털 · 계약·비용 최적화 · 구독 혜택 극대화 · 개인 맞춤 AI 에이전트</b> 다섯 가지 기능으로 다음 작업일과 사용량을 견주어 <b>유지·하향·중단·판단 보류</b>를 정리합니다. 고객이 공식 서비스에서 직접 처리한 뒤 <b>다음 청구까지</b> 기록하는, <b>구독 하나에 특화된 개인 맞춤 구독케어 서비스</b>입니다.</p>
 
     <div class="axis">
       <div class="ax">
@@ -1058,8 +1066,8 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         <span class="d">남은 크레딧·보유 혜택 먼저 활용, 공식 할인 제안</span>
       </div>
       <div class="ax wide">
-        <span class="k">05 · <em style="font-style:normal;color:#B45309">가상 시연</em></span>
-        <b>개인 맞춤 AI 작업비서</b>
+        <span class="k">05 · <em style="font-style:normal;color:#B45309">개발 예정 · 가상 시연</em></span>
+        <b>개인 맞춤 AI 에이전트</b>
         <span class="d">내 작업 방식과 이력을 바탕으로 다음 일을 먼저 제안하고, 승인 시 여러 AI에 역할을 나눠 맡겨 수정안까지 정리</span>
       </div>
     </div>
@@ -1081,7 +1089,7 @@ h1.i-head em{font-style:normal; color:var(--blue)}
         </div>
       </div>
       <p class="flow-note">심층 리포트 1회 <b>9,900원은 2R에서 검증할 가격</b>이며, 이 공개 체험판에서는 <b>실제 결제가 진행되지 않습니다</b>. 리포트 작성 목표는 <b>건당 평균 10분 목표(검수·수정 포함)</b>입니다.</p>
-      <p class="flow-note" style="margin-top:6px"><b>검수본 안내</b> · 홈 상단 시안과 작업판 AI 작업비서 제안(Claude 반론 검토 + Manus 발표자료 구성)은 최종 제품의 사용 흐름을 보여주는 가상 시연입니다 (가상 시연 · 실제 계정 연동 및 전송 없음).</p>
+      <p class="flow-note" style="margin-top:6px"><b>검수본 안내</b> · 상단 <b>체험하기</b> 시트의 시안과 작업판 <b>개인 맞춤 AI 에이전트</b> 제안(Claude 반론 검토 + Manus 발표자료 구성)은 최종 제품의 사용 흐름을 보여주는 가상 시연입니다 (가상 시연 · 실제 계정 연동 및 전송 없음).</p>
     </div>
 
     <div class="card-block">
@@ -1186,9 +1194,9 @@ h1.i-head em{font-style:normal; color:var(--blue)}
             <button type="button" data-act="zoomset" data-zoom="120" class="on">120%</button>
             <button type="button" data-act="zoomset" data-zoom="150">150%</button>
           </div>
-          <button class="ab-install" data-act="install">
-            <svg viewBox="0 0 24 24"><path d="M12 4v10"/><path d="M8 11l4 3.5 4-3.5"/><path d="M5 19h14"/></svg>
-            앱 설치
+          <button class="ab-trial" data-act="trialopen" aria-haspopup="dialog" aria-controls="overlay" title="나대신 제안 시안과 체험 열기">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg>
+            <span class="ab-trial-t">체험하기</span>
           </button>
         </header>
 
@@ -1820,7 +1828,7 @@ const FEATURES = [
   { n:'02', t:'구독 이용 포털', d:'원클릭으로 열고 프로젝트별로 한곳에서 작업', go:'board', c:'작업판에서 보기' },
   { n:'03', t:'계약·비용 최적화', d:'일정에 맞춰 유지·요금제 변경·해지 제안 (실제 변경은 고객이 공식 서비스에서 직접)', go:'report', c:'심층 리포트에서 보기' },
   { n:'04', t:'구독 혜택 극대화', d:'남은 크레딧·보유 혜택 먼저 활용, 공식 할인 제안', em:'개발 예정', go:'benefit', c:'「먼저 쓸 혜택」 카드로 미리 보기', soon:true },
-  { n:'05', t:'개인 맞춤 AI 작업비서', d:'내 작업 방식과 이력을 바탕으로 다음에 필요한 일을 먼저 제안하고, 승인 시 여러 AI에 역할을 나눠 맡겨 수정안까지 정리', em:'가상 시연', note:'AI 작업비서 가상 시연 · 실제 계정 연동 및 전송 없음', go:'agt', c:'작업판에서 제안 체험하기' }
+  { n:'05', t:'개인 맞춤 AI 에이전트', d:'내 작업 방식과 이력을 바탕으로 다음에 필요한 일을 먼저 제안하고, 승인 시 여러 AI에 역할을 나눠 맡겨 수정안까지 정리', em:'개발 예정 · 가상 시연', note:'AI 에이전트 가상 시연 · 실제 계정 연동 및 전송 없음', go:'agt', c:'작업판에서 제안 체험하기' }
 ];
 function featSheetHTML(){
   return '<div class="sd-head fm-head">' +
@@ -1879,16 +1887,6 @@ function viewHome(){
   const unknown = unknownPriceCount();
 
   return '' +
-  '<div class="hsi" id="agtHero">' +
-    '<div class="hsi-top"><span class="hsi-k">새 기능 시안 · 내 사업계획서 작업판</span>' + agtBadge() + '</div>' +
-    '<button type="button" class="hsi-img" data-act="agtzoom" aria-label="홈 상단 시안 크게 보기">' +
-      '<img src="board-ai-hero.jpg" alt="GPT 초안을 나대신 AI 에이전트가 Claude 반론 검토와 Manus 발표자료 구성으로 나눠 맡기고, 분석·피드백을 돌려주는 작업판 시안" width="1536" height="1024" loading="lazy">' +
-      '<span class="hsi-zoom">크게 보기</span>' +
-    '</button>' +
-    '<div class="hsi-flow"><span class="fl">GPT 초안</span><span class="ar">→</span><span class="fl ai">나대신 AI</span><span class="ar">→</span><span class="fl">Claude 반론 검토</span><span class="fl">Manus 발표자료 구성</span><span class="ar">→</span><span class="fl">작업판 피드백</span></div>' +
-    '<p class="hsi-d"><b>플랫폼 이용 이력</b>을 보고 다음에 필요한 일을 먼저 제안합니다. 승인하면 Claude에 반론 검토를, Manus에 발표자료 구성을 맡기고 <b>결과 카드 두 장</b>을 작업판에 모아 드립니다.</p>' +
-    '<button type="button" class="agt-cta" data-act="agtstart">나대신 제안 체험하기</button>' +
-  '</div>' +
   '<div class="hero">' +
     '<div class="hero-top"><span>월 환산 구독료</span><span class="lock">2026년 11월 20일 기준</span></div>' +
     '<div class="hero-total">' + fmt(totalMonthly()) + ' <span>' + allSubs().length + '개 구독</span></div>' +
@@ -1925,7 +1923,7 @@ function viewHome(){
   '<div class="list">' + (list.length ? list.map(subCard).join('') : '<div class="empty">조건에 맞는 구독이 없습니다.<br>필터를 바꿔 보세요.</div>') + '</div>' +
   '</div>' +
   privacyStrip() +
-  '<div class="footnote" style="text-align:center;margin-top:9px"><b>구독 종합현황 · 구독 이용 포털 · 계약·비용 최적화 · 구독 혜택 극대화 · 개인 맞춤 AI 작업비서</b> — 등록은 이 다섯 가지를 쓰기 위한 첫 단계입니다.<br>판단 기준: 다음 작업 연결 · 사용량/크레딧 · 갱신일(참고 규칙 7일) · 약정 만료. 사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>' +
+  '<div class="footnote" style="text-align:center;margin-top:9px"><b>구독 종합현황 · 구독 이용 포털 · 계약·비용 최적화 · 구독 혜택 극대화 · 개인 맞춤 AI 에이전트</b> — 등록은 이 다섯 가지를 쓰기 위한 첫 단계입니다.<br>판단 기준: 다음 작업 연결 · 사용량/크레딧 · 갱신일(참고 규칙 7일) · 약정 만료. 사용률은 확인된 3개(ChatGPT 60% · Higgsfield 20% · Vrew 40%)만 표시하고, 나머지는 <b>사용량 미확인</b>으로 둡니다.</div>' +
   legalHTML();
 }
 
@@ -2044,7 +2042,27 @@ function simResultHTML(sub, rd){
 }
 function defaultSimRd(){ const s = subById(S.simSub) || allSubs()[0]; return S.simDate || defaultRecheck(s) || ''; }
 
-/* ---------- 작업판 AI 작업비서 시연 (검수본 v2 · Claude·Manus) ---------- */
+/* ---------- 체험하기 시트 (v25: 상단 체험하기 → 시안 + 나대신 제안 체험하기) ---------- */
+function trialSheetHTML(){
+  return '' +
+  '<div class="sd-head"><div><div class="sd-name">나대신 제안 · AI 에이전트</div>' +
+    '<div class="sd-meta">내 사업계획서 작업판 · GPT 초안 완료</div></div>' +
+    '<button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
+  '<div class="agt-h" style="margin-top:8px">' + agtBadge() + '</div>' +
+  '<div class="trial-lead">구독 하나에 특화된 <b>개인 맞춤 AI 에이전트</b>가 어디까지 맡아 주는지 시안으로 먼저 봅니다. <b>나대신 제안 체험하기</b>를 누르면 제안 → 승인 → 결과까지 이어집니다.</div>' +
+  '<button type="button" class="hsi-img trial-hero" data-act="agtzoom" aria-label="시안 크게 보기">' +
+    '<img src="board-ai-hero.jpg" alt="GPT 초안을 나대신 AI 에이전트가 Claude 반론 검토와 Manus 발표자료 구성으로 나눠 맡기고, 분석·피드백을 돌려주는 작업판 시안" width="1536" height="1024">' +
+    '<span class="hsi-zoom">크게 보기</span>' +
+  '</button>' +
+  '<div class="hsi-flow"><span class="fl">GPT 초안</span><span class="ar">→</span><span class="fl ai">나대신 AI</span><span class="ar">→</span><span class="fl">Claude 반론 검토</span><span class="fl">Manus 발표자료 구성</span><span class="ar">→</span><span class="fl">작업판 피드백</span></div>' +
+  '<p class="hsi-d"><b>플랫폼 이용 이력</b>을 보고 다음에 필요한 일을 먼저 제안합니다. 승인하면 Claude에 반론 검토를, Manus에 발표자료 구성을 맡기고 <b>결과 카드 두 장</b>을 작업판에 모아 드립니다.</p>' +
+  '<button type="button" class="agt-cta" data-act="agtstart">나대신 제안 체험하기</button>' +
+  '<p class="sd-foot">가상 시연이며 실제 계정 연동·전송은 없습니다. 시안 속 이름·수치는 예시입니다.</p>' +
+  legalHTML();
+}
+function openTrialDOM(){ openSheetDOM(trialSheetHTML()); }
+
+/* ---------- 작업판 개인 맞춤 AI 에이전트 시연 (v25 · Claude·Manus) ---------- */
 const AGT_DEMO = '가상 시연 · 실제 계정 연동 및 전송 없음';
 const AGT_REASON = '평소 Claude로 반론을 검토했고, 이번에는 발표자료도 필요해 Manus를 함께 제안합니다(예시)';
 const AGT_FEEDBACK = '가격 근거를 보강하고, 그 내용을 발표 2장에 넣으세요.';
@@ -2060,14 +2078,14 @@ const AGT_PICKS = [
 ];
 const AGT_RESULTS = [
   { n:'1', tool:'Claude', title:'반론 검토 결과', rows:[
-      { k:'반론', t:'9,900원의 근거가 약합니다 — <b>‘건당 평균 10분’의 측정 방법</b>과 <b>검수·수정 원가</b>가 문서에 없습니다. 심사에서 먼저 질문받을 지점입니다.' },
+      { k:'반론', t:'9,900원의 측정 근거 표기가 필요합니다 — <b>‘건당 평균 10분’의 측정 방법</b>과 <b>검수·수정 원가</b>가 문서에 없습니다. 심사에서 먼저 질문받을 지점입니다.' },
       { k:'인정', t:'<b>2R 검증 예정 가격</b>으로 두는 전제와 10분 목표 자체는 타당합니다.' },
-      { k:'수정안', t:'가격표 아래에 측정 방법·원가 각주를 넣고, <b>대안 가격 14,900원</b>과 비교 1줄을 붙이세요.' }
+      { k:'수정안', t:'가격표 아래에 측정 방법·원가 각주를 넣고, <b>대안 가격 4,900원</b>과 비교 1줄을 붙이세요.' }
   ]},
   { n:'2', tool:'Manus', title:'발표자료 구성안', rows:[
       { k:'1장', t:'<b>문제·타깃</b> — 구독 14개·월 환산 210,000원(가상), 갱신 전 판단이 어렵다' },
-      { k:'2장', t:'<b>해결·가격 근거</b> — 9,900원 + 원가·측정 방법, Claude가 지적한 14,900원 비교' },
-      { k:'3장', t:'<b>2R 실행 계획</b> — 리포트 10건·UT 5명·12월 1일 제출, 10분 발표 기준' }
+      { k:'2장', t:'<b>해결·가격 근거</b> — 9,900원 + 원가·측정 방법, Claude가 지적한 4,900원 비교' },
+      { k:'3장', t:'<b>2R 실행 계획</b> — 유료 제안 50명·첫 구매 5명·관찰형 사용성 시험 20명, 10분 발표 기준' }
   ]}
 ];
 const AGT_HLOG = [
@@ -2090,7 +2108,7 @@ function agtHistoryHTML(){
 }
 function agtChainHTML(){
   return '<div class="agt-chain"><span class="ch">플랫폼 이용 이력</span><span class="ar">→</span>' +
-    '<span class="ch ai">AI 작업비서 제안</span><span class="ar">→</span>' +
+    '<span class="ch ai">AI 에이전트 제안</span><span class="ar">→</span>' +
     '<span class="ch">Claude·Manus</span><span class="ar">→</span>' +
     '<span class="ch">작업판 결과</span><span class="ar">→</span>' +
     '<span class="ch">갱신 전 점검</span></div>';
@@ -2115,7 +2133,7 @@ function agtFeedbackHTML(){
   return '<div class="agt-fb" id="agtFeedback">' +
     '<div class="h"><span class="ic">N</span>나대신 분석 및 피드백</div>' +
     '<div class="q">“' + AGT_FEEDBACK + '”</div>' +
-    '<span class="s">Claude가 지적한 측정 방법·원가를 2장에 붙이고, 14,900원 대안 비교는 각주로 두었습니다(예시).</span>' +
+    '<span class="s">Claude가 지적한 측정 방법·원가를 2장에 붙이고, 4,900원 대안 비교는 각주로 두었습니다(예시).</span>' +
   '</div>';
 }
 function agtEvidenceHTML(withButtons){
@@ -2145,7 +2163,7 @@ function agtBlockHTML(){
 /* 1단계 · 제안 */
 function agtProposalHTML(){
   return '' +
-  '<div class="sd-head"><div><div class="sd-name">나대신 제안 · AI 작업비서</div>' +
+  '<div class="sd-head"><div><div class="sd-name">나대신 제안 · AI 에이전트</div>' +
     '<div class="sd-meta">작업판 「나대신 2R 제품 개발」 · GPT 초안 완료</div></div>' +
     '<button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
   '<div class="agt-h" style="margin-top:8px">' + agtBadge() + '</div>' +
@@ -2201,7 +2219,7 @@ function agtDoneHTML(){
 /* 시안 크게 보기 */
 function agtZoomHTML(){
   return '' +
-  '<div class="sd-head"><div><div class="sd-name">홈 상단 시안</div>' +
+  '<div class="sd-head"><div><div class="sd-name">나대신 제안 시안</div>' +
     '<div class="sd-meta">내 사업계획서 작업판 · 가상 시연</div></div><button class="x" data-act="close" aria-label="닫기">✕</button></div>' +
   '<div class="agt-h" style="margin-top:8px">' + agtBadge() + '</div>' +
   '<div class="agt-zoom"><img src="board-ai-hero.jpg" alt="GPT 초안을 나대신 AI 에이전트가 Claude 반론 검토와 Manus 발표자료 구성으로 나눠 맡기고 분석·피드백을 돌려주는 작업판 시안"></div>' +
@@ -3104,6 +3122,7 @@ function applyNav(st){
   const oid = st && st.oid;
   if (!ov){ closeSheetDOM(); zoomPopSet(false); }
   else if (ov === 'detail'){ zoomPopSet(false); if (S.detailId !== oid) openDetailDOM(oid); }
+  else if (ov === 'trial'){ zoomPopSet(false); if (!$('#overlay .trial-hero')) openTrialDOM(); }
   else if (ov === 'agt'){ zoomPopSet(false); openAgtDOM(oid); }
   else if (ov === 'install'){ zoomPopSet(false); if (!$('#overlay .inst-h')) openInstallDOM(); }
   else if (ov === 'add'){ zoomPopSet(false); if (!$('#fName')) openAddDOM(); }
@@ -3265,7 +3284,8 @@ document.addEventListener('click', function(e){
   if (act === 'close') { navCloseOverlay(); return; }
   if (act === 'example') { openDetail('higgsfield'); return; }
 
-  /* 작업판 AI 작업비서 시연 */
+  /* 작업판 AI 에이전트 시연 */
+  if (act === 'trialopen'){ navOpenOverlay('trial', null, openTrialDOM); return; }
   if (act === 'agtstart'){
     const v = S.agtDone ? 'done' : 'proposal';
     navOpenOverlay('agt', v, function(){ openAgtDOM(v); });
